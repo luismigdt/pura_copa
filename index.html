@@ -1,196 +1,267 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FASE FINAL PURA COPA</title>
-  <style>
-    body {
-      background-color: #1e1e2f;
-      color: #fff;
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FASE FINAL PURA COPA</title>
 
-    h1 {
-      text-align: center;
-      padding: 20px;
-      background-color: #2b2b40;
-      color: #f0c000;
-      margin: 0;
-    }
+<style>
+:root{
+  /* Cambia aquí colores cuando quieras */
+  --bg:#0f172a;          /* fondo principal */
+  --panel:#1e293b;       /* paneles y tarjetas */
+  --text:#f8fafc;        /* texto general */
+  --accent:#fbbf24;      /* títulos y acentos */
+  --win:#0ea5e9;         /* ganador */
+  --lose:#475569;        /* perdedor */
+  --line:#94a3b8;        /* líneas */
+}
 
-    .bracket {
-      display: flex;
-      justify-content: space-between;
-      padding: 40px;
-      overflow-x: auto;
-    }
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+h1{
+  margin:0;
+  padding:24px 12px;
+  text-align:center;
+  background:var(--panel);
+  color:var(--accent);
+  font-size:clamp(22px,4vw,36px);
+  letter-spacing:2px;
+}
 
-    .round {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      min-width: 180px;
-      position: relative;
-    }
+#bracket-wrapper{
+  width:100%;
+  overflow-x:auto;
+  padding:32px 16px 60px;
+}
+.bracket{
+  position:relative;
+  display:flex;
+  gap:60px;
+  min-width:1200px;
+  margin:auto;
+}
+.round{
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  gap:40px;
+  min-width:200px;
+  position:relative;
+}
+.round-title{
+  text-align:center;
+  margin-bottom:10px;
+  color:var(--accent);
+  font-size:15px;
+  font-weight:bold;
+}
+.match{
+  position:relative;
+  background:var(--panel);
+  border:2px solid var(--line);
+  border-radius:10px;
+  margin:0;
+  padding:8px 8px 10px;
+  width:200px;
+  box-shadow:0 0 6px #0006;
+}
+.team{
+  margin:6px 0;
+  padding:8px 6px;
+  border-radius:6px;
+  font-size:14px;
+  line-height:1.2;
+}
+.team small{
+  display:block;
+  opacity:.8;
+  margin-top:2px;
+  font-size:11px;
+}
+.team.win{background:var(--win); color:#fff;}
+.team.lose{background:var(--lose); color:#e2e8f0;}
 
-    .match {
-      background-color: #2b2b40;
-      border: 2px solid #3c3c5c;
-      border-radius: 8px;
-      margin: 20px 0;
-      padding: 8px;
-      position: relative;
-      width: 150px;
-      text-align: center;
-    }
+.svg-lines{
+  position:absolute;
+  inset:0;
+  overflow:visible;
+  pointer-events:none;
+}
 
-    .team {
-      margin: 5px 0;
-      padding: 6px;
-      border-radius: 4px;
-      color: white;
-    }
+.final-box{
+  background:var(--panel);
+  border:2px solid var(--accent);
+  padding:16px 24px;
+  border-radius:14px;
+  text-align:center;
+  font-weight:bold;
+  font-size:18px;
+  color:var(--accent);
+  width:260px;
+  margin:auto;
+  box-shadow:0 0 8px #0008;
+}
 
-    .winner {
-      background-color: #007acc;
-    }
-
-    .loser {
-      background-color: #444;
-      color: #bbb;
-    }
-
-    .line {
-      content: "";
-      position: absolute;
-      width: 20px;
-      height: 2px;
-      background-color: #888;
-      right: -20px;
-      top: 50%;
-    }
-
-    .connector {
-      position: absolute;
-      right: -20px;
-      top: 50%;
-      width: 40px;
-      height: 2px;
-      background: #777;
-    }
-
-    .connector::after {
-      content: "";
-      position: absolute;
-      top: -100px;
-      left: 38px;
-      width: 2px;
-      height: 200px;
-      background: #777;
-    }
-
-    @media (max-width: 768px) {
-      .bracket {
-        flex-direction: column;
-        align-items: center;
-        padding: 10px;
-      }
-
-      .round {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        min-width: unset;
-      }
-
-      .match {
-        margin: 10px;
-      }
-    }
-  </style>
+@media(max-width:768px){
+  .bracket{gap:24px; min-width:900px;}
+  .round{min-width:160px; gap:28px;}
+  .match{width:160px;}
+}
+</style>
 </head>
 <body>
-  <h1>FASE FINAL PURA COPA</h1>
-  <div class="bracket">
-    <!-- Round 1 -->
-    <div class="round">
-      <div class="match">
-        <div class="team winner">EDU VEIGA<br><small>160</small></div>
-        <div class="team loser">SEGA<br><small>87</small></div>
-      </div>
-      <div class="match">
-        <div class="team winner">BUKANEROS<br><small>138</small></div>
-        <div class="team loser">PAHITO TEAM<br><small>100</small></div>
-      </div>
-      <div class="match">
-        <div class="team winner">OLD SCHOOL PARLA<br><small>126</small></div>
-        <div class="team loser">OSCAR CELTA<br><small>126</small></div>
-      </div>
-      <div class="match">
-        <div class="team winner">OB1 MCKUIN<br><small>125</small></div>
-        <div class="team loser">VICTOR MARTIN<br><small>125</small></div>
-      </div>
-      <div class="match">
-        <div class="team winner">MIGUEL TEAM<br><small>156</small></div>
-        <div class="team loser">ATLETICO NACIONAL<br><small>73</small></div>
-      </div>
-      <div class="match">
-        <div class="team winner">AARON ANDRES<br><small>134</small></div>
-        <div class="team loser">BLANQUIVIOLETA<br><small>55</small></div>
-      </div>
-      <div class="match">
-        <div class="team winner">PAYO VALLECANO<br><small>149</small></div>
-        <div class="team loser">NOE TEAM<br><small>104</small></div>
-      </div>
-      <div class="match">
-        <div class="team winner">FELIX ROJO<br><small>143</small></div>
-        <div class="team loser">MIGUI<br><small>82</small></div>
-      </div>
-    </div>
+<h1>FASE FINAL PURA COPA</h1>
 
-    <!-- Round 2 -->
-    <div class="round">
-      <div class="match">
-        <div class="team winner">EDU VEIGA</div>
-        <div class="team loser">BUKANEROS</div>
-      </div>
-      <div class="match">
-        <div class="team winner">OLD SCHOOL PARLA</div>
-        <div class="team loser">OB1 MCKUIN</div>
-      </div>
-      <div class="match">
-        <div class="team winner">MIGUEL TEAM</div>
-        <div class="team loser">AARON ANDRES</div>
-      </div>
-      <div class="match">
-        <div class="team winner">PAYO VALLECANO</div>
-        <div class="team loser">FELIX ROJO</div>
-      </div>
-    </div>
-
-    <!-- Semis -->
-    <div class="round">
-      <div class="match">
-        <div class="team winner">EDU VEIGA</div>
-        <div class="team loser">OLD SCHOOL PARLA</div>
-      </div>
-      <div class="match">
-        <div class="team winner">PAYO VALLECANO</div>
-        <div class="team loser">MIGUEL TEAM</div>
-      </div>
-    </div>
-
-    <!-- Final -->
-    <div class="round">
-      <div class="match">
-        <div class="team winner">LA GRAN PURA FINAL</div>
-        <div class="team loser">EDU VEIGA vs PAYO VALLECANO</div>
-      </div>
-    </div>
+<div id="bracket-wrapper">
+  <div class="bracket" id="bracket">
+    <svg class="svg-lines" id="svgLines"></svg>
   </div>
+</div>
+
+<script>
+/* ======== DATOS DEL TORNEO =========
+   Puedes cambiarlos aquí o cargarlos desde Google Sheets luego */
+const data = {
+  rounds: [
+    {
+      name: "Octavos",
+      matches: [
+        {t1:"EDU VEIGA", s1:160, t2:"SEGA", s2:87},
+        {t1:"BUKANEROS", s1:138, t2:"PAHITO TEAM", s2:100},
+        {t1:"OLD SCHOOL PARLA", s1:126, t2:"OSCAR CELTA", s2:126},
+        {t1:"OB1 MCKUIN", s1:125, t2:"VICTOR MARTIN", s2:125},
+        {t1:"MIGUEL TEAM", s1:156, t2:"ATLETICO NACIONAL", s2:73},
+        {t1:"AARON ANDRES", s1:134, t2:"BLANQUIVIOLETA", s2:55},
+        {t1:"PAYO VALLECANO", s1:149, t2:"NOE TEAM", s2:104},
+        {t1:"FELIX ROJO", s1:143, t2:"MIGUI", s2:82},
+      ]
+    },
+    {
+      name: "Cuartos",
+      matches: [
+        {t1:"EDU VEIGA", t2:"BUKANEROS"},
+        {t1:"OLD SCHOOL PARLA", t2:"OB1 MCKUIN"},
+        {t1:"MIGUEL TEAM", t2:"AARON ANDRES"},
+        {t1:"PAYO VALLECANO", t2:"FELIX ROJO"},
+      ]
+    },
+    {
+      name: "Semifinales",
+      matches: [
+        {t1:"EDU VEIGA", t2:"OLD SCHOOL PARLA"},
+        {t1:"PAYO VALLECANO", t2:"MIGUEL TEAM"},
+      ]
+    },
+    {
+      name: "Final",
+      matches: [
+        {t1:"EDU VEIGA", t2:"PAYO VALLECANO", final:true}
+      ]
+    }
+  ],
+  champion: "CAMPEÓN"
+};
+/* ================================== */
+
+const bracketEl = document.getElementById('bracket');
+const svg = document.getElementById('svgLines');
+
+function createMatch(m){
+  const match = document.createElement('div');
+  match.className = 'match';
+
+  const t1 = document.createElement('div');
+  const t2 = document.createElement('div');
+
+  const hasScores = m.s1 !== undefined && m.s2 !== undefined;
+  const win1 = hasScores ? m.s1 >= m.s2 : false;
+  const win2 = hasScores ? m.s2 >  m.s1 : false;
+
+  t1.className = 'team ' + (hasScores ? (win1 ? 'win' : 'lose') : '');
+  t1.innerHTML = m.t1 + (hasScores? `<small>${m.s1}</small>`:'');
+  t2.className = 'team ' + (hasScores ? (win2 ? 'win' : 'lose') : '');
+  t2.innerHTML = m.t2 + (hasScores? `<small>${m.s2}</small>`:'');
+
+  match.appendChild(t1);
+  match.appendChild(t2);
+  return match;
+}
+
+const coords = []; // para líneas
+
+data.rounds.forEach((round, rIdx)=>{
+  const roundDiv = document.createElement('div');
+  roundDiv.className = 'round';
+  roundDiv.dataset.round = rIdx;
+
+  const title = document.createElement('div');
+  title.className = 'round-title';
+  title.textContent = round.name;
+  roundDiv.appendChild(title);
+
+  round.matches.forEach((m, mIdx)=>{
+    const match = createMatch(m);
+    match.dataset.match = mIdx;
+    roundDiv.appendChild(match);
+  });
+
+  bracketEl.appendChild(roundDiv);
+});
+
+// Caja final
+const finalBox = document.createElement('div');
+finalBox.className='final-box';
+finalBox.textContent = "LA GRAN PURA FINAL";
+bracketEl.appendChild(finalBox);
+
+// ====== DIBUJAR LÍNEAS =======
+function drawLines(){
+  svg.innerHTML = '';
+  coords.length = 0;
+
+  const rounds = [...document.querySelectorAll('.round')];
+  rounds.forEach((roundEl, rIdx)=>{
+    const matches = [...roundEl.querySelectorAll('.match')];
+    matches.forEach((matchEl, mIdx)=>{
+      const rect = matchEl.getBoundingClientRect();
+      const parentRect = bracketEl.getBoundingClientRect();
+      const centerY = rect.top + rect.height/2 - parentRect.top;
+      const rightX  = rect.right - parentRect.left;
+      coords.push({r:rIdx, m:mIdx, x:rightX, y:centerY});
+    });
+  });
+
+  // conectar a siguiente ronda
+  data.rounds.forEach((round, rIdx)=>{
+    if(rIdx === data.rounds.length-1) return;
+    for(let i=0;i<round.matches.length;i+=2){
+      const from1 = coords.find(c=>c.r===rIdx && c.m===i);
+      const from2 = coords.find(c=>c.r===rIdx && c.m===i+1);
+      const to    = coords.find(c=>c.r===rIdx+1 && c.m===Math.floor(i/2));
+      if(!from1 || !from2 || !to) continue;
+      drawConnector(from1.x, from1.y, to.x-200, to.y);
+      drawConnector(from2.x, from2.y, to.x-200, to.y);
+    }
+  });
+}
+function drawConnector(x1,y1,x2,y2){
+  const midX = (x1 + x2)/2;
+  const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+  path.setAttribute('d', `M ${x1} ${y1} H ${midX} V ${y2} H ${x2}`);
+  path.setAttribute('stroke', getComputedStyle(document.documentElement).getPropertyValue('--line'));
+  path.setAttribute('fill','none');
+  path.setAttribute('stroke-width','2');
+  svg.appendChild(path);
+}
+
+window.addEventListener('load', ()=> setTimeout(drawLines,100));
+window.addEventListener('resize', ()=> setTimeout(drawLines,100));
+</script>
 </body>
 </html>
