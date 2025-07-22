@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>PURA COPA - Cuadro Eliminatorio Mejorado</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=1300">
   <style>
     body {
       margin: 0;
@@ -20,26 +20,20 @@
       background: #900d29;
       border-bottom: 4px solid #fff;
     }
-    .bracket-container {
-      width: 100vw;
-      overflow-x: auto;
-      padding-bottom: 32px;
-    }
     .bracket {
       display: grid;
       grid-template-columns: 220px 50px 220px 60px 265px 60px 220px 50px 220px;
       grid-template-rows:
-        1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; /* 9 filas para centrar la final */
-      row-gap: 28px;
+        1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr  /* para los 8 partidos */
+        22px 22px 22px 22px 22px 22px 22px; /* espaciado extra opcional si quieres */
+      row-gap: 22px; /* Espacio vertical entre partidos */
       justify-content: center;
       margin: 0 auto;
       position: relative;
+      margin-top: 25px;
+      margin-bottom: 40px;
       min-width: 1240px;
-      max-width: 1600px;
-      min-height: 100vh;
-      background: transparent;
-      z-index: 1;
-      transition: transform 0.3s;
+      height: 930px;
     }
     .cell { position: relative; z-index: 5; }
     .ronda {
@@ -73,7 +67,6 @@
       padding-left: 18px;
       box-shadow: 0 2px 8px #3d031730;
       position: relative;
-      transition: background 0.2s;
     }
     .score {
       display: inline-block;
@@ -90,33 +83,19 @@
       position: relative;
       z-index: 3;
     }
-    /* Hacemos la final un poco más grande y centrada */
-    .final-match {
-      font-size: 1.29rem;
-      min-width: 230px;
-      max-width: 330px;
-      min-height: 60px;
-      justify-content: center;
-      text-align: center;
-      margin: 0 auto;
-      background: #fff;
-      border: 3.5px solid #e0bfc0;
-      color: #900d29;
-      letter-spacing: 2px;
-    }
     .logo-copa {
       position: absolute;
+      top: 50%;
       left: 50%;
-      top: 62%;
-      transform: translate(-50%, -50%);
-      width: 145px;
-      height: 155px;
+      transform: translate(-50%,-50%);
+      width: 158px;
+      height: 180px;
       background: url('puracopa.png') center/contain no-repeat;
-      opacity: 0.92;
+      opacity: 1;
       z-index: 1;
       filter: drop-shadow(0 2px 12px #0008);
-      pointer-events: none;
     }
+    /* Líneas */
     .svg-lines {
       position: absolute;
       top: 0; left: 0;
@@ -124,37 +103,32 @@
       pointer-events: none;
       z-index: 2;
     }
-    /* Responsive: la escala baja en pantallas pequeñas */
-    @media (max-width:1500px) {
-      .bracket { transform: scale(0.82);}
-      .header { font-size: 2.0rem;}
+    @media (max-width:1400px) {
+      .bracket { transform: scale(0.85);}
+      .header { font-size: 2rem;}
     }
-    @media (max-width:1200px) {
-      .bracket { transform: scale(0.64);}
-      .header { font-size: 1.4rem;}
+    @media (max-width:1100px) {
+      .bracket { transform: scale(0.7);}
     }
-    @media (max-width:900px) {
-      .bracket { transform: scale(0.50);}
-      .header { font-size: 1.07rem;}
-    }
-    @media (max-width:700px) {
-      .bracket { transform: scale(0.38);}
-      .header { font-size: 0.94rem;}
+    @media (max-width:800px) {
+      .bracket { transform: scale(0.52);}
     }
   </style>
 </head>
 <body>
   <div class="header">PURA COPA</div>
-  <div class="bracket-container">
+  <div style="width:1280px; margin:auto; position:relative;">
     <div class="bracket" id="bracket">
-      <!-- Etiquetas ronda -->
+      <!-- Nombres de ronda -->
       <div class="cell" style="grid-column:1;grid-row:1;"><div class="ronda">OCTAVOS</div></div>
       <div class="cell" style="grid-column:3;grid-row:1;"><div class="ronda">CUARTOS</div></div>
-      <div class="cell" style="grid-column:5;grid-row:2;"><div class="ronda">SEMIFINALES</div></div>
-      <div class="cell" style="grid-column:7;grid-row:1;"><div class="ronda">CUARTOS</div></div>
+      <div class="cell" style="grid-column:5;grid-row:3;"><div class="ronda">SEMIFINALES</div></div>
+      <div class="cell" style="grid-column:7;grid-row:5;"><div class="ronda">FINAL</div></div>
       <div class="cell" style="grid-column:9;grid-row:1;"><div class="ronda">OCTAVOS</div></div>
-      <div class="cell" style="grid-column:7;grid-row:4;"><div class="ronda">FINAL</div></div>
-      <!-- OCTAVOS -->
+      <div class="cell" style="grid-column:7;grid-row:1;"><div class="ronda">CUARTOS</div></div>
+      <div class="cell" style="grid-column:5;grid-row:6;"><div class="ronda">SEMIFINALES</div></div>
+
+      <!-- Octavos izquierda -->
       <div class="cell" style="grid-column:1;grid-row:1;"><div class="match">1º GRUPO 1 <span class="score"></span></div></div>
       <div class="cell" style="grid-column:1;grid-row:2;"><div class="match">8º GRUPO 2 <span class="score"></span></div></div>
       <div class="cell" style="grid-column:1;grid-row:3;"><div class="match">4º GRUPO 1 <span class="score"></span></div></div>
@@ -163,25 +137,27 @@
       <div class="cell" style="grid-column:1;grid-row:6;"><div class="match">7º GRUPO 2 <span class="score"></span></div></div>
       <div class="cell" style="grid-column:1;grid-row:7;"><div class="match">3º GRUPO 1 <span class="score"></span></div></div>
       <div class="cell" style="grid-column:1;grid-row:8;"><div class="match">6º GRUPO 2 <span class="score"></span></div></div>
-      <!-- CUARTOS IZQ -->
+
+      <!-- Cuartos izquierda -->
       <div class="cell" style="grid-column:3;grid-row:2;"><div class="match">A <span class="score"></span></div></div>
       <div class="cell" style="grid-column:3;grid-row:4;"><div class="match">B <span class="score"></span></div></div>
       <div class="cell" style="grid-column:3;grid-row:6;"><div class="match">C <span class="score"></span></div></div>
       <div class="cell" style="grid-column:3;grid-row:8;"><div class="match">D <span class="score"></span></div></div>
-      <!-- SEMIFINAL SUPERIOR -->
+
+      <!-- Semis -->
       <div class="cell" style="grid-column:5;grid-row:3;"><div class="match">A/B <span class="score"></span></div></div>
-      <!-- SEMIFINAL INFERIOR AJUSTADA ABAJO -->
       <div class="cell" style="grid-column:5;grid-row:7;"><div class="match">C/D <span class="score"></span></div></div>
-      <!-- FINAL EN EL CENTRO (CON CUADRO GRANDE) -->
-      <div class="cell" style="grid-column:7;grid-row:5;">
-        <div class="match final-match">A-B/C-D <span class="score"></span></div>
-      </div>
-      <!-- CUARTOS DER -->
+
+      <!-- Final (CENTRADA) -->
+      <div class="cell" style="grid-column:7;grid-row:5;"><div class="match">A-B/C-D <span class="score"></span></div></div>
+
+      <!-- Cuartos derecha -->
       <div class="cell" style="grid-column:7;grid-row:2;"><div class="match"></div></div>
       <div class="cell" style="grid-column:7;grid-row:4;"><div class="match"></div></div>
       <div class="cell" style="grid-column:7;grid-row:6;"><div class="match"></div></div>
       <div class="cell" style="grid-column:7;grid-row:8;"><div class="match"></div></div>
-      <!-- OCTAVOS DERECHA -->
+
+      <!-- Octavos derecha -->
       <div class="cell" style="grid-column:9;grid-row:1;"><div class="match">1º GRUPO 2 <span class="score"></span></div></div>
       <div class="cell" style="grid-column:9;grid-row:2;"><div class="match">8º GRUPO 1 <span class="score"></span></div></div>
       <div class="cell" style="grid-column:9;grid-row:3;"><div class="match">4º GRUPO 2 <span class="score"></span></div></div>
@@ -190,6 +166,7 @@
       <div class="cell" style="grid-column:9;grid-row:6;"><div class="match">7º GRUPO 1 <span class="score"></span></div></div>
       <div class="cell" style="grid-column:9;grid-row:7;"><div class="match">3º GRUPO 2 <span class="score"></span></div></div>
       <div class="cell" style="grid-column:9;grid-row:8;"><div class="match">6º GRUPO 1 <span class="score"></span></div></div>
+
       <!-- Logo central -->
       <div class="logo-copa"></div>
       <!-- SVG LINES -->
@@ -223,18 +200,15 @@
         svg.innerHTML += line(p2.x+90, p2.y, p3.x-90, p3.y);
       }
       // CUARTOS izq a semis
-      // Semifinal superior: cuartos filas 2 y 4 a semifinal fila 3
-      let pA = getCellCenter(3,2), pB = getCellCenter(3,4), pSemiSup = getCellCenter(5,3);
-      svg.innerHTML += line(pA.x+90, pA.y, pSemiSup.x-90, pSemiSup.y);
-      svg.innerHTML += line(pB.x+90, pB.y, pSemiSup.x-90, pSemiSup.y);
-      // Semifinal inferior: cuartos filas 6 y 8 a semifinal fila 7
-      let pC = getCellCenter(3,6), pD = getCellCenter(3,8), pSemiInf = getCellCenter(5,7);
-      svg.innerHTML += line(pC.x+90, pC.y, pSemiInf.x-90, pSemiInf.y);
-      svg.innerHTML += line(pD.x+90, pD.y, pSemiInf.x-90, pSemiInf.y);
-      // Semis a final (centrada)
-      let pFinal = getCellCenter(7,5);
-      svg.innerHTML += line(pSemiSup.x+90, pSemiSup.y, pFinal.x-115, pFinal.y); // conecta arriba
-      svg.innerHTML += line(pSemiInf.x+90, pSemiInf.y, pFinal.x-115, pFinal.y); // conecta abajo
+      for(let i=2;i<=8;i+=4){
+        let p1 = getCellCenter(3,i), p2 = getCellCenter(3,i+2), p3 = getCellCenter(5,i+1);
+        svg.innerHTML += line(p1.x+90, p1.y, p3.x-90, p3.y);
+        svg.innerHTML += line(p2.x+90, p2.y, p3.x-90, p3.y);
+      }
+      // Semis izq a final (centrada)
+      let psl = getCellCenter(5,3), psr = getCellCenter(5,7), pf = getCellCenter(7,5);
+      svg.innerHTML += line(psl.x+90, psl.y, pf.x-90, pf.y);
+      svg.innerHTML += line(psr.x+90, psr.y, pf.x-90, pf.y);
       // DER octavos a cuartos
       for(let i=1;i<=7;i+=2){
         let p1 = getCellCenter(9,i), p2 = getCellCenter(9,i+1), p3 = getCellCenter(7,i+1);
@@ -242,18 +216,15 @@
         svg.innerHTML += line(p2.x-90, p2.y, p3.x+90, p3.y);
       }
       // CUARTOS der a semis
-      // Semifinal superior: cuartos filas 2 y 4 a semifinal fila 3
-      let pCA = getCellCenter(7,2), pCB = getCellCenter(7,4), pSemiSupR = getCellCenter(5,3);
-      svg.innerHTML += line(pCA.x-90, pCA.y, pSemiSupR.x+90, pSemiSupR.y);
-      svg.innerHTML += line(pCB.x-90, pCB.y, pSemiSupR.x+90, pSemiSupR.y);
-      // Semifinal inferior: cuartos filas 6 y 8 a semifinal fila 7
-      let pCC = getCellCenter(7,6), pCD = getCellCenter(7,8), pSemiInfR = getCellCenter(5,7);
-      svg.innerHTML += line(pCC.x-90, pCC.y, pSemiInfR.x+90, pSemiInfR.y);
-      svg.innerHTML += line(pCD.x-90, pCD.y, pSemiInfR.x+90, pSemiInfR.y);
+      for(let i=2;i<=8;i+=4){
+        let p1 = getCellCenter(7,i), p2 = getCellCenter(7,i+2), p3 = getCellCenter(5,i+1);
+        svg.innerHTML += line(p1.x-90, p1.y, p3.x+90, p3.y);
+        svg.innerHTML += line(p2.x-90, p2.y, p3.x+90, p3.y);
+      }
+      // Semis der a final (ya hecho)
     }
-    window.addEventListener('DOMContentLoaded',()=>{setTimeout(drawBracketLines, 90)});
-    window.addEventListener('resize',()=>setTimeout(drawBracketLines,120));
+    window.addEventListener('DOMContentLoaded',()=>{setTimeout(drawBracketLines, 80)});
+    window.addEventListener('resize',()=>setTimeout(drawBracketLines,100));
   </script>
 </body>
 </html>
-
