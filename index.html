@@ -7,21 +7,22 @@
 
 <style>
 :root{
-  --bg:#0f172a;      /* fondo */
-  --panel:#1e293b;   /* tarjetas */
-  --text:#f8fafc;    /* texto */
-  --accent:#fbbf24;  /* títulos/bordes */
-  --win:#0ea5e9;     /* ganador */
-  --lose:#475569;    /* perdedor */
-  --line:#94a3b8;    /* líneas */
+  /* Colores (cámbialos si quieres) */
+  --bg:#0f172a;
+  --panel:#1e293b;
+  --text:#f8fafc;
+  --accent:#fbbf24;
+  --win:#0ea5e9;
+  --lose:#475569;
+  --line:#94a3b8;
 }
 
 *{box-sizing:border-box;}
 body{
   margin:0;
-  font-family:Arial, Helvetica, sans-serif;
   background:var(--bg);
   color:var(--text);
+  font-family:Arial, Helvetica, sans-serif;
 }
 h1{
   margin:0;
@@ -33,22 +34,35 @@ h1{
   letter-spacing:2px;
 }
 
-/* LAYOUT PRINCIPAL (dos lados + centro) */
+/* LAYOUT PRINCIPAL */
 #stage{
   width:100%;
   overflow-x:auto;
   padding:32px 12px 80px;
 }
-.bracket-wrap{
+#wrap{
   position:relative;
-  min-width:1400px;
   margin:auto;
   display:flex;
   justify-content:space-between;
   align-items:flex-start;
+  min-width:1400px; /* ancho mínimo para escritorio */
+  gap:40px;
 }
 
-/* Columnas de rondas */
+/* Z-index para que el svg quede detrás */
+#lines{
+  position:absolute;
+  top:0; left:0;
+  z-index:0;
+  pointer-events:none;
+}
+.side, .center{
+  position:relative;
+  z-index:1;
+}
+
+/* LADOS */
 .side{
   display:flex;
   gap:60px;
@@ -68,7 +82,7 @@ h1{
   font-size:15px;
 }
 
-/* Partidos */
+/* PARTIDOS */
 .match{
   background:var(--panel);
   border:2px solid var(--line);
@@ -76,7 +90,6 @@ h1{
   padding:8px 10px;
   width:210px;
   margin:18px 0;
-  position:relative;
   box-shadow:0 0 6px #0006;
 }
 .team{
@@ -95,7 +108,7 @@ h1{
 .team.win{background:var(--win); color:#fff;}
 .team.lose{background:var(--lose); color:#e2e8f0;}
 
-/* Centro */
+/* CENTRO */
 .center{
   display:flex;
   flex-direction:column;
@@ -126,15 +139,8 @@ h1{
   box-shadow:0 0 10px #0008;
 }
 
-/* SVG Líneas */
-svg#lines{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-}
-
 @media(max-width:900px){
-  .bracket-wrap{min-width:1100px;}
+  #wrap{min-width:1100px; gap:24px;}
   .round{min-width:180px;}
   .match{width:170px;}
 }
@@ -144,11 +150,10 @@ svg#lines{
 <h1>FASE FINAL PURA COPA</h1>
 
 <div id="stage">
-  <div class="bracket-wrap" id="bracketWrap">
-    <!-- SVG lines -->
+  <div id="wrap">
     <svg id="lines"></svg>
 
-    <!-- LADO IZQUIERDO -->
+    <!-- IZQUIERDA -->
     <div class="side" id="leftSide"></div>
 
     <!-- CENTRO -->
@@ -157,13 +162,13 @@ svg#lines{
       <div class="champion-box" id="championBox">CAMPEÓN</div>
     </div>
 
-    <!-- LADO DERECHO -->
+    <!-- DERECHA -->
     <div class="side" id="rightSide"></div>
   </div>
 </div>
 
 <script>
-/* ================== DATOS =================== */
+/* ========= DATOS ========= */
 const leftRounds = [
   { name:"Octavos", matches:[
     {t1:"EDU VEIGA",s1:160, t2:"SEGA",s2:87},
@@ -196,13 +201,15 @@ const rightRounds = [
   ]}
 ];
 
-const finalMatch = {t1:"EDU VEIGA", t2:"PAYO VALLECANO", champion:"EDU VEIGA"}; // cambia aquí
-/* =========================================== */
+const finalMatch = {t1:"EDU VEIGA", t2:"PAYO VALLECANO", champion:"EDU VEIGA"};
+/* ========================== */
 
 const leftSide = document.getElementById('leftSide');
 const rightSide = document.getElementById('rightSide');
-const svg = document.getElementById('lines');
+const championBox = document.getElementById('championBox');
+championBox.textContent = finalMatch.champion || "CAMPEÓN";
 
+/* Construir lados */
 function buildSide(container, rounds, isLeft){
   rounds.forEach((round, rIdx)=>{
     const roundDiv = document.createElement('div');
@@ -218,7 +225,7 @@ function buildSide(container, rounds, isLeft){
     round.matches.forEach((m, mIdx)=>{
       const matchEl = document.createElement('div');
       matchEl.className='match';
-      matchEl.dataset.m = mIdx;
+      matchEl.dataset.m=mIdx;
 
       const hasScores = m.s1!==undefined && m.s2!==undefined;
       const win1 = hasScores ? m.s1>=m.s2 : false;
@@ -243,25 +250,27 @@ function buildSide(container, rounds, isLeft){
 buildSide(leftSide, leftRounds, true);
 buildSide(rightSide, rightRounds, false);
 
-// Final box text
-document.getElementById('championBox').textContent = finalMatch.champion || "CAMPEÓN";
-
 /* ====== DIBUJAR LÍNEAS ====== */
 function drawLines(){
+  const wrap = document.getElementById('wrap');
+  const rectWrap = wrap.getBoundingClientRect();
+
+  const svg = document.getElementById('lines');
   svg.innerHTML='';
-  const wrapRect = document.getElementById('bracketWrap').getBoundingClientRect();
+  svg.setAttribute('width', rectWrap.width);
+  svg.setAttribute('height', rectWrap.height);
 
   function centerRight(el){
     const r = el.getBoundingClientRect();
-    return {x:r.right - wrapRect.left, y:r.top + r.height/2 - wrapRect.top};
+    return {x:r.right - rectWrap.left, y:r.top + r.height/2 - rectWrap.top};
   }
   function centerLeft(el){
     const r = el.getBoundingClientRect();
-    return {x:r.left - wrapRect.left, y:r.top + r.height/2 - wrapRect.top};
+    return {x:r.left - rectWrap.left, y:r.top + r.height/2 - rectWrap.top};
   }
-  function path(x1,y1,x2,y2){
-    const midX = (x1 + x2)/2;
-    const d = `M ${x1} ${y1} H ${midX} V ${y2} H ${x2}`;
+  function strokePath(x1,y1,x2,y2){
+    const mid = (x1+x2)/2;
+    const d = `M ${x1} ${y1} H ${mid} V ${y2} H ${x2}`;
     const p = document.createElementNS('http://www.w3.org/2000/svg','path');
     p.setAttribute('d', d);
     p.setAttribute('stroke', getComputedStyle(document.documentElement).getPropertyValue('--line'));
@@ -270,54 +279,49 @@ function drawLines(){
     svg.appendChild(p);
   }
 
-  // Conectar rondas izquierda
-  for(let r=0; r<leftRounds.length-1; r++){
-    const roundA = leftSide.querySelectorAll('.round')[r];
-    const roundB = leftSide.querySelectorAll('.round')[r+1];
-    const matchesA = roundA.querySelectorAll('.match');
-    const matchesB = roundB.querySelectorAll('.match');
-
-    for(let i=0;i<matchesA.length;i+=2){
-      const from1 = centerRight(matchesA[i]);
-      const from2 = centerRight(matchesA[i+1]);
-      const to   = centerLeft(matchesB[Math.floor(i/2)]);
-      path(from1.x, from1.y, to.x, to.y);
-      path(from2.x, from2.y, to.x, to.y);
+  // Lado izquierdo: conectar pares a siguiente ronda
+  const leftRoundsEls = leftSide.querySelectorAll('.round');
+  for(let r=0; r<leftRoundsEls.length-1; r++){
+    const a = leftRoundsEls[r].querySelectorAll('.match');
+    const b = leftRoundsEls[r+1].querySelectorAll('.match');
+    for(let i=0;i<a.length;i+=2){
+      const from1 = centerRight(a[i]);
+      const from2 = centerRight(a[i+1]);
+      const to    = centerLeft(b[Math.floor(i/2)]);
+      strokePath(from1.x, from1.y, to.x, to.y);
+      strokePath(from2.x, from2.y, to.x, to.y);
     }
   }
 
-  // Conectar rondas derecha
-  for(let r=0; r<rightRounds.length-1; r++){
-    const roundA = rightSide.querySelectorAll('.round')[r];
-    const roundB = rightSide.querySelectorAll('.round')[r+1];
-    const matchesA = roundA.querySelectorAll('.match');
-    const matchesB = roundB.querySelectorAll('.match');
-
-    for(let i=0;i<matchesA.length;i+=2){
-      const from1 = centerLeft(matchesA[i]);
-      const from2 = centerLeft(matchesA[i+1]);
-      const to   = centerRight(matchesB[Math.floor(i/2)]);
-      path(from1.x, from1.y, to.x, to.y);
-      path(from2.x, from2.y, to.x, to.y);
+  // Lado derecho: conectar pares a siguiente ronda
+  const rightRoundsEls = rightSide.querySelectorAll('.round');
+  for(let r=0; r<rightRoundsEls.length-1; r++){
+    const a = rightRoundsEls[r].querySelectorAll('.match');
+    const b = rightRoundsEls[r+1].querySelectorAll('.match');
+    for(let i=0;i<a.length;i+=2){
+      const from1 = centerLeft(a[i]);
+      const from2 = centerLeft(a[i+1]);
+      const to    = centerRight(b[Math.floor(i/2)]);
+      strokePath(from1.x, from1.y, to.x, to.y);
+      strokePath(from2.x, from2.y, to.x, to.y);
     }
   }
 
-  // Conectar semifinal izquierda con final
-  const semiL = leftSide.querySelectorAll('.round:last-child .match')[0];
-  const semiR = rightSide.querySelectorAll('.round:last-child .match')[0];
-  const finalBox = document.querySelector('.final-label');
-  const finalRect = finalBox.getBoundingClientRect();
-  const finalY = finalRect.top + finalRect.height/2 - wrapRect.top;
-  const finalLeftX  = finalRect.left - wrapRect.left;
-  const finalRightX = finalRect.right - wrapRect.left;
+  // Conectar semifinales a la FINAL (centro)
+  const semiL = leftRoundsEls[leftRoundsEls.length-1].querySelector('.match');
+  const semiR = rightRoundsEls[rightRoundsEls.length-1].querySelector('.match');
+  const finalLabel = document.querySelector('.final-label');
+  const rFinal = finalLabel.getBoundingClientRect();
+  const finalY = rFinal.top + rFinal.height/2 - rectWrap.top;
+  const finalLeftX  = rFinal.left - rectWrap.left;
+  const finalRightX = rFinal.right - rectWrap.left;
 
-  path(centerRight(semiL).x, centerRight(semiL).y, finalLeftX, finalY);
-  path(centerLeft(semiR).x,  centerLeft(semiR).y,  finalRightX, finalY);
+  strokePath(centerRight(semiL).x, centerRight(semiL).y, finalLeftX, finalY);
+  strokePath(centerLeft(semiR).x,  centerLeft(semiR).y,  finalRightX, finalY);
 }
 
-window.addEventListener('load', ()=>setTimeout(drawLines,120));
-window.addEventListener('resize', ()=>setTimeout(drawLines,120));
+window.addEventListener('load', ()=> setTimeout(drawLines, 200));
+window.addEventListener('resize', ()=> setTimeout(drawLines, 150));
 </script>
 </body>
 </html>
-
