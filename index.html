@@ -1,212 +1,211 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Cuadro Eliminatorio - Mundial</title>
-<style>
-body {
-  margin: 0;
-  background: #7a0028;
-  font-family: Arial, Helvetica, sans-serif;
-}
-.header {
-  background: #660020;
-  color: #fff;
-  text-align: center;
-  padding: 16px 10px 0;
-  font-size: 2.4rem;
-  font-weight: bold;
-  letter-spacing: 2px;
-  border-bottom: 5px solid #fff;
-}
-.cuadro-wrap {
-  position: relative;
-  width: 1080px;
-  min-height: 800px;
-  margin: 0 auto;
-  background: #7a0028;
-  padding-top: 16px;
-  padding-bottom: 36px;
-}
-.cuadro {
-  position: relative;
-  width: 1080px;
-  min-height: 780px;
-}
-.ronda {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 180px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-.ronda.octavos { left: 0;  height: 670px; top: 60px; }
-.ronda.cuartos  { left: 200px; height: 540px; top: 125px; }
-.ronda.semis   { left: 400px; height: 335px; top: 220px; }
-.ronda.final   { left: 630px; height: 150px; top: 325px;}
-.ronda.centro  { left: 865px; height: 780px; top: 0;}
-.ronda.tercer  { left: 400px; height: 50px; top: 590px;}
-.match {
-  background: #fff;
-  color: #7a0028;
-  border-radius: 6px;
-  border: 2.5px solid #c0a29f;
-  width: 170px;
-  height: 42px;
-  display: flex;
-  align-items: center;
-  padding: 6px 14px;
-  font-size: 1.11rem;
-  font-weight: bold;
-  margin-bottom: 16px;
-  margin-top: 0;
-  box-shadow: 0 2px 8px #0002;
-  letter-spacing: 1px;
-  position: relative;
-}
-.match:empty::after {
-  content: "";
-}
-.centro-titulo {
-  position: absolute;
-  left: 0;
-  width: 1080px;
-  text-align: center;
-  top: 0;
-  color: #fff;
-  font-size: 2.2rem;
-  font-weight: bold;
-  letter-spacing: 4px;
-  margin-bottom: 12px;
-  padding-top: 20px;
-  z-index: 2;
-  pointer-events: none;
-}
-.trofeo {
-  position: absolute;
-  left: 535px;
-  top: 340px;
-  width: 60px;
-  height: 80px;
-  background: url('https://cdn-icons-png.flaticon.com/512/5361/5361755.png') center/contain no-repeat;
-  z-index: 5;
-}
-@media (max-width:1120px) {
-  .cuadro-wrap, .cuadro { width: 100vw; min-width: 0;}
-  .ronda { width: 18vw; }
-  .match { width: 16vw;}
-  .centro-titulo { width: 100vw;}
-}
-</style>
+  <meta charset="UTF-8">
+  <title>Cuadro Eliminatorio - Qatar Style</title>
+  <meta name="viewport" content="width=1120">
+  <style>
+    body {
+      margin: 0;
+      background: #7a0028;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .header {
+      background: #660020;
+      color: #fff;
+      text-align: center;
+      padding: 16px 10px 0;
+      font-size: 2.4rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+      border-bottom: 5px solid #fff;
+    }
+    .cuadro-abs-wrap {
+      position: relative;
+      width: 1080px;
+      min-height: 780px;
+      margin: 0 auto;
+      background: #7a0028;
+      overflow: visible;
+      box-shadow: 0 6px 40px #42001044;
+    }
+    .match-abs {
+      position: absolute;
+      width: 178px;
+      height: 44px;
+      background: #fff;
+      color: #7a0028;
+      border-radius: 6px;
+      border: 2.5px solid #c0a29f;
+      font-weight: bold;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      letter-spacing: 1px;
+      box-shadow: 0 2px 8px #0002;
+    }
+    /* Columnas: octavos-cuarto-semi-final-center */
+    /* Octavos izquierda */
+    .oct-l1 { left: 8px; top: 62px;}
+    .oct-l2 { left: 8px; top: 150px;}
+    .oct-l3 { left: 8px; top: 264px;}
+    .oct-l4 { left: 8px; top: 352px;}
+    /* Octavos derecha */
+    .oct-r1 { left: 894px; top: 62px;}
+    .oct-r2 { left: 894px; top: 150px;}
+    .oct-r3 { left: 894px; top: 264px;}
+    .oct-r4 { left: 894px; top: 352px;}
+    /* Cuartos */
+    .cua-l1 { left: 192px; top: 107px;}
+    .cua-l2 { left: 192px; top: 308px;}
+    .cua-r1 { left: 709px; top: 107px;}
+    .cua-r2 { left: 709px; top: 308px;}
+    /* Semis */
+    .sem-l { left: 376px; top: 208px;}
+    .sem-r { left: 525px; top: 208px;}
+    /* Final */
+    .final { left: 451px; top: 310px;}
+    /* 3er lugar */
+    .third { left: 451px; top: 414px;}
+    /* Trofeo */
+    .trofeo {
+      position: absolute;
+      left: 508px; top: 375px;
+      width: 64px; height: 84px;
+      background: url('https://cdn-icons-png.flaticon.com/512/5361/5361755.png') center/contain no-repeat;
+      z-index: 10;
+      filter: drop-shadow(0 2px 5px #0007);
+    }
+    /* Títulos */
+    .round-label {
+      position: absolute;
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: bold;
+      left: 14px; width: 170px;
+      text-align: center;
+      background: rgba(50,0,28,0.6);
+      letter-spacing: 2px;
+      border-radius: 7px;
+      padding: 2px 0;
+    }
+    .label-oct { top: 20px;}
+    .label-cua { left: 192px; top: 60px; width:178px;}
+    .label-sem { left: 376px; top: 165px; width: 178px;}
+    .label-final { left: 451px; top: 270px; width:178px;}
+    .label-tercer { left: 451px; top: 374px; width:178px;}
+    .label-oct-r { left: 894px; top: 20px; width:178px;}
+    .label-cua-r { left: 709px; top: 60px; width:178px;}
+    .label-sem-r { left: 525px; top: 165px; width:178px;}
+    /* Responsive horizontal scroll */
+    @media(max-width:1080px){
+      .cuadro-abs-wrap { width: 100vw; min-width: 0; }
+      .match-abs { font-size: 0.95rem; }
+    }
+  </style>
 </head>
 <body>
   <div class="header">8º DE FINAL</div>
-  <div class="cuadro-wrap">
-    <div class="centro-titulo"></div>
-    <div class="cuadro">
-      <!-- Octavos izquierda -->
-      <div class="ronda octavos">
-        <div class="match"></div>
-        <div class="match"></div>
-        <div class="match"></div>
-        <div class="match"></div>
-      </div>
-      <!-- Cuartos izquierda -->
-      <div class="ronda cuartos">
-        <div class="match"></div>
-        <div class="match"></div>
-      </div>
-      <!-- Semis izquierda -->
-      <div class="ronda semis">
-        <div class="match"></div>
-      </div>
-      <!-- Centro: trofeo y final -->
-      <div class="trofeo"></div>
-      <div class="ronda final">
-        <div class="match"></div>
-      </div>
-      <!-- Semis derecha -->
-      <div class="ronda semis" style="left: 865px;">
-        <div class="match"></div>
-      </div>
-      <!-- Cuartos derecha -->
-      <div class="ronda cuartos" style="left: 865px;">
-        <div class="match"></div>
-        <div class="match"></div>
-      </div>
-      <!-- Octavos derecha -->
-      <div class="ronda octavos" style="left: 865px;">
-        <div class="match"></div>
-        <div class="match"></div>
-        <div class="match"></div>
-        <div class="match"></div>
-      </div>
-      <!-- Tercer puesto -->
-      <div class="ronda tercer">
-        <div class="match"></div>
-      </div>
-      <!-- LÍNEAS SVG -->
-      <svg width="1080" height="780" style="position:absolute;left:0;top:0;z-index:1;" id="linesvg"></svg>
-    </div>
+  <div class="cuadro-abs-wrap">
+    <!-- Etiquetas de ronda -->
+    <div class="round-label label-oct">OCTAVOS</div>
+    <div class="round-label label-cua">CUARTOS</div>
+    <div class="round-label label-sem">SEMIFINAL</div>
+    <div class="round-label label-final">FINAL</div>
+    <div class="round-label label-tercer">3° LUGAR</div>
+    <div class="round-label label-oct-r">OCTAVOS</div>
+    <div class="round-label label-cua-r">CUARTOS</div>
+    <div class="round-label label-sem-r">SEMIFINAL</div>
+    <!-- OCTAVOS -->
+    <div class="match-abs oct-l1"></div>
+    <div class="match-abs oct-l2"></div>
+    <div class="match-abs oct-l3"></div>
+    <div class="match-abs oct-l4"></div>
+    <div class="match-abs oct-r1"></div>
+    <div class="match-abs oct-r2"></div>
+    <div class="match-abs oct-r3"></div>
+    <div class="match-abs oct-r4"></div>
+    <!-- CUARTOS -->
+    <div class="match-abs cua-l1"></div>
+    <div class="match-abs cua-l2"></div>
+    <div class="match-abs cua-r1"></div>
+    <div class="match-abs cua-r2"></div>
+    <!-- SEMIS -->
+    <div class="match-abs sem-l"></div>
+    <div class="match-abs sem-r"></div>
+    <!-- FINAL -->
+    <div class="match-abs final"></div>
+    <!-- TERCER LUGAR -->
+    <div class="match-abs third"></div>
+    <!-- TROFEO -->
+    <div class="trofeo"></div>
+    <!-- LÍNEAS SVG -->
+    <svg id="svg-lines" width="1080" height="780" style="position:absolute;left:0;top:0;z-index:2;pointer-events:none"></svg>
   </div>
-<script>
-// Dibuja líneas según los recuadros
-window.addEventListener('DOMContentLoaded', ()=> {
-  function midY(el){ const r = el.getBoundingClientRect(); return r.top+r.height/2;}
-  function rightX(el){ const r = el.getBoundingClientRect(); return r.right;}
-  function leftX(el){ const r = el.getBoundingClientRect(); return r.left;}
-  const svg = document.getElementById('linesvg');
-  function draw() {
-    svg.innerHTML="";
-    const octL = document.querySelectorAll('.ronda.octavos .match');
-    const cuaL = document.querySelectorAll('.ronda.cuartos .match');
-    const semL = document.querySelectorAll('.ronda.semis .match');
-    const octR = document.querySelectorAll('.ronda.octavos[style] .match');
-    const cuaR = document.querySelectorAll('.ronda.cuartos[style] .match');
-    const semR = document.querySelectorAll('.ronda.semis[style] .match');
-    const final = document.querySelector('.ronda.final .match');
-    const finalR = document.querySelector('.ronda.final .match');
-    const tercer = document.querySelector('.ronda.tercer .match');
-    function path(x1,y1,x2,y2) {
-      const p = document.createElementNS('http://www.w3.org/2000/svg','path');
-      p.setAttribute('d',`M${x1},${y1} L${x2},${y2}`);
-      p.setAttribute('stroke','#c0a29f');
-      p.setAttribute('stroke-width','3');
-      p.setAttribute('fill','none');
-      svg.appendChild(p);
-    }
-    // Izquierda
-    for(let i=0;i<octL.length;i+=2){
-      path(rightX(octL[i]),midY(octL[i]),leftX(cuaL[Math.floor(i/2)]),midY(cuaL[Math.floor(i/2)]));
-      path(rightX(octL[i+1]),midY(octL[i+1]),leftX(cuaL[Math.floor(i/2)]),midY(cuaL[Math.floor(i/2)]));
-    }
-    for(let i=0;i<cuaL.length;i+=2){
-      path(rightX(cuaL[i]),midY(cuaL[i]),leftX(semL[Math.floor(i/2)]),midY(semL[Math.floor(i/2)]));
-      path(rightX(cuaL[i+1]),midY(cuaL[i+1]),leftX(semL[Math.floor(i/2)]),midY(semL[Math.floor(i/2)]));
-    }
-    // Derecha
-    for(let i=0;i<octR.length;i+=2){
-      path(leftX(octR[i]),midY(octR[i]),rightX(cuaR[Math.floor(i/2)]),midY(cuaR[Math.floor(i/2)]));
-      path(leftX(octR[i+1]),midY(octR[i+1]),rightX(cuaR[Math.floor(i/2)]),midY(cuaR[Math.floor(i/2)]));
-    }
-    for(let i=0;i<cuaR.length;i+=2){
-      path(leftX(cuaR[i]),midY(cuaR[i]),rightX(semR[Math.floor(i/2)]),midY(semR[Math.floor(i/2)]));
-      path(leftX(cuaR[i+1]),midY(cuaR[i+1]),rightX(semR[Math.floor(i/2)]),midY(semR[Math.floor(i/2)]));
-    }
-    // Final
-    path(rightX(semL[0]), midY(semL[0]), leftX(final), midY(final));
-    path(leftX(semR[0]), midY(semR[0]), rightX(finalR), midY(finalR));
-    // Tercer puesto
-    path(rightX(semL[0]), midY(semL[0])+40, leftX(tercer), midY(tercer));
-    path(leftX(semR[0]), midY(semR[0])+40, rightX(tercer), midY(tercer));
-  }
-  draw();
-  window.addEventListener('resize', ()=>setTimeout(draw, 120));
-});
-</script>
+  <script>
+    // Conexiones fijas según posición de los cuadros
+    window.addEventListener('DOMContentLoaded',()=>{
+      function getMid(el){
+        const r = el.getBoundingClientRect();
+        const parent = el.parentElement.getBoundingClientRect();
+        return {
+          x: r.left + r.width/2 - parent.left,
+          y: r.top + r.height/2 - parent.top
+        };
+      }
+      const svg = document.getElementById('svg-lines');
+      function drawLines(){
+        svg.innerHTML="";
+        // Octavos a Cuartos (izquierda)
+        for(let i=1;i<=4;i+=2){
+          let a1 = document.querySelector('.oct-l'+i), a2 = document.querySelector('.oct-l'+(i+1));
+          let b = document.querySelector('.cua-l'+Math.ceil(i/2));
+          let ma = getMid(a1), mb = getMid(a2), mbb = getMid(b);
+          svg.innerHTML += `
+            <path d="M${ma.x+89},${ma.y} L${mbb.x-89},${mbb.y}" stroke="#c0a29f" stroke-width="3" fill="none"/>
+            <path d="M${mb.x+89},${mb.y} L${mbb.x-89},${mbb.y}" stroke="#c0a29f" stroke-width="3" fill="none"/>
+          `;
+        }
+        // Cuartos a Semis (izquierda)
+        for(let i=1;i<=2;i++){
+          let a1 = document.querySelector('.cua-l'+i);
+          let b = document.querySelector('.sem-l');
+          let ma = getMid(a1), mb = getMid(b);
+          svg.innerHTML += `<path d="M${ma.x+89},${ma.y} L${mb.x-89},${mb.y}" stroke="#c0a29f" stroke-width="3" fill="none"/>`;
+        }
+        // Octavos a Cuartos (derecha)
+        for(let i=1;i<=4;i+=2){
+          let a1 = document.querySelector('.oct-r'+i), a2 = document.querySelector('.oct-r'+(i+1));
+          let b = document.querySelector('.cua-r'+Math.ceil(i/2));
+          let ma = getMid(a1), mb = getMid(a2), mbb = getMid(b);
+          svg.innerHTML += `
+            <path d="M${ma.x-89},${ma.y} L${mbb.x+89},${mbb.y}" stroke="#c0a29f" stroke-width="3" fill="none"/>
+            <path d="M${mb.x-89},${mb.y} L${mbb.x+89},${mbb.y}" stroke="#c0a29f" stroke-width="3" fill="none"/>
+          `;
+        }
+        // Cuartos a Semis (derecha)
+        for(let i=1;i<=2;i++){
+          let a1 = document.querySelector('.cua-r'+i);
+          let b = document.querySelector('.sem-r');
+          let ma = getMid(a1), mb = getMid(b);
+          svg.innerHTML += `<path d="M${ma.x-89},${ma.y} L${mb.x+89},${mb.y}" stroke="#c0a29f" stroke-width="3" fill="none"/>`;
+        }
+        // Semis a Final
+        let semiL = document.querySelector('.sem-l'), semiR = document.querySelector('.sem-r'), final = document.querySelector('.final');
+        let ml = getMid(semiL), mr = getMid(semiR), mf = getMid(final);
+        svg.innerHTML += `<path d="M${ml.x+89},${ml.y} L${mf.x-89},${mf.y}" stroke="#c0a29f" stroke-width="3" fill="none"/>`;
+        svg.innerHTML += `<path d="M${mr.x-89},${mr.y} L${mf.x+89},${mf.y}" stroke="#c0a29f" stroke-width="3" fill="none"/>`;
+        // Semis a tercer puesto
+        let third = document.querySelector('.third');
+        let mt = getMid(third);
+        svg.innerHTML += `<path d="M${ml.x+89},${ml.y+44} L${mt.x-89},${mt.y}" stroke="#c0a29f" stroke-width="3" fill="none"/>`;
+        svg.innerHTML += `<path d="M${mr.x-89},${mr.y+44} L${mt.x+89},${mt.y}" stroke="#c0a29f" stroke-width="3" fill="none"/>`;
+      }
+      drawLines();
+      window.addEventListener('resize', ()=> setTimeout(drawLines, 100));
+    });
+  </script>
 </body>
 </html>
 
