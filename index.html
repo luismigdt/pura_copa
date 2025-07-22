@@ -1,327 +1,212 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>FASE FINAL PURA COPA</title>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Cuadro Eliminatorio - Mundial</title>
 <style>
-:root{
-  /* Colores (cámbialos si quieres) */
-  --bg:#0f172a;
-  --panel:#1e293b;
-  --text:#f8fafc;
-  --accent:#fbbf24;
-  --win:#0ea5e9;
-  --lose:#475569;
-  --line:#94a3b8;
+body {
+  margin: 0;
+  background: #7a0028;
+  font-family: Arial, Helvetica, sans-serif;
 }
-
-*{box-sizing:border-box;}
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:Arial, Helvetica, sans-serif;
+.header {
+  background: #660020;
+  color: #fff;
+  text-align: center;
+  padding: 16px 10px 0;
+  font-size: 2.4rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  border-bottom: 5px solid #fff;
 }
-h1{
-  margin:0;
-  padding:20px 10px;
-  text-align:center;
-  background:var(--panel);
-  color:var(--accent);
-  font-size:clamp(22px,4vw,34px);
-  letter-spacing:2px;
+.cuadro-wrap {
+  position: relative;
+  width: 1080px;
+  min-height: 800px;
+  margin: 0 auto;
+  background: #7a0028;
+  padding-top: 16px;
+  padding-bottom: 36px;
 }
-
-/* LAYOUT PRINCIPAL */
-#stage{
-  width:100%;
-  overflow-x:auto;
-  padding:32px 12px 80px;
+.cuadro {
+  position: relative;
+  width: 1080px;
+  min-height: 780px;
 }
-#wrap{
-  position:relative;
-  margin:auto;
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  min-width:1400px; /* ancho mínimo para escritorio */
-  gap:40px;
+.ronda {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
-
-/* Z-index para que el svg quede detrás */
-#lines{
-  position:absolute;
-  top:0; left:0;
-  z-index:0;
-  pointer-events:none;
+.ronda.octavos { left: 0;  height: 670px; top: 60px; }
+.ronda.cuartos  { left: 200px; height: 540px; top: 125px; }
+.ronda.semis   { left: 400px; height: 335px; top: 220px; }
+.ronda.final   { left: 630px; height: 150px; top: 325px;}
+.ronda.centro  { left: 865px; height: 780px; top: 0;}
+.ronda.tercer  { left: 400px; height: 50px; top: 590px;}
+.match {
+  background: #fff;
+  color: #7a0028;
+  border-radius: 6px;
+  border: 2.5px solid #c0a29f;
+  width: 170px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  padding: 6px 14px;
+  font-size: 1.11rem;
+  font-weight: bold;
+  margin-bottom: 16px;
+  margin-top: 0;
+  box-shadow: 0 2px 8px #0002;
+  letter-spacing: 1px;
+  position: relative;
 }
-.side, .center{
-  position:relative;
-  z-index:1;
+.match:empty::after {
+  content: "";
 }
-
-/* LADOS */
-.side{
-  display:flex;
-  gap:60px;
+.centro-titulo {
+  position: absolute;
+  left: 0;
+  width: 1080px;
+  text-align: center;
+  top: 0;
+  color: #fff;
+  font-size: 2.2rem;
+  font-weight: bold;
+  letter-spacing: 4px;
+  margin-bottom: 12px;
+  padding-top: 20px;
+  z-index: 2;
+  pointer-events: none;
 }
-.round{
-  min-width:220px;
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-  position:relative;
+.trofeo {
+  position: absolute;
+  left: 535px;
+  top: 340px;
+  width: 60px;
+  height: 80px;
+  background: url('https://cdn-icons-png.flaticon.com/512/5361/5361755.png') center/contain no-repeat;
+  z-index: 5;
 }
-.round-title{
-  text-align:center;
-  color:var(--accent);
-  margin:0 0 16px;
-  font-weight:bold;
-  font-size:15px;
-}
-
-/* PARTIDOS */
-.match{
-  background:var(--panel);
-  border:2px solid var(--line);
-  border-radius:10px;
-  padding:8px 10px;
-  width:210px;
-  margin:18px 0;
-  box-shadow:0 0 6px #0006;
-}
-.team{
-  margin:6px 0;
-  padding:7px 6px;
-  border-radius:6px;
-  font-size:14px;
-  line-height:1.15;
-}
-.team small{
-  display:block;
-  opacity:.85;
-  margin-top:2px;
-  font-size:11px;
-}
-.team.win{background:var(--win); color:#fff;}
-.team.lose{background:var(--lose); color:#e2e8f0;}
-
-/* CENTRO */
-.center{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:40px;
-  padding:0 40px;
-}
-.final-label{
-  background:var(--panel);
-  border:2px solid var(--accent);
-  color:var(--accent);
-  font-weight:bold;
-  padding:14px 24px;
-  border-radius:14px;
-  text-align:center;
-}
-.champion-box{
-  background:var(--panel);
-  border:3px solid var(--accent);
-  color:var(--accent);
-  font-size:18px;
-  font-weight:bold;
-  border-radius:12px;
-  padding:18px 26px;
-  text-align:center;
-  width:260px;
-  box-shadow:0 0 10px #0008;
-}
-
-@media(max-width:900px){
-  #wrap{min-width:1100px; gap:24px;}
-  .round{min-width:180px;}
-  .match{width:170px;}
+@media (max-width:1120px) {
+  .cuadro-wrap, .cuadro { width: 100vw; min-width: 0;}
+  .ronda { width: 18vw; }
+  .match { width: 16vw;}
+  .centro-titulo { width: 100vw;}
 }
 </style>
 </head>
 <body>
-<h1>FASE FINAL PURA COPA</h1>
-
-<div id="stage">
-  <div id="wrap">
-    <svg id="lines"></svg>
-
-    <!-- IZQUIERDA -->
-    <div class="side" id="leftSide"></div>
-
-    <!-- CENTRO -->
-    <div class="center">
-      <div class="final-label">LA GRAN PURA FINAL</div>
-      <div class="champion-box" id="championBox">CAMPEÓN</div>
+  <div class="header">8º DE FINAL</div>
+  <div class="cuadro-wrap">
+    <div class="centro-titulo"></div>
+    <div class="cuadro">
+      <!-- Octavos izquierda -->
+      <div class="ronda octavos">
+        <div class="match"></div>
+        <div class="match"></div>
+        <div class="match"></div>
+        <div class="match"></div>
+      </div>
+      <!-- Cuartos izquierda -->
+      <div class="ronda cuartos">
+        <div class="match"></div>
+        <div class="match"></div>
+      </div>
+      <!-- Semis izquierda -->
+      <div class="ronda semis">
+        <div class="match"></div>
+      </div>
+      <!-- Centro: trofeo y final -->
+      <div class="trofeo"></div>
+      <div class="ronda final">
+        <div class="match"></div>
+      </div>
+      <!-- Semis derecha -->
+      <div class="ronda semis" style="left: 865px;">
+        <div class="match"></div>
+      </div>
+      <!-- Cuartos derecha -->
+      <div class="ronda cuartos" style="left: 865px;">
+        <div class="match"></div>
+        <div class="match"></div>
+      </div>
+      <!-- Octavos derecha -->
+      <div class="ronda octavos" style="left: 865px;">
+        <div class="match"></div>
+        <div class="match"></div>
+        <div class="match"></div>
+        <div class="match"></div>
+      </div>
+      <!-- Tercer puesto -->
+      <div class="ronda tercer">
+        <div class="match"></div>
+      </div>
+      <!-- LÍNEAS SVG -->
+      <svg width="1080" height="780" style="position:absolute;left:0;top:0;z-index:1;" id="linesvg"></svg>
     </div>
-
-    <!-- DERECHA -->
-    <div class="side" id="rightSide"></div>
   </div>
-</div>
-
 <script>
-/* ========= DATOS ========= */
-const leftRounds = [
-  { name:"Octavos", matches:[
-    {t1:"EDU VEIGA",s1:160, t2:"SEGA",s2:87},
-    {t1:"BUKANEROS",s1:138, t2:"PAHITO TEAM",s2:100},
-    {t1:"OLD SCHOOL PARLA",s1:126, t2:"OSCAR CELTA",s2:126},
-    {t1:"OB1 MCKUIN",s1:125, t2:"VICTOR MARTIN",s2:125}
-  ]},
-  { name:"Cuartos", matches:[
-    {t1:"EDU VEIGA", t2:"BUKANEROS"},
-    {t1:"OLD SCHOOL PARLA", t2:"OB1 MCKUIN"}
-  ]},
-  { name:"Semifinales", matches:[
-    {t1:"EDU VEIGA", t2:"OLD SCHOOL PARLA"}
-  ]}
-];
-
-const rightRounds = [
-  { name:"Octavos", matches:[
-    {t1:"MIGUEL TEAM",s1:156, t2:"ATLETICO NACIONAL",s2:73},
-    {t1:"AARON ANDRES",s1:134, t2:"BLANQUIVIOLETA",s2:55},
-    {t1:"PAYO VALLECANO",s1:149, t2:"NOE TEAM",s2:104},
-    {t1:"FELIX ROJO",s1:143, t2:"MIGUI",s2:82}
-  ]},
-  { name:"Cuartos", matches:[
-    {t1:"MIGUEL TEAM", t2:"AARON ANDRES"},
-    {t1:"PAYO VALLECANO", t2:"FELIX ROJO"}
-  ]},
-  { name:"Semifinales", matches:[
-    {t1:"PAYO VALLECANO", t2:"MIGUEL TEAM"}
-  ]}
-];
-
-const finalMatch = {t1:"EDU VEIGA", t2:"PAYO VALLECANO", champion:"EDU VEIGA"};
-/* ========================== */
-
-const leftSide = document.getElementById('leftSide');
-const rightSide = document.getElementById('rightSide');
-const championBox = document.getElementById('championBox');
-championBox.textContent = finalMatch.champion || "CAMPEÓN";
-
-/* Construir lados */
-function buildSide(container, rounds, isLeft){
-  rounds.forEach((round, rIdx)=>{
-    const roundDiv = document.createElement('div');
-    roundDiv.className='round';
-    roundDiv.dataset.side = isLeft?'L':'R';
-    roundDiv.dataset.r = rIdx;
-
-    const title = document.createElement('div');
-    title.className='round-title';
-    title.textContent = round.name;
-    roundDiv.appendChild(title);
-
-    round.matches.forEach((m, mIdx)=>{
-      const matchEl = document.createElement('div');
-      matchEl.className='match';
-      matchEl.dataset.m=mIdx;
-
-      const hasScores = m.s1!==undefined && m.s2!==undefined;
-      const win1 = hasScores ? m.s1>=m.s2 : false;
-      const win2 = hasScores ? m.s2> m.s1 : false;
-
-      const t1 = document.createElement('div');
-      t1.className='team '+(hasScores?(win1?'win':'lose'):'');
-      t1.innerHTML = m.t1 + (hasScores?`<small>${m.s1}</small>`:'');
-      const t2 = document.createElement('div');
-      t2.className='team '+(hasScores?(win2?'win':'lose'):'');
-      t2.innerHTML = m.t2 + (hasScores?`<small>${m.s2}</small>`:'');
-
-      matchEl.appendChild(t1);
-      matchEl.appendChild(t2);
-      roundDiv.appendChild(matchEl);
-    });
-
-    container.appendChild(roundDiv);
-  });
-}
-
-buildSide(leftSide, leftRounds, true);
-buildSide(rightSide, rightRounds, false);
-
-/* ====== DIBUJAR LÍNEAS ====== */
-function drawLines(){
-  const wrap = document.getElementById('wrap');
-  const rectWrap = wrap.getBoundingClientRect();
-
-  const svg = document.getElementById('lines');
-  svg.innerHTML='';
-  svg.setAttribute('width', rectWrap.width);
-  svg.setAttribute('height', rectWrap.height);
-
-  function centerRight(el){
-    const r = el.getBoundingClientRect();
-    return {x:r.right - rectWrap.left, y:r.top + r.height/2 - rectWrap.top};
-  }
-  function centerLeft(el){
-    const r = el.getBoundingClientRect();
-    return {x:r.left - rectWrap.left, y:r.top + r.height/2 - rectWrap.top};
-  }
-  function strokePath(x1,y1,x2,y2){
-    const mid = (x1+x2)/2;
-    const d = `M ${x1} ${y1} H ${mid} V ${y2} H ${x2}`;
-    const p = document.createElementNS('http://www.w3.org/2000/svg','path');
-    p.setAttribute('d', d);
-    p.setAttribute('stroke', getComputedStyle(document.documentElement).getPropertyValue('--line'));
-    p.setAttribute('stroke-width','2');
-    p.setAttribute('fill','none');
-    svg.appendChild(p);
-  }
-
-  // Lado izquierdo: conectar pares a siguiente ronda
-  const leftRoundsEls = leftSide.querySelectorAll('.round');
-  for(let r=0; r<leftRoundsEls.length-1; r++){
-    const a = leftRoundsEls[r].querySelectorAll('.match');
-    const b = leftRoundsEls[r+1].querySelectorAll('.match');
-    for(let i=0;i<a.length;i+=2){
-      const from1 = centerRight(a[i]);
-      const from2 = centerRight(a[i+1]);
-      const to    = centerLeft(b[Math.floor(i/2)]);
-      strokePath(from1.x, from1.y, to.x, to.y);
-      strokePath(from2.x, from2.y, to.x, to.y);
+// Dibuja líneas según los recuadros
+window.addEventListener('DOMContentLoaded', ()=> {
+  function midY(el){ const r = el.getBoundingClientRect(); return r.top+r.height/2;}
+  function rightX(el){ const r = el.getBoundingClientRect(); return r.right;}
+  function leftX(el){ const r = el.getBoundingClientRect(); return r.left;}
+  const svg = document.getElementById('linesvg');
+  function draw() {
+    svg.innerHTML="";
+    const octL = document.querySelectorAll('.ronda.octavos .match');
+    const cuaL = document.querySelectorAll('.ronda.cuartos .match');
+    const semL = document.querySelectorAll('.ronda.semis .match');
+    const octR = document.querySelectorAll('.ronda.octavos[style] .match');
+    const cuaR = document.querySelectorAll('.ronda.cuartos[style] .match');
+    const semR = document.querySelectorAll('.ronda.semis[style] .match');
+    const final = document.querySelector('.ronda.final .match');
+    const finalR = document.querySelector('.ronda.final .match');
+    const tercer = document.querySelector('.ronda.tercer .match');
+    function path(x1,y1,x2,y2) {
+      const p = document.createElementNS('http://www.w3.org/2000/svg','path');
+      p.setAttribute('d',`M${x1},${y1} L${x2},${y2}`);
+      p.setAttribute('stroke','#c0a29f');
+      p.setAttribute('stroke-width','3');
+      p.setAttribute('fill','none');
+      svg.appendChild(p);
     }
-  }
-
-  // Lado derecho: conectar pares a siguiente ronda
-  const rightRoundsEls = rightSide.querySelectorAll('.round');
-  for(let r=0; r<rightRoundsEls.length-1; r++){
-    const a = rightRoundsEls[r].querySelectorAll('.match');
-    const b = rightRoundsEls[r+1].querySelectorAll('.match');
-    for(let i=0;i<a.length;i+=2){
-      const from1 = centerLeft(a[i]);
-      const from2 = centerLeft(a[i+1]);
-      const to    = centerRight(b[Math.floor(i/2)]);
-      strokePath(from1.x, from1.y, to.x, to.y);
-      strokePath(from2.x, from2.y, to.x, to.y);
+    // Izquierda
+    for(let i=0;i<octL.length;i+=2){
+      path(rightX(octL[i]),midY(octL[i]),leftX(cuaL[Math.floor(i/2)]),midY(cuaL[Math.floor(i/2)]));
+      path(rightX(octL[i+1]),midY(octL[i+1]),leftX(cuaL[Math.floor(i/2)]),midY(cuaL[Math.floor(i/2)]));
     }
+    for(let i=0;i<cuaL.length;i+=2){
+      path(rightX(cuaL[i]),midY(cuaL[i]),leftX(semL[Math.floor(i/2)]),midY(semL[Math.floor(i/2)]));
+      path(rightX(cuaL[i+1]),midY(cuaL[i+1]),leftX(semL[Math.floor(i/2)]),midY(semL[Math.floor(i/2)]));
+    }
+    // Derecha
+    for(let i=0;i<octR.length;i+=2){
+      path(leftX(octR[i]),midY(octR[i]),rightX(cuaR[Math.floor(i/2)]),midY(cuaR[Math.floor(i/2)]));
+      path(leftX(octR[i+1]),midY(octR[i+1]),rightX(cuaR[Math.floor(i/2)]),midY(cuaR[Math.floor(i/2)]));
+    }
+    for(let i=0;i<cuaR.length;i+=2){
+      path(leftX(cuaR[i]),midY(cuaR[i]),rightX(semR[Math.floor(i/2)]),midY(semR[Math.floor(i/2)]));
+      path(leftX(cuaR[i+1]),midY(cuaR[i+1]),rightX(semR[Math.floor(i/2)]),midY(semR[Math.floor(i/2)]));
+    }
+    // Final
+    path(rightX(semL[0]), midY(semL[0]), leftX(final), midY(final));
+    path(leftX(semR[0]), midY(semR[0]), rightX(finalR), midY(finalR));
+    // Tercer puesto
+    path(rightX(semL[0]), midY(semL[0])+40, leftX(tercer), midY(tercer));
+    path(leftX(semR[0]), midY(semR[0])+40, rightX(tercer), midY(tercer));
   }
-
-  // Conectar semifinales a la FINAL (centro)
-  const semiL = leftRoundsEls[leftRoundsEls.length-1].querySelector('.match');
-  const semiR = rightRoundsEls[rightRoundsEls.length-1].querySelector('.match');
-  const finalLabel = document.querySelector('.final-label');
-  const rFinal = finalLabel.getBoundingClientRect();
-  const finalY = rFinal.top + rFinal.height/2 - rectWrap.top;
-  const finalLeftX  = rFinal.left - rectWrap.left;
-  const finalRightX = rFinal.right - rectWrap.left;
-
-  strokePath(centerRight(semiL).x, centerRight(semiL).y, finalLeftX, finalY);
-  strokePath(centerLeft(semiR).x,  centerLeft(semiR).y,  finalRightX, finalY);
-}
-
-window.addEventListener('load', ()=> setTimeout(drawLines, 200));
-window.addEventListener('resize', ()=> setTimeout(drawLines, 150));
+  draw();
+  window.addEventListener('resize', ()=>setTimeout(draw, 120));
+});
 </script>
 </body>
 </html>
+
