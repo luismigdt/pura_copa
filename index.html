@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>PURA COPA</title>
+  <title>PURA COPA - Cuadro Eliminatorio Mejorado</title>
   <meta name="viewport" content="width=1300">
   <style>
     body {
@@ -23,13 +23,17 @@
     .bracket {
       display: grid;
       grid-template-columns: 220px 50px 220px 60px 265px 60px 220px 50px 220px;
-      grid-template-rows: repeat(8, 60px);
+      grid-template-rows:
+        1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr  /* para los 8 partidos */
+        22px 22px 22px 22px 22px 22px 22px; /* espaciado extra opcional si quieres */
+      row-gap: 22px; /* Espacio vertical entre partidos */
       justify-content: center;
       margin: 0 auto;
       position: relative;
       margin-top: 25px;
       margin-bottom: 40px;
       min-width: 1240px;
+      height: 930px;
     }
     .cell { position: relative; z-index: 5; }
     .ronda {
@@ -53,11 +57,11 @@
       color: #900d29;
       border-radius: 7px;
       border: 2.5px solid #e0bfc0;
-      min-height: 45px;
+      min-height: 52px;
       min-width: 176px;
       max-width: 210px;
       font-weight: bold;
-      font-size: 1.05rem;
+      font-size: 1.12rem;
       letter-spacing: 1px;
       margin: 7px 0;
       padding-left: 18px;
@@ -84,8 +88,8 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%,-50%);
-      width: 130px;
-      height: 148px;
+      width: 158px;
+      height: 180px;
       background: url('puracopa.png') center/contain no-repeat;
       opacity: 1;
       z-index: 1;
@@ -99,7 +103,6 @@
       pointer-events: none;
       z-index: 2;
     }
-    /* Responsive: escala bracket si la pantalla es pequeña */
     @media (max-width:1400px) {
       .bracket { transform: scale(0.85);}
       .header { font-size: 2rem;}
@@ -119,50 +122,50 @@
       <!-- Nombres de ronda -->
       <div class="cell" style="grid-column:1;grid-row:1;"><div class="ronda">OCTAVOS</div></div>
       <div class="cell" style="grid-column:3;grid-row:1;"><div class="ronda">CUARTOS</div></div>
-      <div class="cell" style="grid-column:5;grid-row:2;"><div class="ronda">SEMIFINALES</div></div>
-      <div class="cell" style="grid-column:7;grid-row:4;"><div class="ronda">FINAL</div></div>
+      <div class="cell" style="grid-column:5;grid-row:3;"><div class="ronda">SEMIFINALES</div></div>
+      <div class="cell" style="grid-column:7;grid-row:5;"><div class="ronda">FINAL</div></div>
       <div class="cell" style="grid-column:9;grid-row:1;"><div class="ronda">OCTAVOS</div></div>
       <div class="cell" style="grid-column:7;grid-row:1;"><div class="ronda">CUARTOS</div></div>
-      <div class="cell" style="grid-column:5;grid-row:7;"><div class="ronda">SEMIFINALES</div></div>
+      <div class="cell" style="grid-column:5;grid-row:6;"><div class="ronda">SEMIFINALES</div></div>
 
       <!-- Octavos izquierda -->
-      <div class="cell" style="grid-column:1;grid-row:1;"><div class="match">1º GRUPO 1<span class="score"></span></div></div>
-      <div class="cell" style="grid-column:1;grid-row:2;"><div class="match">8º GRUPO 2<span class="score"></span></div></div>
-      <div class="cell" style="grid-column:1;grid-row:3;"><div class="match">4º GRUPO 1<span class="score"></span></div></div>
-      <div class="cell" style="grid-column:1;grid-row:4;"><div class="match">5º GRUPO 2<span class="score"></span></div></div>
-      <div class="cell" style="grid-column:1;grid-row:5;"><div class="match">2º GRUPO 1<span class="score"></span></div></div>
-      <div class="cell" style="grid-column:1;grid-row:6;"><div class="match">7º GRUPO 2<span class="score"></span></div></div>
-      <div class="cell" style="grid-column:1;grid-row:7;"><div class="match">3º GRUPO 1<span class="score"></span></div></div>
-      <div class="cell" style="grid-column:1;grid-row:8;"><div class="match">6º GRUPO 2<span class="score"></span></div></div>
+      <div class="cell" style="grid-column:1;grid-row:1;"><div class="match">1º GRUPO 1 <span class="score"></span></div></div>
+      <div class="cell" style="grid-column:1;grid-row:2;"><div class="match">8º GRUPO 2 <span class="score"></span></div></div>
+      <div class="cell" style="grid-column:1;grid-row:3;"><div class="match">4º GRUPO 1 <span class="score"></span></div></div>
+      <div class="cell" style="grid-column:1;grid-row:4;"><div class="match">5º GRUPO 2 <span class="score"></span></div></div>
+      <div class="cell" style="grid-column:1;grid-row:5;"><div class="match">2º GRUPO 1 <span class="score"></span></div></div>
+      <div class="cell" style="grid-column:1;grid-row:6;"><div class="match">7º GRUPO 2 <span class="score"></span></div></div>
+      <div class="cell" style="grid-column:1;grid-row:7;"><div class="match">3º GRUPO 1 <span class="score"></span></div></div>
+      <div class="cell" style="grid-column:1;grid-row:8;"><div class="match">6º GRUPO 2 <span class="score"></span></div></div>
 
       <!-- Cuartos izquierda -->
-      <div class="cell" style="grid-column:3;grid-row:1;"><div class="match">A <span class="score"></span></div></div>
-      <div class="cell" style="grid-column:3;grid-row:3;"><div class="match">B <span class="score"></span></div></div>
-      <div class="cell" style="grid-column:3;grid-row:5;"><div class="match">C <span class="score"></span></div></div>
-      <div class="cell" style="grid-column:3;grid-row:7;"><div class="match">D <span class="score"></span></div></div>
+      <div class="cell" style="grid-column:3;grid-row:2;"><div class="match">A <span class="score"></span></div></div>
+      <div class="cell" style="grid-column:3;grid-row:4;"><div class="match">B <span class="score"></span></div></div>
+      <div class="cell" style="grid-column:3;grid-row:6;"><div class="match">C <span class="score"></span></div></div>
+      <div class="cell" style="grid-column:3;grid-row:8;"><div class="match">D <span class="score"></span></div></div>
 
       <!-- Semis -->
-      <div class="cell" style="grid-column:5;grid-row:2;"><div class="match">A/B<span class="score"></span></div></div>
-      <div class="cell" style="grid-column:5;grid-row:7;"><div class="match">C/D<span class="score"></span></div></div>
+      <div class="cell" style="grid-column:5;grid-row:3;"><div class="match">A/B <span class="score"></span></div></div>
+      <div class="cell" style="grid-column:5;grid-row:7;"><div class="match">C/D <span class="score"></span></div></div>
 
-      <!-- Final -->
-      <div class="cell" style="grid-column:7;grid-row:4;"><div class="match">A-B/C-D<span class="score"></span></div></div>
+      <!-- Final (CENTRADA) -->
+      <div class="cell" style="grid-column:7;grid-row:5;"><div class="match">A-B/C-D <span class="score"></span></div></div>
 
       <!-- Cuartos derecha -->
-      <div class="cell" style="grid-column:7;grid-row:1;"><div class="match"></div></div>
-      <div class="cell" style="grid-column:7;grid-row:3;"><div class="match"></div></div>
-      <div class="cell" style="grid-column:7;grid-row:5;"><div class="match"></div></div>
-      <div class="cell" style="grid-column:7;grid-row:7;"><div class="match"></div></div>
+      <div class="cell" style="grid-column:7;grid-row:2;"><div class="match"></div></div>
+      <div class="cell" style="grid-column:7;grid-row:4;"><div class="match"></div></div>
+      <div class="cell" style="grid-column:7;grid-row:6;"><div class="match"></div></div>
+      <div class="cell" style="grid-column:7;grid-row:8;"><div class="match"></div></div>
 
       <!-- Octavos derecha -->
-      <div class="cell" style="grid-column:9;grid-row:1;"><div class="match">1º GRUPO 2<span class="score"></span></div></div>
-      <div class="cell" style="grid-column:9;grid-row:2;"><div class="match">8º GRUPO 1<span class="score"></span></div></div>
-      <div class="cell" style="grid-column:9;grid-row:3;"><div class="match">4º GRUPO 2<span class="score"></span></div></div>
-      <div class="cell" style="grid-column:9;grid-row:4;"><div class="match">5º GRUPO 1<span class="score"></span></div></div>
-      <div class="cell" style="grid-column:9;grid-row:5;"><div class="match">2º GRUPO 2<span class="score"></span></div></div>
-      <div class="cell" style="grid-column:9;grid-row:6;"><div class="match">7º GRUPO 1<span class="score"></span></div></div>
-      <div class="cell" style="grid-column:9;grid-row:7;"><div class="match">3º GRUPO 2<span class="score"></span></div></div>
-      <div class="cell" style="grid-column:9;grid-row:8;"><div class="match">6º GRUPO 1<span class="score"></span></div></div>
+      <div class="cell" style="grid-column:9;grid-row:1;"><div class="match">1º GRUPO 2 <span class="score"></span></div></div>
+      <div class="cell" style="grid-column:9;grid-row:2;"><div class="match">8º GRUPO 1 <span class="score"></span></div></div>
+      <div class="cell" style="grid-column:9;grid-row:3;"><div class="match">4º GRUPO 2 <span class="score"></span></div></div>
+      <div class="cell" style="grid-column:9;grid-row:4;"><div class="match">5º GRUPO 1 <span class="score"></span></div></div>
+      <div class="cell" style="grid-column:9;grid-row:5;"><div class="match">2º GRUPO 2 <span class="score"></span></div></div>
+      <div class="cell" style="grid-column:9;grid-row:6;"><div class="match">7º GRUPO 1 <span class="score"></span></div></div>
+      <div class="cell" style="grid-column:9;grid-row:7;"><div class="match">3º GRUPO 2 <span class="score"></span></div></div>
+      <div class="cell" style="grid-column:9;grid-row:8;"><div class="match">6º GRUPO 1 <span class="score"></span></div></div>
 
       <!-- Logo central -->
       <div class="logo-copa"></div>
@@ -171,7 +174,6 @@
     </div>
   </div>
   <script>
-    // Función para líneas
     function line(x1, y1, x2, y2) {
       return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#e0bfc0" stroke-width="4" />`;
     }
@@ -193,29 +195,29 @@
       }
       // IZQ octavos a cuartos
       for(let i=1;i<=7;i+=2){
-        let p1 = getCellCenter(1,i), p2 = getCellCenter(1,i+1), p3 = getCellCenter(3,Math.ceil(i/2)*2-1);
+        let p1 = getCellCenter(1,i), p2 = getCellCenter(1,i+1), p3 = getCellCenter(3,i+1);
         svg.innerHTML += line(p1.x+90, p1.y, p3.x-90, p3.y);
         svg.innerHTML += line(p2.x+90, p2.y, p3.x-90, p3.y);
       }
       // CUARTOS izq a semis
-      for(let i=1;i<=4;i+=2){
-        let p1 = getCellCenter(3,i), p2 = getCellCenter(3,i+2), p3 = getCellCenter(5,(i==1?2:7));
+      for(let i=2;i<=8;i+=4){
+        let p1 = getCellCenter(3,i), p2 = getCellCenter(3,i+2), p3 = getCellCenter(5,i+1);
         svg.innerHTML += line(p1.x+90, p1.y, p3.x-90, p3.y);
         svg.innerHTML += line(p2.x+90, p2.y, p3.x-90, p3.y);
       }
-      // Semis izq a final
-      let psl = getCellCenter(5,2), psr = getCellCenter(5,7), pf = getCellCenter(7,4);
+      // Semis izq a final (centrada)
+      let psl = getCellCenter(5,3), psr = getCellCenter(5,7), pf = getCellCenter(7,5);
       svg.innerHTML += line(psl.x+90, psl.y, pf.x-90, pf.y);
       svg.innerHTML += line(psr.x+90, psr.y, pf.x-90, pf.y);
       // DER octavos a cuartos
       for(let i=1;i<=7;i+=2){
-        let p1 = getCellCenter(9,i), p2 = getCellCenter(9,i+1), p3 = getCellCenter(7,Math.ceil(i/2)*2-1);
+        let p1 = getCellCenter(9,i), p2 = getCellCenter(9,i+1), p3 = getCellCenter(7,i+1);
         svg.innerHTML += line(p1.x-90, p1.y, p3.x+90, p3.y);
         svg.innerHTML += line(p2.x-90, p2.y, p3.x+90, p3.y);
       }
       // CUARTOS der a semis
-      for(let i=1;i<=4;i+=2){
-        let p1 = getCellCenter(7,i), p2 = getCellCenter(7,i+2), p3 = getCellCenter(5,(i==1?2:7));
+      for(let i=2;i<=8;i+=4){
+        let p1 = getCellCenter(7,i), p2 = getCellCenter(7,i+2), p3 = getCellCenter(5,i+1);
         svg.innerHTML += line(p1.x-90, p1.y, p3.x+90, p3.y);
         svg.innerHTML += line(p2.x-90, p2.y, p3.x+90, p3.y);
       }
