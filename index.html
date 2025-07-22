@@ -1,0 +1,196 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FASE FINAL PURA COPA</title>
+  <style>
+    body {
+      background-color: #1e1e2f;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+      padding: 20px;
+      background-color: #2b2b40;
+      color: #f0c000;
+      margin: 0;
+    }
+
+    .bracket {
+      display: flex;
+      justify-content: space-between;
+      padding: 40px;
+      overflow-x: auto;
+    }
+
+    .round {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      min-width: 180px;
+      position: relative;
+    }
+
+    .match {
+      background-color: #2b2b40;
+      border: 2px solid #3c3c5c;
+      border-radius: 8px;
+      margin: 20px 0;
+      padding: 8px;
+      position: relative;
+      width: 150px;
+      text-align: center;
+    }
+
+    .team {
+      margin: 5px 0;
+      padding: 6px;
+      border-radius: 4px;
+      color: white;
+    }
+
+    .winner {
+      background-color: #007acc;
+    }
+
+    .loser {
+      background-color: #444;
+      color: #bbb;
+    }
+
+    .line {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 2px;
+      background-color: #888;
+      right: -20px;
+      top: 50%;
+    }
+
+    .connector {
+      position: absolute;
+      right: -20px;
+      top: 50%;
+      width: 40px;
+      height: 2px;
+      background: #777;
+    }
+
+    .connector::after {
+      content: "";
+      position: absolute;
+      top: -100px;
+      left: 38px;
+      width: 2px;
+      height: 200px;
+      background: #777;
+    }
+
+    @media (max-width: 768px) {
+      .bracket {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+      }
+
+      .round {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        min-width: unset;
+      }
+
+      .match {
+        margin: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>FASE FINAL PURA COPA</h1>
+  <div class="bracket">
+    <!-- Round 1 -->
+    <div class="round">
+      <div class="match">
+        <div class="team winner">EDU VEIGA<br><small>160</small></div>
+        <div class="team loser">SEGA<br><small>87</small></div>
+      </div>
+      <div class="match">
+        <div class="team winner">BUKANEROS<br><small>138</small></div>
+        <div class="team loser">PAHITO TEAM<br><small>100</small></div>
+      </div>
+      <div class="match">
+        <div class="team winner">OLD SCHOOL PARLA<br><small>126</small></div>
+        <div class="team loser">OSCAR CELTA<br><small>126</small></div>
+      </div>
+      <div class="match">
+        <div class="team winner">OB1 MCKUIN<br><small>125</small></div>
+        <div class="team loser">VICTOR MARTIN<br><small>125</small></div>
+      </div>
+      <div class="match">
+        <div class="team winner">MIGUEL TEAM<br><small>156</small></div>
+        <div class="team loser">ATLETICO NACIONAL<br><small>73</small></div>
+      </div>
+      <div class="match">
+        <div class="team winner">AARON ANDRES<br><small>134</small></div>
+        <div class="team loser">BLANQUIVIOLETA<br><small>55</small></div>
+      </div>
+      <div class="match">
+        <div class="team winner">PAYO VALLECANO<br><small>149</small></div>
+        <div class="team loser">NOE TEAM<br><small>104</small></div>
+      </div>
+      <div class="match">
+        <div class="team winner">FELIX ROJO<br><small>143</small></div>
+        <div class="team loser">MIGUI<br><small>82</small></div>
+      </div>
+    </div>
+
+    <!-- Round 2 -->
+    <div class="round">
+      <div class="match">
+        <div class="team winner">EDU VEIGA</div>
+        <div class="team loser">BUKANEROS</div>
+      </div>
+      <div class="match">
+        <div class="team winner">OLD SCHOOL PARLA</div>
+        <div class="team loser">OB1 MCKUIN</div>
+      </div>
+      <div class="match">
+        <div class="team winner">MIGUEL TEAM</div>
+        <div class="team loser">AARON ANDRES</div>
+      </div>
+      <div class="match">
+        <div class="team winner">PAYO VALLECANO</div>
+        <div class="team loser">FELIX ROJO</div>
+      </div>
+    </div>
+
+    <!-- Semis -->
+    <div class="round">
+      <div class="match">
+        <div class="team winner">EDU VEIGA</div>
+        <div class="team loser">OLD SCHOOL PARLA</div>
+      </div>
+      <div class="match">
+        <div class="team winner">PAYO VALLECANO</div>
+        <div class="team loser">MIGUEL TEAM</div>
+      </div>
+    </div>
+
+    <!-- Final -->
+    <div class="round">
+      <div class="match">
+        <div class="team winner">LA GRAN PURA FINAL</div>
+        <div class="team loser">EDU VEIGA vs PAYO VALLECANO</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
