@@ -7,14 +7,13 @@
 
 <style>
 :root{
-  /* Cambia aquí colores cuando quieras */
-  --bg:#0f172a;          /* fondo principal */
-  --panel:#1e293b;       /* paneles y tarjetas */
-  --text:#f8fafc;        /* texto general */
-  --accent:#fbbf24;      /* títulos y acentos */
-  --win:#0ea5e9;         /* ganador */
-  --lose:#475569;        /* perdedor */
-  --line:#94a3b8;        /* líneas */
+  --bg:#0f172a;      /* fondo */
+  --panel:#1e293b;   /* tarjetas */
+  --text:#f8fafc;    /* texto */
+  --accent:#fbbf24;  /* títulos/bordes */
+  --win:#0ea5e9;     /* ganador */
+  --lose:#475569;    /* perdedor */
+  --line:#94a3b8;    /* líneas */
 }
 
 *{box-sizing:border-box;}
@@ -26,242 +25,299 @@ body{
 }
 h1{
   margin:0;
-  padding:24px 12px;
+  padding:20px 10px;
   text-align:center;
   background:var(--panel);
   color:var(--accent);
-  font-size:clamp(22px,4vw,36px);
+  font-size:clamp(22px,4vw,34px);
   letter-spacing:2px;
 }
 
-#bracket-wrapper{
+/* LAYOUT PRINCIPAL (dos lados + centro) */
+#stage{
   width:100%;
   overflow-x:auto;
-  padding:32px 16px 60px;
+  padding:32px 12px 80px;
 }
-.bracket{
+.bracket-wrap{
   position:relative;
+  min-width:1400px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+}
+
+/* Columnas de rondas */
+.side{
   display:flex;
   gap:60px;
-  min-width:1200px;
-  margin:auto;
 }
 .round{
+  min-width:220px;
   display:flex;
   flex-direction:column;
   justify-content:space-between;
-  gap:40px;
-  min-width:200px;
   position:relative;
 }
 .round-title{
   text-align:center;
-  margin-bottom:10px;
   color:var(--accent);
-  font-size:15px;
+  margin:0 0 16px;
   font-weight:bold;
+  font-size:15px;
 }
+
+/* Partidos */
 .match{
-  position:relative;
   background:var(--panel);
   border:2px solid var(--line);
   border-radius:10px;
-  margin:0;
-  padding:8px 8px 10px;
-  width:200px;
+  padding:8px 10px;
+  width:210px;
+  margin:18px 0;
+  position:relative;
   box-shadow:0 0 6px #0006;
 }
 .team{
   margin:6px 0;
-  padding:8px 6px;
+  padding:7px 6px;
   border-radius:6px;
   font-size:14px;
-  line-height:1.2;
+  line-height:1.15;
 }
 .team small{
   display:block;
-  opacity:.8;
+  opacity:.85;
   margin-top:2px;
   font-size:11px;
 }
 .team.win{background:var(--win); color:#fff;}
 .team.lose{background:var(--lose); color:#e2e8f0;}
 
-.svg-lines{
+/* Centro */
+.center{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:40px;
+  padding:0 40px;
+}
+.final-label{
+  background:var(--panel);
+  border:2px solid var(--accent);
+  color:var(--accent);
+  font-weight:bold;
+  padding:14px 24px;
+  border-radius:14px;
+  text-align:center;
+}
+.champion-box{
+  background:var(--panel);
+  border:3px solid var(--accent);
+  color:var(--accent);
+  font-size:18px;
+  font-weight:bold;
+  border-radius:12px;
+  padding:18px 26px;
+  text-align:center;
+  width:260px;
+  box-shadow:0 0 10px #0008;
+}
+
+/* SVG Líneas */
+svg#lines{
   position:absolute;
   inset:0;
-  overflow:visible;
   pointer-events:none;
 }
 
-.final-box{
-  background:var(--panel);
-  border:2px solid var(--accent);
-  padding:16px 24px;
-  border-radius:14px;
-  text-align:center;
-  font-weight:bold;
-  font-size:18px;
-  color:var(--accent);
-  width:260px;
-  margin:auto;
-  box-shadow:0 0 8px #0008;
-}
-
-@media(max-width:768px){
-  .bracket{gap:24px; min-width:900px;}
-  .round{min-width:160px; gap:28px;}
-  .match{width:160px;}
+@media(max-width:900px){
+  .bracket-wrap{min-width:1100px;}
+  .round{min-width:180px;}
+  .match{width:170px;}
 }
 </style>
 </head>
 <body>
 <h1>FASE FINAL PURA COPA</h1>
 
-<div id="bracket-wrapper">
-  <div class="bracket" id="bracket">
-    <svg class="svg-lines" id="svgLines"></svg>
+<div id="stage">
+  <div class="bracket-wrap" id="bracketWrap">
+    <!-- SVG lines -->
+    <svg id="lines"></svg>
+
+    <!-- LADO IZQUIERDO -->
+    <div class="side" id="leftSide"></div>
+
+    <!-- CENTRO -->
+    <div class="center">
+      <div class="final-label">LA GRAN PURA FINAL</div>
+      <div class="champion-box" id="championBox">CAMPEÓN</div>
+    </div>
+
+    <!-- LADO DERECHO -->
+    <div class="side" id="rightSide"></div>
   </div>
 </div>
 
 <script>
-/* ======== DATOS DEL TORNEO =========
-   Puedes cambiarlos aquí o cargarlos desde Google Sheets luego */
-const data = {
-  rounds: [
-    {
-      name: "Octavos",
-      matches: [
-        {t1:"EDU VEIGA", s1:160, t2:"SEGA", s2:87},
-        {t1:"BUKANEROS", s1:138, t2:"PAHITO TEAM", s2:100},
-        {t1:"OLD SCHOOL PARLA", s1:126, t2:"OSCAR CELTA", s2:126},
-        {t1:"OB1 MCKUIN", s1:125, t2:"VICTOR MARTIN", s2:125},
-        {t1:"MIGUEL TEAM", s1:156, t2:"ATLETICO NACIONAL", s2:73},
-        {t1:"AARON ANDRES", s1:134, t2:"BLANQUIVIOLETA", s2:55},
-        {t1:"PAYO VALLECANO", s1:149, t2:"NOE TEAM", s2:104},
-        {t1:"FELIX ROJO", s1:143, t2:"MIGUI", s2:82},
-      ]
-    },
-    {
-      name: "Cuartos",
-      matches: [
-        {t1:"EDU VEIGA", t2:"BUKANEROS"},
-        {t1:"OLD SCHOOL PARLA", t2:"OB1 MCKUIN"},
-        {t1:"MIGUEL TEAM", t2:"AARON ANDRES"},
-        {t1:"PAYO VALLECANO", t2:"FELIX ROJO"},
-      ]
-    },
-    {
-      name: "Semifinales",
-      matches: [
-        {t1:"EDU VEIGA", t2:"OLD SCHOOL PARLA"},
-        {t1:"PAYO VALLECANO", t2:"MIGUEL TEAM"},
-      ]
-    },
-    {
-      name: "Final",
-      matches: [
-        {t1:"EDU VEIGA", t2:"PAYO VALLECANO", final:true}
-      ]
-    }
-  ],
-  champion: "CAMPEÓN"
-};
-/* ================================== */
+/* ================== DATOS =================== */
+const leftRounds = [
+  { name:"Octavos", matches:[
+    {t1:"EDU VEIGA",s1:160, t2:"SEGA",s2:87},
+    {t1:"BUKANEROS",s1:138, t2:"PAHITO TEAM",s2:100},
+    {t1:"OLD SCHOOL PARLA",s1:126, t2:"OSCAR CELTA",s2:126},
+    {t1:"OB1 MCKUIN",s1:125, t2:"VICTOR MARTIN",s2:125}
+  ]},
+  { name:"Cuartos", matches:[
+    {t1:"EDU VEIGA", t2:"BUKANEROS"},
+    {t1:"OLD SCHOOL PARLA", t2:"OB1 MCKUIN"}
+  ]},
+  { name:"Semifinales", matches:[
+    {t1:"EDU VEIGA", t2:"OLD SCHOOL PARLA"}
+  ]}
+];
 
-const bracketEl = document.getElementById('bracket');
-const svg = document.getElementById('svgLines');
+const rightRounds = [
+  { name:"Octavos", matches:[
+    {t1:"MIGUEL TEAM",s1:156, t2:"ATLETICO NACIONAL",s2:73},
+    {t1:"AARON ANDRES",s1:134, t2:"BLANQUIVIOLETA",s2:55},
+    {t1:"PAYO VALLECANO",s1:149, t2:"NOE TEAM",s2:104},
+    {t1:"FELIX ROJO",s1:143, t2:"MIGUI",s2:82}
+  ]},
+  { name:"Cuartos", matches:[
+    {t1:"MIGUEL TEAM", t2:"AARON ANDRES"},
+    {t1:"PAYO VALLECANO", t2:"FELIX ROJO"}
+  ]},
+  { name:"Semifinales", matches:[
+    {t1:"PAYO VALLECANO", t2:"MIGUEL TEAM"}
+  ]}
+];
 
-function createMatch(m){
-  const match = document.createElement('div');
-  match.className = 'match';
+const finalMatch = {t1:"EDU VEIGA", t2:"PAYO VALLECANO", champion:"EDU VEIGA"}; // cambia aquí
+/* =========================================== */
 
-  const t1 = document.createElement('div');
-  const t2 = document.createElement('div');
+const leftSide = document.getElementById('leftSide');
+const rightSide = document.getElementById('rightSide');
+const svg = document.getElementById('lines');
 
-  const hasScores = m.s1 !== undefined && m.s2 !== undefined;
-  const win1 = hasScores ? m.s1 >= m.s2 : false;
-  const win2 = hasScores ? m.s2 >  m.s1 : false;
+function buildSide(container, rounds, isLeft){
+  rounds.forEach((round, rIdx)=>{
+    const roundDiv = document.createElement('div');
+    roundDiv.className='round';
+    roundDiv.dataset.side = isLeft?'L':'R';
+    roundDiv.dataset.r = rIdx;
 
-  t1.className = 'team ' + (hasScores ? (win1 ? 'win' : 'lose') : '');
-  t1.innerHTML = m.t1 + (hasScores? `<small>${m.s1}</small>`:'');
-  t2.className = 'team ' + (hasScores ? (win2 ? 'win' : 'lose') : '');
-  t2.innerHTML = m.t2 + (hasScores? `<small>${m.s2}</small>`:'');
+    const title = document.createElement('div');
+    title.className='round-title';
+    title.textContent = round.name;
+    roundDiv.appendChild(title);
 
-  match.appendChild(t1);
-  match.appendChild(t2);
-  return match;
-}
+    round.matches.forEach((m, mIdx)=>{
+      const matchEl = document.createElement('div');
+      matchEl.className='match';
+      matchEl.dataset.m = mIdx;
 
-const coords = []; // para líneas
+      const hasScores = m.s1!==undefined && m.s2!==undefined;
+      const win1 = hasScores ? m.s1>=m.s2 : false;
+      const win2 = hasScores ? m.s2> m.s1 : false;
 
-data.rounds.forEach((round, rIdx)=>{
-  const roundDiv = document.createElement('div');
-  roundDiv.className = 'round';
-  roundDiv.dataset.round = rIdx;
+      const t1 = document.createElement('div');
+      t1.className='team '+(hasScores?(win1?'win':'lose'):'');
+      t1.innerHTML = m.t1 + (hasScores?`<small>${m.s1}</small>`:'');
+      const t2 = document.createElement('div');
+      t2.className='team '+(hasScores?(win2?'win':'lose'):'');
+      t2.innerHTML = m.t2 + (hasScores?`<small>${m.s2}</small>`:'');
 
-  const title = document.createElement('div');
-  title.className = 'round-title';
-  title.textContent = round.name;
-  roundDiv.appendChild(title);
-
-  round.matches.forEach((m, mIdx)=>{
-    const match = createMatch(m);
-    match.dataset.match = mIdx;
-    roundDiv.appendChild(match);
-  });
-
-  bracketEl.appendChild(roundDiv);
-});
-
-// Caja final
-const finalBox = document.createElement('div');
-finalBox.className='final-box';
-finalBox.textContent = "LA GRAN PURA FINAL";
-bracketEl.appendChild(finalBox);
-
-// ====== DIBUJAR LÍNEAS =======
-function drawLines(){
-  svg.innerHTML = '';
-  coords.length = 0;
-
-  const rounds = [...document.querySelectorAll('.round')];
-  rounds.forEach((roundEl, rIdx)=>{
-    const matches = [...roundEl.querySelectorAll('.match')];
-    matches.forEach((matchEl, mIdx)=>{
-      const rect = matchEl.getBoundingClientRect();
-      const parentRect = bracketEl.getBoundingClientRect();
-      const centerY = rect.top + rect.height/2 - parentRect.top;
-      const rightX  = rect.right - parentRect.left;
-      coords.push({r:rIdx, m:mIdx, x:rightX, y:centerY});
+      matchEl.appendChild(t1);
+      matchEl.appendChild(t2);
+      roundDiv.appendChild(matchEl);
     });
-  });
 
-  // conectar a siguiente ronda
-  data.rounds.forEach((round, rIdx)=>{
-    if(rIdx === data.rounds.length-1) return;
-    for(let i=0;i<round.matches.length;i+=2){
-      const from1 = coords.find(c=>c.r===rIdx && c.m===i);
-      const from2 = coords.find(c=>c.r===rIdx && c.m===i+1);
-      const to    = coords.find(c=>c.r===rIdx+1 && c.m===Math.floor(i/2));
-      if(!from1 || !from2 || !to) continue;
-      drawConnector(from1.x, from1.y, to.x-200, to.y);
-      drawConnector(from2.x, from2.y, to.x-200, to.y);
+    container.appendChild(roundDiv);
+  });
+}
+
+buildSide(leftSide, leftRounds, true);
+buildSide(rightSide, rightRounds, false);
+
+// Final box text
+document.getElementById('championBox').textContent = finalMatch.champion || "CAMPEÓN";
+
+/* ====== DIBUJAR LÍNEAS ====== */
+function drawLines(){
+  svg.innerHTML='';
+  const wrapRect = document.getElementById('bracketWrap').getBoundingClientRect();
+
+  function centerRight(el){
+    const r = el.getBoundingClientRect();
+    return {x:r.right - wrapRect.left, y:r.top + r.height/2 - wrapRect.top};
+  }
+  function centerLeft(el){
+    const r = el.getBoundingClientRect();
+    return {x:r.left - wrapRect.left, y:r.top + r.height/2 - wrapRect.top};
+  }
+  function path(x1,y1,x2,y2){
+    const midX = (x1 + x2)/2;
+    const d = `M ${x1} ${y1} H ${midX} V ${y2} H ${x2}`;
+    const p = document.createElementNS('http://www.w3.org/2000/svg','path');
+    p.setAttribute('d', d);
+    p.setAttribute('stroke', getComputedStyle(document.documentElement).getPropertyValue('--line'));
+    p.setAttribute('stroke-width','2');
+    p.setAttribute('fill','none');
+    svg.appendChild(p);
+  }
+
+  // Conectar rondas izquierda
+  for(let r=0; r<leftRounds.length-1; r++){
+    const roundA = leftSide.querySelectorAll('.round')[r];
+    const roundB = leftSide.querySelectorAll('.round')[r+1];
+    const matchesA = roundA.querySelectorAll('.match');
+    const matchesB = roundB.querySelectorAll('.match');
+
+    for(let i=0;i<matchesA.length;i+=2){
+      const from1 = centerRight(matchesA[i]);
+      const from2 = centerRight(matchesA[i+1]);
+      const to   = centerLeft(matchesB[Math.floor(i/2)]);
+      path(from1.x, from1.y, to.x, to.y);
+      path(from2.x, from2.y, to.x, to.y);
     }
-  });
-}
-function drawConnector(x1,y1,x2,y2){
-  const midX = (x1 + x2)/2;
-  const path = document.createElementNS('http://www.w3.org/2000/svg','path');
-  path.setAttribute('d', `M ${x1} ${y1} H ${midX} V ${y2} H ${x2}`);
-  path.setAttribute('stroke', getComputedStyle(document.documentElement).getPropertyValue('--line'));
-  path.setAttribute('fill','none');
-  path.setAttribute('stroke-width','2');
-  svg.appendChild(path);
+  }
+
+  // Conectar rondas derecha
+  for(let r=0; r<rightRounds.length-1; r++){
+    const roundA = rightSide.querySelectorAll('.round')[r];
+    const roundB = rightSide.querySelectorAll('.round')[r+1];
+    const matchesA = roundA.querySelectorAll('.match');
+    const matchesB = roundB.querySelectorAll('.match');
+
+    for(let i=0;i<matchesA.length;i+=2){
+      const from1 = centerLeft(matchesA[i]);
+      const from2 = centerLeft(matchesA[i+1]);
+      const to   = centerRight(matchesB[Math.floor(i/2)]);
+      path(from1.x, from1.y, to.x, to.y);
+      path(from2.x, from2.y, to.x, to.y);
+    }
+  }
+
+  // Conectar semifinal izquierda con final
+  const semiL = leftSide.querySelectorAll('.round:last-child .match')[0];
+  const semiR = rightSide.querySelectorAll('.round:last-child .match')[0];
+  const finalBox = document.querySelector('.final-label');
+  const finalRect = finalBox.getBoundingClientRect();
+  const finalY = finalRect.top + finalRect.height/2 - wrapRect.top;
+  const finalLeftX  = finalRect.left - wrapRect.left;
+  const finalRightX = finalRect.right - wrapRect.left;
+
+  path(centerRight(semiL).x, centerRight(semiL).y, finalLeftX, finalY);
+  path(centerLeft(semiR).x,  centerLeft(semiR).y,  finalRightX, finalY);
 }
 
-window.addEventListener('load', ()=> setTimeout(drawLines,100));
-window.addEventListener('resize', ()=> setTimeout(drawLines,100));
+window.addEventListener('load', ()=>setTimeout(drawLines,120));
+window.addEventListener('resize', ()=>setTimeout(drawLines,120));
 </script>
 </body>
 </html>
+
