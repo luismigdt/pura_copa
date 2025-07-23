@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>PURA COPA - Cuadro Eliminatorio Mejorado</title>
+  <title>PURA COPA</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
@@ -178,55 +178,63 @@
       <svg class="svg-lines" id="svg-lines"></svg>
     </div>
   </div>
-  <script>
-    function line(x1, y1, x2, y2) {
-      return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#e0bfc0" stroke-width="4" />`;
+ <script>
+function line(x1, y1, x2, y2) {
+  return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#e0bfc0" stroke-width="4" />`;
+}
+function drawBracketLines() {
+  const grid = document.getElementById('bracket');
+  const svg = document.getElementById('svg-lines');
+  svg.innerHTML = '';
+  function getCellCenter(col, row) {
+    const q = document.querySelector(
+      `.bracket > .cell[style*="grid-column:${col};"][style*="grid-row:${row};"] > .match`
+    );
+    if (!q) return {x:0,y:0};
+    const r = q.getBoundingClientRect();
+    const gridr = grid.getBoundingClientRect();
+    return {
+      x: r.left + r.width/2 - gridr.left,
+      y: r.top + r.height/2 - gridr.top
     }
-    function drawBracketLines() {
-      const grid = document.getElementById('bracket');
-      const svg = document.getElementById('svg-lines');
-      svg.innerHTML = '';
-      function getCellCenter(col, row) {
-        const q = document.querySelector(
-          `.bracket > .cell[style*="grid-column:${col};"][style*="grid-row:${row};"] > .match`
-        );
-        if (!q) return {x:0,y:0};
-        const r = q.getBoundingClientRect();
-        const gridr = grid.getBoundingClientRect();
-        return {
-          x: r.left + r.width/2 - gridr.left,
-          y: r.top + r.height/2 - gridr.top
-        }
-      }
-      // Octavos a cuartos (izq y der)
-      for(let i=1; i<=7; i+=2) {
-        // Izquierda
-        let l1 = getCellCenter(1,i), l2 = getCellCenter(1,i+1), lq = getCellCenter(3,i+1);
-        svg.innerHTML += line(l1.x+105, l1.y, lq.x-105, lq.y);
-        svg.innerHTML += line(l2.x+105, l2.y, lq.x-105, lq.y);
-        // Derecha
-        let r1 = getCellCenter(9,i), r2 = getCellCenter(9,i+1), rq = getCellCenter(7,i+1);
-        svg.innerHTML += line(r1.x-105, r1.y, rq.x+105, rq.y);
-        svg.innerHTML += line(r2.x-105, r2.y, rq.x+105, rq.y);
-      }
-      // Cuartos a semis (izq y der)
-      for(let i=2; i<=8; i+=4) {
-        // Izquierda
-        let lq1 = getCellCenter(3,i), lq2 = getCellCenter(3,i+2), ls = getCellCenter(5,3);
-        svg.innerHTML += line(lq1.x+105, lq1.y, ls.x-105, ls.y);
-        svg.innerHTML += line(lq2.x+105, lq2.y, ls.x-105, ls.y);
-        // Derecha
-        let rq1 = getCellCenter(7,i), rq2 = getCellCenter(7,i+2), rs = getCellCenter(5,7);
-        svg.innerHTML += line(rq1.x-105, rq1.y, rs.x+105, rs.y);
-        svg.innerHTML += line(rq2.x-105, rq2.y, rs.x+105, rs.y);
-      }
-      // Semis a final (ambos lados)
-      let sf1 = getCellCenter(5,3), sf2 = getCellCenter(5,7), final = getCellCenter(5,5);
-      svg.innerHTML += line(sf1.x, sf1.y+40, final.x, final.y-24);
-      svg.innerHTML += line(sf2.x, sf2.y-40, final.x, final.y+24);
-    }
-    window.addEventListener('DOMContentLoaded',()=>{setTimeout(drawBracketLines, 120)});
-    window.addEventListener('resize',()=>setTimeout(drawBracketLines,120));
-  </script>
+  }
+  // Octavos a cuartos (izq y der)
+  for(let i=1; i<=7; i+=2) {
+    // Izquierda
+    let l1 = getCellCenter(1,i), l2 = getCellCenter(1,i+1), lq = getCellCenter(3,i+1);
+    svg.innerHTML += line(l1.x+105, l1.y, lq.x-105, lq.y);
+    svg.innerHTML += line(l2.x+105, l2.y, lq.x-105, lq.y);
+    // Derecha
+    let r1 = getCellCenter(9,i), r2 = getCellCenter(9,i+1), rq = getCellCenter(7,i+1);
+    svg.innerHTML += line(r1.x-105, r1.y, rq.x+105, rq.y);
+    svg.innerHTML += line(r2.x-105, r2.y, rq.x+105, rq.y);
+  }
+  // CUARTOS a SEMIS -- NUEVO: conecta A/B con E/F y C/D con G/H
+  // Semifinal superior (A/B vs E/F): cuartos izq (A,B) y der (E,F)
+  let s1 = getCellCenter(5,3);
+  let a = getCellCenter(3,2), b = getCellCenter(3,4);
+  let e = getCellCenter(7,2), f = getCellCenter(7,4);
+  svg.innerHTML += line(a.x+105, a.y, s1.x-105, s1.y);
+  svg.innerHTML += line(b.x+105, b.y, s1.x-105, s1.y);
+  svg.innerHTML += line(e.x-105, e.y, s1.x+105, s1.y);
+  svg.innerHTML += line(f.x-105, f.y, s1.x+105, s1.y);
+  // Semifinal inferior (C/D vs G/H): cuartos izq (C,D) y der (G,H)
+  let s2 = getCellCenter(5,7);
+  let c = getCellCenter(3,6), d = getCellCenter(3,8);
+  let g = getCellCenter(7,6), h = getCellCenter(7,8);
+  svg.innerHTML += line(c.x+105, c.y, s2.x-105, s2.y);
+  svg.innerHTML += line(d.x+105, d.y, s2.x-105, s2.y);
+  svg.innerHTML += line(g.x-105, g.y, s2.x+105, s2.y);
+  svg.innerHTML += line(h.x-105, h.y, s2.x+105, s2.y);
+
+  // Semis a Final
+  let final = getCellCenter(5,5);
+  svg.innerHTML += line(s1.x, s1.y+40, final.x, final.y-24);
+  svg.innerHTML += line(s2.x, s2.y-40, final.x, final.y+24);
+}
+window.addEventListener('DOMContentLoaded',()=>{setTimeout(drawBracketLines, 120)});
+window.addEventListener('resize',()=>setTimeout(drawBracketLines,120));
+</script>
+
 </body>
 </html>
