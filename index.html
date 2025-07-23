@@ -168,6 +168,26 @@
   	cursor: pointer;
   	transition: background 0.18s;
 	}
+	  .bracket-container {
+  display: grid;
+  grid-template-columns: repeat(9, 180px);
+  justify-content: center;
+  overflow-x: auto;
+}
+
+.rondas-grid {
+  display: contents;
+}
+
+.ronda {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1rem;
+  color: #fff;
+  margin-bottom: 8px;
+  text-shadow: 0 1px 4px #900d29bb;
+}
+
 	#ir-arriba:hover { background: #e0bfc0cc; color: #900d29;}
 	@media (max-width:900px) {
   	.bracket { min-width: 700px; grid-template-columns: repeat(9, 92px);}
@@ -190,17 +210,30 @@
   </style>
 </head>
 <body>
+	<div class="bracket-container">
+  <div class="rondas-grid">
+    <div class="ronda" style="grid-column: 1 / 2;">OCTAVOS</div>
+    <div class="ronda" style="grid-column: 3 / 4;">CUARTOS</div>
+    <div class="ronda" style="grid-column: 5 / 6;">SEMIFINALES</div>
+    <div class="ronda" style="grid-column: 7 / 8;">CUARTOS</div>
+    <div class="ronda" style="grid-column: 9 / 10;">OCTAVOS</div>
+  </div>
+  <div class="bracket" id="bracket">
+    <!-- tus partidos aquí -->
+  </div>
+</div>
+
   <div class="header-logo-bar">
 	<img src="puracopa.png" alt="Pura Copa Logo" class="logo-titulo" />
 	<span class="header">PURA COPA</span>
 	<img src="puracopa.png" alt="Pura Copa Logo" class="logo-titulo" />
   </div>
-  <div class="rondas-bar">
+ <!-- <div class="rondas-bar">
 	<span>OCTAVOS</span>
 	<span>CUARTOS</span>
 	<span>SEMIFINALES</span>
 	<span>FINAL</span>
-  </div>
+  </div> -->
   <div class="mobile-scroll-msg">Desliza lateralmente para ver el cuadro completo</div>
   <div class="bracket-wrap">
 	<div class="bracket" id="bracket">
