@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -6,11 +7,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <link rel="icon" type="image/png" href="puracopa.png">
   <style>
-    body {
-      margin: 0;
+    html, body {
+      margin: 0; padding: 0;
       background: #900d29;
       font-family: Arial, Helvetica, sans-serif;
       color: #fff;
+      width: 100vw;
+      overflow-x: hidden;
     }
     .header-logo-bar {
       display: flex;
@@ -41,11 +44,11 @@
       object-fit: contain;
       vertical-align: middle;
     }
-    /* Barra de rondas alineada con el grid */
     .rondas-grid-bar-wrap {
-      width: 100%;
+      width: 100vw;
       overflow-x: auto;
-      margin-bottom: -6px;
+      margin-bottom: -8px;
+      /* Permite que la barra nunca tape la primera columna */
     }
     .rondas-grid-bar {
       display: grid;
@@ -55,6 +58,7 @@
       margin: 0 auto;
       gap: 0;
       position: relative;
+      pointer-events: none;
     }
     .ronda-label {
       background: #3d0317;
@@ -72,6 +76,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      pointer-events: auto;
     }
     .ronda-label.empty { background: none; border: none; }
     .mobile-scroll-msg {
@@ -86,10 +91,11 @@
       .mobile-scroll-msg { display: block; }
     }
     .bracket-wrap {
-      width: 100%;
+      width: 100vw;
       overflow-x: auto;
       padding-bottom: 38px;
       scroll-snap-type: x proximity;
+      -webkit-overflow-scrolling: touch;
     }
     .bracket {
       display: grid;
@@ -124,6 +130,31 @@
       overflow: hidden;
       cursor: pointer;
     }
+    .match-final, .match-final-label {
+      min-width: 180px;
+      max-width: 240px;
+      min-height: 50px;
+      font-size: 1.19rem;
+      background: #e0bfc0;
+      color: #900d29;
+      border: 3px solid #900d29;
+      justify-content: center;
+      text-align: center;
+      margin: 1.5px auto;
+      box-shadow: 0 6px 20px #900d2942;
+      z-index: 9;
+    }
+    .match-final-label {
+      background: #ffe5f4;
+      font-size: 1.1rem;
+      min-height: 40px;
+      max-width: 235px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      border-radius: 9px 9px 9px 9px;
+      border: 2px solid #c095b9;
+      margin-bottom: 2px;
+    }
     .match:hover {
       background: #ffe4ee;
       color: #660020;
@@ -131,6 +162,7 @@
       z-index: 10;
       border-color: #c02050;
     }
+    .match:hover .score { background: #900d29; color: #fff;}
     .score {
       display: inline-block;
       min-width: 34px;
@@ -149,10 +181,6 @@
       border: 1.5px solid #900d2940;
       vertical-align: middle;
       transition: background 0.18s, color 0.18s;
-    }
-    .match:hover .score {
-      background: #900d29;
-      color: #fff;
     }
     .svg-lines {
       position: absolute;
@@ -184,6 +212,7 @@
     @media (max-width:900px) {
       .bracket, .rondas-grid-bar { min-width: 700px; grid-template-columns: repeat(9, 92px);}
       .match { min-width: 66px; max-width: 96px; font-size:0.87rem; padding-left:7px;}
+      .match-final, .match-final-label { min-width:98px; max-width:120px; font-size:1.02rem;}
       .score { font-size:0.88rem; min-width:22px; margin-right:4px;}
       .logo-titulo { width:32px; height:36px;}
       .header { font-size: 1.3rem; margin:0 12px;}
@@ -192,6 +221,7 @@
     @media (max-width:650px) {
       .bracket, .rondas-grid-bar { min-width: 430px; grid-template-columns: repeat(9, 47px);}
       .match { min-width: 34px; max-width: 50px; font-size:0.64rem; padding-left:4px;}
+      .match-final, .match-final-label { min-width:53px; max-width:70px; font-size:0.71rem;}
       .score { font-size:0.68rem; min-width:13px;}
       .logo-titulo { width:19px; height:21px;}
       .header { font-size: 0.88rem; margin:0 4px;}
@@ -219,20 +249,7 @@
       <span class="ronda-label empty"></span>
       <span class="ronda-label">OCTAVOS</span>
     </div>
-    <!-- Pura Final SOLO encima del cuadro de la final, centrado en columna 5, fila aparte -->
-    <div class="rondas-grid-bar" style="margin-top: 18px; margin-bottom: -14px;">
-      <span class="ronda-label empty"></span>
-      <span class="ronda-label empty"></span>
-      <span class="ronda-label empty"></span>
-      <span class="ronda-label empty"></span>
-      <span class="ronda-label" style="background:#e0bfc0;color:#900d29;border-color:#900d29;">PURA FINAL</span>
-      <span class="ronda-label empty"></span>
-      <span class="ronda-label empty"></span>
-      <span class="ronda-label empty"></span>
-      <span class="ronda-label empty"></span>
-    </div>
   </div>
-
   <div class="mobile-scroll-msg">Desliza lateralmente para ver el cuadro completo</div>
   <div class="bracket-wrap">
     <div class="bracket" id="bracket">
@@ -254,9 +271,13 @@
       <!-- SEMIFINALES -->
       <div class="cell" style="grid-column:5;grid-row:3;"><div class="match">A/B VS E/F <span class="score">-</span></div></div>
       <div class="cell" style="grid-column:5;grid-row:7;"><div class="match">C/D VS G/H <span class="score">-</span></div></div>
-      <!-- FINAL (centrada) -->
-      <div class="cell" style="grid-column:5;grid-row:5;z-index:3;">
-        <div class="match" style="text-align:center;justify-content:center;font-size:1.13rem;">GRAN FINAL <span class="score">-</span></div>
+      <!-- PURA FINAL (label destacado, grande, pegado a la final) -->
+      <div class="cell" style="grid-column:5;grid-row:4;z-index:12;">
+        <div class="match-final-label">PURA FINAL</div>
+      </div>
+      <!-- FINAL (centrada, grande) -->
+      <div class="cell" style="grid-column:5;grid-row:5;z-index:13;">
+        <div class="match match-final" style="text-align:center;justify-content:center;">GRAN FINAL <span class="score">-</span></div>
       </div>
       <!-- CUARTOS derecha -->
       <div class="cell" style="grid-column:7;grid-row:2;"><div class="match">E <span class="score">-</span></div></div>
@@ -291,7 +312,8 @@
       svg.innerHTML = '';
       function getCellCenter(col, row) {
         const q = document.querySelector(
-          `.bracket > .cell[style*="grid-column:${col};"][style*="grid-row:${row};"] > .match`
+          `.bracket > .cell[style*="grid-column:${col};"][style*="grid-row:${row};"] > .match, 
+           .bracket > .cell[style*="grid-column:${col};"][style*="grid-row:${row};"] > .match-final`
         );
         if (!q) return {x:0,y:0};
         const r = q.getBoundingClientRect();
@@ -305,39 +327,38 @@
       for(let i=1; i<=7; i+=2) {
         // Izquierda
         let l1 = getCellCenter(1,i), l2 = getCellCenter(1,i+1), lq = getCellCenter(3,i+1);
-        svg.innerHTML += line(l1.x+86, l1.y, lq.x-86, lq.y);
-        svg.innerHTML += line(l2.x+86, l2.y, lq.x-86, lq.y);
+        svg.innerHTML += line(l1.x+80, l1.y, lq.x-80, lq.y);
+        svg.innerHTML += line(l2.x+80, l2.y, lq.x-80, lq.y);
         // Derecha
         let r1 = getCellCenter(9,i), r2 = getCellCenter(9,i+1), rq = getCellCenter(7,i+1);
-        svg.innerHTML += line(r1.x-86, r1.y, rq.x+86, rq.y);
-        svg.innerHTML += line(r2.x-86, r2.y, rq.x+86, rq.y);
+        svg.innerHTML += line(r1.x-80, r1.y, rq.x+80, rq.y);
+        svg.innerHTML += line(r2.x-80, r2.y, rq.x+80, rq.y);
       }
-      // Cuartos a semis: conecta A/B y E/F a la semifinal de arriba; C/D y G/H a la de abajo
+      // CUARTOS a SEMIS -- NUEVO: conecta A/B con E/F y C/D con G/H
       // Semifinal superior (A/B vs E/F): cuartos izq (A,B) y der (E,F)
       let s1 = getCellCenter(5,3);
       let a = getCellCenter(3,2), b = getCellCenter(3,4);
       let e = getCellCenter(7,2), f = getCellCenter(7,4);
-      svg.innerHTML += line(a.x+86, a.y, s1.x-86, s1.y);
-      svg.innerHTML += line(b.x+86, b.y, s1.x-86, s1.y);
-      svg.innerHTML += line(e.x-86, e.y, s1.x+86, s1.y);
-      svg.innerHTML += line(f.x-86, f.y, s1.x+86, s1.y);
+      svg.innerHTML += line(a.x+80, a.y, s1.x-80, s1.y);
+      svg.innerHTML += line(b.x+80, b.y, s1.x-80, s1.y);
+      svg.innerHTML += line(e.x-80, e.y, s1.x+80, s1.y);
+      svg.innerHTML += line(f.x-80, f.y, s1.x+80, s1.y);
       // Semifinal inferior (C/D vs G/H): cuartos izq (C,D) y der (G,H)
       let s2 = getCellCenter(5,7);
       let c = getCellCenter(3,6), d = getCellCenter(3,8);
       let g = getCellCenter(7,6), h = getCellCenter(7,8);
-      svg.innerHTML += line(c.x+86, c.y, s2.x-86, s2.y);
-      svg.innerHTML += line(d.x+86, d.y, s2.x-86, s2.y);
-      svg.innerHTML += line(g.x-86, g.y, s2.x+86, s2.y);
-      svg.innerHTML += line(h.x-86, h.y, s2.x+86, s2.y);
+      svg.innerHTML += line(c.x+80, c.y, s2.x-80, s2.y);
+      svg.innerHTML += line(d.x+80, d.y, s2.x-80, s2.y);
+      svg.innerHTML += line(g.x-80, g.y, s2.x+80, s2.y);
+      svg.innerHTML += line(h.x-80, h.y, s2.x+80, s2.y);
 
       // Semis a Final
       let final = getCellCenter(5,5);
-      svg.innerHTML += line(s1.x, s1.y+28, final.x, final.y-18);
-      svg.innerHTML += line(s2.x, s2.y-28, final.x, final.y+18);
+      svg.innerHTML += line(s1.x, s1.y+35, final.x, final.y-20);
+      svg.innerHTML += line(s2.x, s2.y-35, final.x, final.y+20);
     }
     window.addEventListener('DOMContentLoaded',()=>{setTimeout(drawBracketLines, 120)});
     window.addEventListener('resize',()=>setTimeout(drawBracketLines,120));
-
     // Botón IR ARRIBA
     const btnArriba = document.getElementById('ir-arriba');
     window.addEventListener('scroll', function() {
