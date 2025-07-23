@@ -357,9 +357,7 @@
       svg.innerHTML += line(s1.x, s1.y+34, puraFinal.x, puraFinal.y-34);
       svg.innerHTML += line(s2.x, s2.y-34, puraFinal.x, puraFinal.y+34);
 
-      // PURA FINAL a GRAN FINAL
-      let granFinal = getCellCenter(5,7,".cell > .gran-final-box");
-      svg.innerHTML += line(puraFinal.x, puraFinal.y+38, granFinal.x, granFinal.y-38);
+      // NO DIBUJAR línea de PURA FINAL a GRAN FINAL
     }
     window.addEventListener('DOMContentLoaded',()=>{setTimeout(drawBracketLines, 150)});
     window.addEventListener('resize',()=>setTimeout(drawBracketLines,150));
@@ -382,4 +380,3 @@
   </script>
 </body>
 </html>
-
