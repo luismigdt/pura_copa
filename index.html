@@ -12,7 +12,6 @@
       font-family: Arial, Helvetica, sans-serif;
       color: #fff;
     }
-    /* HEADER LOGO BAR */
     .header-logo-bar {
       display: flex;
       align-items: center;
@@ -42,26 +41,40 @@
       object-fit: contain;
       vertical-align: middle;
     }
-    /* RONDAS BAR */
-    .rondas-bar {
-      display: flex;
+    /* Barra de rondas alineada con el grid */
+    .rondas-grid-bar-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin-bottom: -6px;
+    }
+    .rondas-grid-bar {
+      display: grid;
+      grid-template-columns: repeat(9, 180px);
       justify-content: center;
-      gap: 35px;
-      margin: 16px 0 -4px 0;
+      min-width: 1420px;
+      margin: 0 auto;
+      gap: 0;
+      position: relative;
+    }
+    .ronda-label {
+      background: #3d0317;
+      border-radius: 8px;
+      padding: 3px 10px;
+      min-width: 60px;
+      text-align: center;
+      border: 1.5px solid #e0bfc0;
       font-size: 1.09rem;
       font-weight: bold;
       letter-spacing: 1.4px;
       color: #fff;
       text-shadow: 0 1px 4px #900d29bb;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .rondas-bar span {
-      background: #3d0317;
-      border-radius: 8px;
-      padding: 3px 24px 3px 24px;
-      min-width: 100px;
-      text-align: center;
-      border: 1.5px solid #e0bfc0;
-    }
+    /* Oculta columnas vacías */
+    .ronda-label.empty { background: none; border: none; }
     .mobile-scroll-msg {
       display: none;
       text-align: center;
@@ -170,22 +183,20 @@
     }
     #ir-arriba:hover { background: #e0bfc0cc; color: #900d29;}
     @media (max-width:900px) {
-      .bracket { min-width: 700px; grid-template-columns: repeat(9, 92px);}
+      .bracket, .rondas-grid-bar { min-width: 700px; grid-template-columns: repeat(9, 92px);}
       .match { min-width: 66px; max-width: 96px; font-size:0.87rem; padding-left:7px;}
       .score { font-size:0.88rem; min-width:22px; margin-right:4px;}
       .logo-titulo { width:32px; height:36px;}
       .header { font-size: 1.3rem; margin:0 12px;}
-      .rondas-bar { gap: 11px; font-size:0.97rem;}
-      .rondas-bar span { font-size:0.95rem; padding:2px 8px;}
+      .ronda-label { font-size:0.95rem; padding:2px 2px;}
     }
     @media (max-width:650px) {
-      .bracket { min-width: 430px; grid-template-columns: repeat(9, 47px);}
+      .bracket, .rondas-grid-bar { min-width: 430px; grid-template-columns: repeat(9, 47px);}
       .match { min-width: 34px; max-width: 50px; font-size:0.64rem; padding-left:4px;}
       .score { font-size:0.68rem; min-width:13px;}
       .logo-titulo { width:19px; height:21px;}
       .header { font-size: 0.88rem; margin:0 4px;}
-      .rondas-bar { gap: 2px; font-size:0.8rem;}
-      .rondas-bar span { font-size:0.72rem; padding:2px 4px;}
+      .ronda-label { font-size:0.72rem; padding:1px 0;}
     }
   </style>
 </head>
@@ -195,12 +206,22 @@
     <span class="header">PURA COPA</span>
     <img src="puracopa.png" alt="Pura Copa Logo" class="logo-titulo" />
   </div>
-  <div class="rondas-bar">
-    <span>OCTAVOS</span>
-    <span>CUARTOS</span>
-    <span>SEMIFINALES</span>
-    <span>FINAL</span>
+
+  <!-- Barra de rondas perfectamente alineada con las columnas -->
+  <div class="rondas-grid-bar-wrap">
+    <div class="rondas-grid-bar">
+      <span class="ronda-label">OCTAVOS</span>
+      <span class="ronda-label empty"></span>
+      <span class="ronda-label">CUARTOS</span>
+      <span class="ronda-label empty"></span>
+      <span class="ronda-label">SEMIFINALES</span>
+      <span class="ronda-label empty"></span>
+      <span class="ronda-label">CUARTOS</span>
+      <span class="ronda-label empty"></span>
+      <span class="ronda-label">OCTAVOS</span>
+    </div>
   </div>
+
   <div class="mobile-scroll-msg">Desliza lateralmente para ver el cuadro completo</div>
   <div class="bracket-wrap">
     <div class="bracket" id="bracket">
