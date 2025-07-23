@@ -2,8 +2,8 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>PURA COPA</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PURA COPA - Cuadro Eliminatorio Mejorado</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <style>
     body {
       margin: 0;
@@ -13,45 +13,60 @@
     }
     .header {
       text-align: center;
-      font-size: 2.7rem;
+      font-size: 2.6rem;
       font-weight: bold;
       letter-spacing: 2.5px;
-      padding: 22px 0 10px 0;
+      padding: 20px 0 10px 0;
       background: #900d29;
       border-bottom: 4px solid #fff;
+    }
+    .rondas-bar {
+      display: flex;
+      justify-content: center;
+      gap: 35px;
+      margin: 16px 0 -4px 0;
+      font-size: 1.09rem;
+      font-weight: bold;
+      letter-spacing: 1.4px;
+      color: #fff;
+      text-shadow: 0 1px 4px #900d29bb;
+    }
+    .rondas-bar span {
+      background: #3d0317;
+      border-radius: 8px;
+      padding: 3px 24px 3px 24px;
+      min-width: 100px;
+      text-align: center;
+      border: 1.5px solid #e0bfc0;
+    }
+    .mobile-scroll-msg {
+      display: none;
+      text-align: center;
+      font-size: 1rem;
+      margin: 10px 0 2px 0;
+      color: #fff;
+      letter-spacing: 1px;
+    }
+    @media (max-width:900px) {
+      .mobile-scroll-msg { display: block; }
     }
     .bracket-wrap {
       width: 100%;
       overflow-x: auto;
-      padding-bottom: 40px;
+      padding-bottom: 38px;
     }
     .bracket {
       display: grid;
-      grid-template-columns: 210px 60px 210px 60px 210px 60px 210px 60px 210px;
-      grid-template-rows: repeat(8, 70px); /* 8 partidos por lado */
+      grid-template-columns: repeat(9, 180px);
+      grid-template-rows: repeat(8, 70px);
       justify-content: center;
       align-items: center;
       position: relative;
-      min-width: 1300px;
+      min-width: 1420px;
       margin: 0 auto;
-      margin-top: 30px;
-      margin-bottom: 0;
+      margin-top: 0;
     }
     .cell { position: relative; z-index: 5; }
-    .ronda {
-      position: absolute;
-      top: -38px; left: 0; right: 0;
-      text-align: center;
-      background: #3d0317;
-      color: #fff;
-      font-size: 1.08rem;
-      font-weight: bold;
-      letter-spacing: 1.2px;
-      border-radius: 8px;
-      padding: 3px 0;
-      z-index: 10;
-      min-width: 110px;
-    }
     .match {
       display: flex;
       align-items: center;
@@ -60,37 +75,24 @@
       color: #900d29;
       border-radius: 7px;
       border: 2.5px solid #e0bfc0;
-      min-height: 45px;
-      min-width: 156px;
-      max-width: 210px;
+      min-height: 46px;
+      min-width: 114px;
+      max-width: 170px;
       font-weight: bold;
-      font-size: 1.13rem;
+      font-size: 1.06rem;
       letter-spacing: 1px;
-      margin: 6px 0;
-      padding-left: 16px;
+      margin: 4px 0;
+      padding-left: 14px;
       box-shadow: 0 2px 8px #3d031730;
       position: relative;
-    }
-    .score {
-      display: inline-block;
-      min-width: 24px;
-      text-align: center;
-      background: #900d29;
-      color: #fff;
-      font-size: 1.1rem;
-      font-weight: bold;
-      border-radius: 4px;
-      margin-left: 8px;
-      margin-right: 2px;
-      padding: 1px 6px 1px 6px;
-      position: relative;
-      z-index: 3;
+      transition: background 0.2s;
+      overflow: hidden;
     }
     .logo-copa {
       position: absolute;
       left: 50%; top: 52%;
       transform: translate(-50%,-50%);
-      width: 154px; height: 170px;
+      width: 110px; height: 125px;
       background: url('puracopa.png') center/contain no-repeat;
       opacity: 1;
       z-index: 1;
@@ -104,34 +106,32 @@
       pointer-events: none;
       z-index: 2;
     }
-    /* Responsive (escala horizontal) */
-    @media (max-width:1300px) {
-      .bracket { min-width: 1100px; }
-    }
-    @media (max-width:1100px) {
-      .bracket { min-width: 900px; }
-      .header { font-size: 2rem;}
-    }
+    /* Responsive: columnas más estrechas, texto más pequeño en móvil */
     @media (max-width:900px) {
-      .bracket { min-width: 650px; }
+      .bracket { min-width: 700px; grid-template-columns: repeat(9, 92px);}
+      .match { min-width: 66px; max-width: 96px; font-size:0.92rem; padding-left:7px;}
+      .logo-copa { width:60px; height:70px;}
+      .rondas-bar span { font-size:0.97rem; padding:2px 9px;}
     }
-    @media (max-width:700px) {
-      .bracket { min-width: 400px; }
+    @media (max-width:650px) {
+      .bracket { min-width: 430px; grid-template-columns: repeat(9, 47px);}
+      .match { min-width: 34px; max-width: 50px; font-size:0.69rem; padding-left:4px;}
+      .logo-copa { width:38px; height:42px;}
+      .rondas-bar span { font-size:0.8rem; padding:2px 4px;}
     }
   </style>
 </head>
 <body>
   <div class="header">PURA COPA</div>
+  <div class="rondas-bar">
+    <span>OCTAVOS</span>
+    <span>CUARTOS</span>
+    <span>SEMIFINALES</span>
+    <span>FINAL</span>
+  </div>
+  <div class="mobile-scroll-msg">Desliza lateralmente para ver el cuadro completo</div>
   <div class="bracket-wrap">
     <div class="bracket" id="bracket">
-
-      <!-- TÍTULOS DE RONDAS -->
-      <div class="cell" style="grid-column:1;grid-row:1;"><div class="ronda">OCTAVOS</div></div>
-      <div class="cell" style="grid-column:3;grid-row:1;"><div class="ronda">CUARTOS</div></div>
-      <div class="cell" style="grid-column:5;grid-row:2;"><div class="ronda">SEMIFINAL</div></div>
-      <div class="cell" style="grid-column:5;grid-row:5;"><div class="ronda">FINAL</div></div>
-      <div class="cell" style="grid-column:7;grid-row:1;"><div class="ronda">CUARTOS</div></div>
-      <div class="cell" style="grid-column:9;grid-row:1;"><div class="ronda">OCTAVOS</div></div>
 
       <!-- OCTAVOS izquierda -->
       <div class="cell" style="grid-column:1;grid-row:1;"><div class="match">1º GRUPO 1</div></div>
@@ -142,26 +142,23 @@
       <div class="cell" style="grid-column:1;grid-row:6;"><div class="match">7º GRUPO 2</div></div>
       <div class="cell" style="grid-column:1;grid-row:7;"><div class="match">3º GRUPO 1</div></div>
       <div class="cell" style="grid-column:1;grid-row:8;"><div class="match">6º GRUPO 2</div></div>
-
       <!-- CUARTOS izquierda -->
       <div class="cell" style="grid-column:3;grid-row:2;"><div class="match">A</div></div>
       <div class="cell" style="grid-column:3;grid-row:4;"><div class="match">B</div></div>
       <div class="cell" style="grid-column:3;grid-row:6;"><div class="match">C</div></div>
       <div class="cell" style="grid-column:3;grid-row:8;"><div class="match">D</div></div>
-
-      <!-- SEMIFINAL -->
+      <!-- SEMIFINALES -->
       <div class="cell" style="grid-column:5;grid-row:3;"><div class="match">A/B VS E/F</div></div>
       <div class="cell" style="grid-column:5;grid-row:7;"><div class="match">C/D VS G/H</div></div>
-
-      <!-- FINAL (bien centrada, nueva fila 5) -->
-      <div class="cell" style="grid-column:5;grid-row:5;z-index:3;"><div class="match" style="text-align:center;justify-content:center;font-size:1.2rem;">GRAN FINAL</div></div>
-
+      <!-- FINAL (centrada) -->
+      <div class="cell" style="grid-column:5;grid-row:5;z-index:3;">
+        <div class="match" style="text-align:center;justify-content:center;font-size:1.13rem;">GRAN FINAL</div>
+      </div>
       <!-- CUARTOS derecha -->
       <div class="cell" style="grid-column:7;grid-row:2;"><div class="match">E</div></div>
       <div class="cell" style="grid-column:7;grid-row:4;"><div class="match">F</div></div>
       <div class="cell" style="grid-column:7;grid-row:6;"><div class="match">G</div></div>
       <div class="cell" style="grid-column:7;grid-row:8;"><div class="match">H</div></div>
-
       <!-- OCTAVOS derecha -->
       <div class="cell" style="grid-column:9;grid-row:1;"><div class="match">1º GRUPO 2</div></div>
       <div class="cell" style="grid-column:9;grid-row:2;"><div class="match">8º GRUPO 1</div></div>
@@ -171,70 +168,67 @@
       <div class="cell" style="grid-column:9;grid-row:6;"><div class="match">7º GRUPO 1</div></div>
       <div class="cell" style="grid-column:9;grid-row:7;"><div class="match">3º GRUPO 2</div></div>
       <div class="cell" style="grid-column:9;grid-row:8;"><div class="match">6º GRUPO 1</div></div>
-
       <!-- LOGO -->
       <div class="logo-copa"></div>
       <!-- LÍNEAS SVG -->
       <svg class="svg-lines" id="svg-lines"></svg>
     </div>
   </div>
- <script>
-function line(x1, y1, x2, y2) {
-  return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#e0bfc0" stroke-width="4" />`;
-}
-function drawBracketLines() {
-  const grid = document.getElementById('bracket');
-  const svg = document.getElementById('svg-lines');
-  svg.innerHTML = '';
-  function getCellCenter(col, row) {
-    const q = document.querySelector(
-      `.bracket > .cell[style*="grid-column:${col};"][style*="grid-row:${row};"] > .match`
-    );
-    if (!q) return {x:0,y:0};
-    const r = q.getBoundingClientRect();
-    const gridr = grid.getBoundingClientRect();
-    return {
-      x: r.left + r.width/2 - gridr.left,
-      y: r.top + r.height/2 - gridr.top
+  <script>
+    function line(x1, y1, x2, y2) {
+      return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#e0bfc0" stroke-width="4" />`;
     }
-  }
-  // Octavos a cuartos (izq y der)
-  for(let i=1; i<=7; i+=2) {
-    // Izquierda
-    let l1 = getCellCenter(1,i), l2 = getCellCenter(1,i+1), lq = getCellCenter(3,i+1);
-    svg.innerHTML += line(l1.x+105, l1.y, lq.x-105, lq.y);
-    svg.innerHTML += line(l2.x+105, l2.y, lq.x-105, lq.y);
-    // Derecha
-    let r1 = getCellCenter(9,i), r2 = getCellCenter(9,i+1), rq = getCellCenter(7,i+1);
-    svg.innerHTML += line(r1.x-105, r1.y, rq.x+105, rq.y);
-    svg.innerHTML += line(r2.x-105, r2.y, rq.x+105, rq.y);
-  }
-  // CUARTOS a SEMIS -- NUEVO: conecta A/B con E/F y C/D con G/H
-  // Semifinal superior (A/B vs E/F): cuartos izq (A,B) y der (E,F)
-  let s1 = getCellCenter(5,3);
-  let a = getCellCenter(3,2), b = getCellCenter(3,4);
-  let e = getCellCenter(7,2), f = getCellCenter(7,4);
-  svg.innerHTML += line(a.x+105, a.y, s1.x-105, s1.y);
-  svg.innerHTML += line(b.x+105, b.y, s1.x-105, s1.y);
-  svg.innerHTML += line(e.x-105, e.y, s1.x+105, s1.y);
-  svg.innerHTML += line(f.x-105, f.y, s1.x+105, s1.y);
-  // Semifinal inferior (C/D vs G/H): cuartos izq (C,D) y der (G,H)
-  let s2 = getCellCenter(5,7);
-  let c = getCellCenter(3,6), d = getCellCenter(3,8);
-  let g = getCellCenter(7,6), h = getCellCenter(7,8);
-  svg.innerHTML += line(c.x+105, c.y, s2.x-105, s2.y);
-  svg.innerHTML += line(d.x+105, d.y, s2.x-105, s2.y);
-  svg.innerHTML += line(g.x-105, g.y, s2.x+105, s2.y);
-  svg.innerHTML += line(h.x-105, h.y, s2.x+105, s2.y);
-
-  // Semis a Final
-  let final = getCellCenter(5,5);
-  svg.innerHTML += line(s1.x, s1.y+40, final.x, final.y-24);
-  svg.innerHTML += line(s2.x, s2.y-40, final.x, final.y+24);
-}
-window.addEventListener('DOMContentLoaded',()=>{setTimeout(drawBracketLines, 120)});
-window.addEventListener('resize',()=>setTimeout(drawBracketLines,120));
-</script>
-
+    function drawBracketLines() {
+      const grid = document.getElementById('bracket');
+      const svg = document.getElementById('svg-lines');
+      svg.innerHTML = '';
+      function getCellCenter(col, row) {
+        const q = document.querySelector(
+          `.bracket > .cell[style*="grid-column:${col};"][style*="grid-row:${row};"] > .match`
+        );
+        if (!q) return {x:0,y:0};
+        const r = q.getBoundingClientRect();
+        const gridr = grid.getBoundingClientRect();
+        return {
+          x: r.left + r.width/2 - gridr.left,
+          y: r.top + r.height/2 - gridr.top
+        }
+      }
+      // Octavos a cuartos (izq y der)
+      for(let i=1; i<=7; i+=2) {
+        // Izquierda
+        let l1 = getCellCenter(1,i), l2 = getCellCenter(1,i+1), lq = getCellCenter(3,i+1);
+        svg.innerHTML += line(l1.x+86, l1.y, lq.x-86, lq.y);
+        svg.innerHTML += line(l2.x+86, l2.y, lq.x-86, lq.y);
+        // Derecha
+        let r1 = getCellCenter(9,i), r2 = getCellCenter(9,i+1), rq = getCellCenter(7,i+1);
+        svg.innerHTML += line(r1.x-86, r1.y, rq.x+86, rq.y);
+        svg.innerHTML += line(r2.x-86, r2.y, rq.x+86, rq.y);
+      }
+      // Cuartos a semis: conecta A/B y E/F a la semifinal de arriba; C/D y G/H a la de abajo
+      // Semifinal superior (A/B vs E/F): cuartos izq (A,B) y der (E,F)
+      let s1 = getCellCenter(5,3);
+      let a = getCellCenter(3,2), b = getCellCenter(3,4);
+      let e = getCellCenter(7,2), f = getCellCenter(7,4);
+      svg.innerHTML += line(a.x+86, a.y, s1.x-86, s1.y);
+      svg.innerHTML += line(b.x+86, b.y, s1.x-86, s1.y);
+      svg.innerHTML += line(e.x-86, e.y, s1.x+86, s1.y);
+      svg.innerHTML += line(f.x-86, f.y, s1.x+86, s1.y);
+      // Semifinal inferior (C/D vs G/H): cuartos izq (C,D) y der (G,H)
+      let s2 = getCellCenter(5,7);
+      let c = getCellCenter(3,6), d = getCellCenter(3,8);
+      let g = getCellCenter(7,6), h = getCellCenter(7,8);
+      svg.innerHTML += line(c.x+86, c.y, s2.x-86, s2.y);
+      svg.innerHTML += line(d.x+86, d.y, s2.x-86, s2.y);
+      svg.innerHTML += line(g.x-86, g.y, s2.x+86, s2.y);
+      svg.innerHTML += line(h.x-86, h.y, s2.x+86, s2.y);
+      // Semis a Final
+      let final = getCellCenter(5,5);
+      svg.innerHTML += line(s1.x, s1.y+34, final.x, final.y-22);
+      svg.innerHTML += line(s2.x, s2.y-34, final.x, final.y+22);
+    }
+    window.addEventListener('DOMContentLoaded',()=>{setTimeout(drawBracketLines, 100)});
+    window.addEventListener('resize',()=>setTimeout(drawBracketLines,100));
+  </script>
 </body>
 </html>
