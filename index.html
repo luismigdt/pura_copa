@@ -11,6 +11,11 @@
       font-family: Arial, Helvetica, sans-serif;
       color: #fff;
     }
+          <div class="header-logo-bar">
+  <img src="puracopa.png" alt="Pura Copa Logo" class="logo-titulo" />
+  <span class="header">PURA COPA</span>
+  <img src="puracopa.png" alt="Pura Copa Logo" class="logo-titulo" />
+</div>
     .header {
       text-align: center;
       font-size: 2.7rem;
@@ -20,6 +25,38 @@
       background: #900d29;
       border-bottom: 4px solid #fff;
     }
+    .header-logo-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #900d29;
+  border-bottom: 4px solid #fff;
+  padding-top: 18px;
+  padding-bottom: 10px;
+}
+.header {
+  font-size: 2.7rem;
+  font-weight: bold;
+  letter-spacing: 2.5px;
+  color: #fff;
+  margin: 0 32px;
+  background: none;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+}
+.logo-titulo {
+  width: 65px;
+  height: 70px;
+  filter: drop-shadow(0 2px 12px #0008);
+  object-fit: contain;
+}
+@media (max-width:700px) {
+  .header { font-size: 1.2rem; margin: 0 8px;}
+  .logo-titulo { width:32px; height:36px;}
+  .header-logo-bar { padding-top: 8px; padding-bottom: 6px;}
+}
+
     .bracket-wrap {
       width: 100%;
       overflow-x: auto;
@@ -153,7 +190,7 @@
       <div class="cell" style="grid-column:5;grid-row:3;"><div class="match">A/B VS E/F</div></div>
       <div class="cell" style="grid-column:5;grid-row:7;"><div class="match">C/D VS G/H</div></div>
 
-      <!-- FINAL (bien centrada, nueva fila 5) -->
+      <!-- FINAL -->
       <div class="cell" style="grid-column:5;grid-row:5;z-index:3;"><div class="match" style="text-align:center;justify-content:center;font-size:1.2rem;">GRAN FINAL</div></div>
 
       <!-- CUARTOS derecha -->
@@ -172,8 +209,6 @@
       <div class="cell" style="grid-column:9;grid-row:7;"><div class="match">3º GRUPO 2</div></div>
       <div class="cell" style="grid-column:9;grid-row:8;"><div class="match">6º GRUPO 1</div></div>
 
-      <!-- LOGO -->
-      <div class="logo-copa"></div>
       <!-- LÍNEAS SVG -->
       <svg class="svg-lines" id="svg-lines"></svg>
     </div>
