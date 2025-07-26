@@ -227,24 +227,29 @@
       });
     }
 
-    function crearMatchHtml(match) {
-      const golesIda = match.ida.split('-').map(x => parseInt(x.trim()));
-      const golesVuelta = match.vuelta.split('-').map(x => parseInt(x.trim()));
-      const total1 = (golesIda[0] || 0) + (golesVuelta[0] || 0);
-      const total2 = (golesIda[1] || 0) + (golesVuelta[1] || 0);
-      const equipo1Ganador = total1 > total2;
-      const resultadoFinal = `${total1} - ${total2}`;
+     function crearMatchHtml(match) {
+  const golesIda = match.ida.split('-').map(x => parseInt(x.trim()));
+  const golesVuelta = match.vuelta.split('-').map(x => parseInt(x.trim()));
+  const total1 = (golesIda[0] || 0) + (golesVuelta[0] || 0);
+  const total2 = (golesIda[1] || 0) + (golesVuelta[1] || 0);
 
-      return `
-        <div>
-          <span class="${equipo1Ganador ? 'team-winner' : ''}">${match.equipo1}</span> <br />
-          <small>Ida: ${match.ida} - Vuelta: ${match.vuelta}</small>
-        </div>
-        <div>
-          <span class="${equipo1Ganador ? '' : 'team-winner'}">${match.equipo2}</span>
-        </div>
-      `;
-    }
+  const team1Winner = total1 > total2;
+  const team2Winner = total2 > total1;
+
+  const resultadoFinal = `${total1} - ${total2}`;
+
+  if (match.id === "f1") {
+    return `
+      <div class="team ${team1Winner ? "team-winner" : ""}">
+        ${match.equipo1} ${team1Winner ? "🏆" : ""}
+      </div>
+      <div class="team ${team2Winner ? "team-winner" : ""}">
+        ${match.equipo2} ${team2Winner ? "🏆" : ""}
+      </div>
+      <div class="team">${resultadoFinal}</div>
+    `;
+  }
+
 
     function loadMatches() {
       fetch(url)
