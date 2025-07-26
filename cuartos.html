@@ -211,71 +211,79 @@
 
   <script>
      const sheetId = "1M7dV2jRDWsh4A4PhbVlbpFmcEX4l-C-2ERUdG-F29ew";
-    const sheetName = "Hoja 1"; 
-    const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
+  const sheetName = "Hoja 1"; 
+  const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
 
-    // Función para parsear datos del JSON de Google Sheets
-    function parseSheetData(data) {
-      const json = JSON.parse(data.substring(47, data.length - 2));
-      return json.table.rows.map(row => {
-        return {
-          id: row.c[0]?.v || "",
-          equipo1: row.c[1]?.v || "",
-          equipo2: row.c[2]?.v || "",
-          ida: row.c[3]?.v || "",
-          vuelta: row.c[4]?.v || ""
-        };
-      });
+  // Función para parsear datos del JSON de Google Sheets
+  function parseSheetData(data) {
+    const json = JSON.parse(data.substring(47, data.length - 2));
+    return json.table.rows.map(row => {
+      return {
+        id: row.c[0]?.v || "",
+        equipo1: row.c[1]?.v || "",
+        equipo2: row.c[2]?.v || "",
+        ida: row.c[3]?.v || "",
+        vuelta: row.c[4]?.v || ""
+      };
+    });
+  }
+
+  function crearMatchHtml(match) {
+    const golesIda = match.ida?.includes("-") ? match.ida.split('-').map(x => parseInt(x.trim())) : [0, 0];
+    const golesVuelta = match.vuelta?.includes("-") ? match.vuelta.split('-').map(x => parseInt(x.trim())) : [0, 0];
+
+    const total1 = (golesIda[0] || 0) + (golesVuelta[0] || 0);
+    const total2 = (golesIda[1] || 0) + (golesVuelta[1] || 0);
+
+    const team1Winner = total1 > total2;
+    const team2Winner = total2 > total1;
+
+    const resultadoFinal = `${total1} - ${total2}`;
+    const idaStr = match.ida ? `Ida: ${match.ida}` : '';
+    const vueltaStr = match.vuelta ? `Vuelta: ${match.vuelta}` : '';
+
+    if (match.id === "f1") {
+      // Final a partido único
+      const golesFinal = match.ida?.includes("-") ? match.ida.split('-').map(x => parseInt(x.trim())) : [0, 0];
+      const f1Team1Winner = golesFinal[0] > golesFinal[1];
+      const f1Team2Winner = golesFinal[1] > golesFinal[0];
+      const resultadoUnico = match.ida || "0-0";
+
+      return `
+        <div class="team ${f1Team1Winner ? "team-winner" : ""}">
+          ${match.equipo1} ${f1Team1Winner ? "🏆" : ""}
+        </div>
+        <div class="team ${f1Team2Winner ? "team-winner" : ""}">
+          ${match.equipo2} ${f1Team2Winner ? "🏆" : ""}
+        </div>
+        <div class="team">Resultado: ${resultadoUnico}</div>
+      `;
     }
 
-   function crearMatchHtml(match) {
-  const golesIda = match.ida.split('-').map(x => parseInt(x.trim()));
-  const golesVuelta = match.vuelta.split('-').map(x => parseInt(x.trim()));
-  const total1 = (golesIda[0] || 0) + (golesVuelta[0] || 0);
-  const total2 = (golesIda[1] || 0) + (golesVuelta[1] || 0);
-
-  const team1Winner = total1 > total2;
-  const team2Winner = total2 > total1;
-
-  const resultadoFinal = `${total1} - ${total2}`;
-
-  if (match.id === "f1") {
+    // Para el resto de partidos
     return `
-      <div class="team ${team1Winner ? "team-winner" : ""}">
-        ${match.equipo1} ${team1Winner ? "🏆" : ""}
-      </div>
-      <div class="team ${team2Winner ? "team-winner" : ""}">
-        ${match.equipo2} ${team2Winner ? "🏆" : ""}
-      </div>
-      <div class="team">${resultadoFinal}</div>
+      <div class="team ${team1Winner ? "team-winner" : ""}">${match.equipo1}</div>
+      <div class="team ${team2Winner ? "team-winner" : ""}">${match.equipo2}</div>
+      <div class="team">Total: ${resultadoFinal}</div>
+      <div class="team">${idaStr}</div>
+      <div class="team">${vueltaStr}</div>
     `;
   }
 
-  return `
-    <div class="team ${team1Winner ? "team-winner" : ""}">${match.equipo1}</div>
-    <div class="team ${team2Winner ? "team-winner" : ""}">${match.equipo2}</div>
-    
-  `;
-}
-
-
-    fetch(url)
-      .then(res => res.text())
-      .then(data => {
-        const matches = parseSheetData(data);
-        // matches tiene objetos con id, equipo1, equipo2, ida, vuelta
-
-        // Asignar cada partido al div correspondiente según su ID
-        matches.forEach(match => {
-          const div = document.getElementById(match.id);
-          if (div) {
-            div.innerHTML = crearMatchHtml(match);
-          }
-        });
-      })
-      .catch(e => {
-        console.error("Error cargando datos de Google Sheets:", e);
+  fetch(url)
+    .then(res => res.text())
+    .then(data => {
+      const matches = parseSheetData(data);
+      matches.forEach(match => {
+        const div = document.getElementById(match.id);
+        if (div) {
+          div.innerHTML = crearMatchHtml(match);
+        }
       });
+    })
+    .catch(e => {
+      console.error("Error cargando datos de Google Sheets:", e);
+    });
     
     document.getElementById('btn-prev').addEventListener('click', () => {
       window.location.href = 'index.html';
