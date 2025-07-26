@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>PURA COPA</title>
+  <title>PURA COPA - Cuartos</title>
   <style>
+    /* Usa el mismo CSS que en pase-final.html, pero añade: */
     body {
       margin: 0;
       padding: 20px;
@@ -18,13 +19,11 @@
       align-items: center;
       min-height: 100vh;
     }
-
-    @keyframes gradient {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    /* Ocultar octavos */
+    #m1, #m2, #m3, #m4, #m5, #m6, #m7, #m8 {
+      display: none;
     }
-
+    /* Títulos y estilo igual al anterior */
     .title-container {
       filter: drop-shadow(2px 2px 5px rgba(255, 255, 255, 0.4));
       display: flex;
@@ -33,20 +32,17 @@
       margin-bottom: 40px;
       user-select: none;
     }
-
     .title-container img {
       width: 50px;
       height: 50px;
       object-fit: contain;
     }
-
     h1 {
       color: #f59e0b;
       font-weight: 900;
       font-size: 3rem;
       margin: 0;
     }
-
     .bracket {
       display: grid;
       grid-template-columns: repeat(7, max-content);
@@ -55,7 +51,6 @@
       width: 100%;
       max-width: 1200px;
     }
-
     .round-title {
       color: #fbbf24;
       font-weight: bold;
@@ -64,7 +59,6 @@
       grid-row: 1;
       user-select: none;
     }
-
     .match {
       background: #1e293b;
       border-radius: 8px;
@@ -78,12 +72,10 @@
       min-width: 180px;
       max-width: 240px;
     }
-
     .team-winner {
       font-weight: bold;
       color: #22c55e;
     }
-
     .final {
       background: #f59e0b;
       border: 2px solid #fbbf24;
@@ -103,61 +95,29 @@
       h1 {
         font-size: 2rem;
       }
-
       .title-container img {
         width: 35px;
         height: 35px;
       }
-
       .bracket {
         gap: 6px 12px;
         overflow-x: auto;
         padding-bottom: 20px;
         justify-content: start;
       }
-
-      .scroll-tip {
-        display: block;
-      }
-
       .match, .final {
         min-width: 140px;
         padding: 8px;
         font-size: 0.8rem;
       }
-
       .round-title {
         font-size: 1rem;
       }
-
       body {
         padding: 10px;
       }
     }
-
-    .scroll-tip {
-      display: none;
-      font-size: 0.9rem;
-      color: #fbbf24;
-      background-color: rgba(0, 0, 0, 0.3);
-      padding: 6px 12px;
-      margin-top: 30px;
-      margin-bottom: 10px;
-      border-radius: 6px;
-      text-align: center;
-      user-select: none;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0% { opacity: 0.6; }
-      50% { opacity: 1; }
-      100% { opacity: 0.6; }
-    }
-    
-    /* Colocación */
-
-    /* Títulos */
+    /* Colocación idéntica a pase-final */
     .bracket .round-title:nth-child(1)  { grid-column: 1; }
     .bracket .round-title:nth-child(2)  { grid-column: 2; }
     .bracket .round-title:nth-child(3)  { grid-column: 3; }
@@ -165,43 +125,43 @@
     .bracket .round-title:nth-child(5)  { grid-column: 5; }
     .bracket .round-title:nth-child(6)  { grid-column: 6; }
     .bracket .round-title:nth-child(7)  { grid-column: 7; }
-
     /* Cuartos izquierda */
     #q1 { grid-column: 2; grid-row: 3 / span 2; }
     #q2 { grid-column: 2; grid-row: 7 / span 2; }
-
     /* Semis izquierda */
     #s1 { grid-column: 3; grid-row: 5 / span 2; }
-
     /* Final */
     #f1 { grid-column: 4; grid-row: 6 / span 2; }
-
     /* Semis derecha */
     #s2 { grid-column: 5; grid-row: 5 / span 2; }
-
     /* Cuartos derecha */
     #q3 { grid-column: 6; grid-row: 3 / span 2; }
     #q4 { grid-column: 6; grid-row: 7 / span 2; }
-
   </style>
 </head>
 <body>
 
   <div class="title-container">
     <img src="puracopa.png" alt="Logo Izquierda" />
-    <h1>PURA COPA</h1>
+    <h1>PURA COPA - Cuartos</h1>
     <img src="puracopa.png" alt="Logo Derecha" />
   </div>
 
   <div class="bracket">
     <!-- Títulos -->
+    <div class="round-title">Octavos</div>
     <div class="round-title">Cuartos</div>
     <div class="round-title">Semis</div>
     <div class="round-title">Final</div>
     <div class="round-title">Semis</div>
     <div class="round-title">Cuartos</div>
+    <div class="round-title">Octavos</div>
 
-    <!-- Partidos: los rellenaremos con JS -->
+    <!-- Partidos: solo cuartos en adelante -->
+    <div class="match" id="m1"></div>
+    <div class="match" id="m2"></div>
+    <div class="match" id="m3"></div>
+    <div class="match" id="m4"></div>
 
     <div class="match" id="q1"></div>
     <div class="match" id="q2"></div>
@@ -214,16 +174,44 @@
 
     <div class="match" id="q3"></div>
     <div class="match" id="q4"></div>
+
+    <div class="match" id="m5"></div>
+    <div class="match" id="m6"></div>
+    <div class="match" id="m7"></div>
+    <div class="match" id="m8"></div>
   </div>
 
-  <div class="scroll-tip">👉 Desliza para ver el cuadro completo</div>
+  <div style="text-align: center; margin: 30px 0;">
+    <button id="btn-prev" style="
+      background-color: #64748b;
+      border: none;
+      color: #e2e8f0;
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      margin-right: 15px;
+    ">Ronda anterior</button>
+    <button id="btn-next" style="
+      background-color: #f59e0b;
+      border: none;
+      color: #1e293b;
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    ">Siguiente ronda</button>
+  </div>
 
   <script>
     const sheetId = "1M7dV2jRDWsh4A4PhbVlbpFmcEX4l-C-2ERUdG-F29ew";
-    const sheetName = "Hoja 1"; // Cambia si tu hoja tiene otro nombre
+    const sheetName = "Hoja 1";
     const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
 
-    // Función para parsear datos del JSON de Google Sheets
     function parseSheetData(data) {
       const json = JSON.parse(data.substring(47, data.length - 2));
       return json.table.rows.map(row => {
@@ -237,85 +225,46 @@
       });
     }
 
-   function crearMatchHtml(match) {
-  const golesIda = match.ida.split('-').map(x => parseInt(x.trim()));
-  const golesVuelta = match.vuelta.split('-').map(x => parseInt(x.trim()));
-  const total1 = (golesIda[0] || 0) + (golesVuelta[0] || 0);
-  const total2 = (golesIda[1] || 0) + (golesVuelta[1] || 0);
+    function crearMatchHtml(match) {
+      const golesIda = match.ida.split('-').map(x => parseInt(x.trim()));
+      const golesVuelta = match.vuelta.split('-').map(x => parseInt(x.trim()));
+      const total1 = (golesIda[0] || 0) + (golesVuelta[0] || 0);
+      const total2 = (golesIda[1] || 0) + (golesVuelta[1] || 0);
+      const equipo1Ganador = total1 > total2;
 
-  const team1Winner = total1 > total2;
-  const team2Winner = total2 > total1;
+      return `
+        <div>
+          <span class="${equipo1Ganador ? 'team-winner' : ''}">${match.equipo1}</span> <br />
+          <small>Ida: ${match.ida} - Vuelta: ${match.vuelta}</small>
+        </div>
+        <div>
+          <span class="${equipo1Ganador ? '' : 'team-winner'}">${match.equipo2}</span>
+        </div>
+      `;
+    }
 
-  const resultadoFinal = `Resultado: ${total1} - ${total2}`;
-
-  if (match.id === "f1") {
-    return `
-      <div class="team ${team1Winner ? "team-winner" : ""}">
-        ${match.equipo1} ${team1Winner ? "🏆" : ""}
-      </div>
-      <div class="team ${team2Winner ? "team-winner" : ""}">
-        ${match.equipo2} ${team2Winner ? "🏆" : ""}
-      </div>
-      <div class="team">${resultadoFinal}</div>
-    `;
-  }
-
-  return `
-    <div class="team ${team1Winner ? "team-winner" : ""}">${match.equipo1}</div>
-    <div class="team ${team2Winner ? "team-winner" : ""}">${match.equipo2}</div>
-    <div class="team">Ida: ${match.ida} | Vuelta: ${match.vuelta}</div>
-  `;
-}
-
-
-    fetch(url)
-      .then(res => res.text())
-      .then(data => {
-        const matches = parseSheetData(data);
-        // matches tiene objetos con id, equipo1, equipo2, ida, vuelta
-
-        // Asignar cada partido al div correspondiente según su ID
-        matches.forEach(match => {
-          const div = document.getElementById(match.id);
-          if (div) {
-            div.innerHTML = crearMatchHtml(match);
-          }
+    function loadMatches() {
+      fetch(url)
+        .then(res => res.text())
+        .then(text => {
+          const matches = parseSheetData(text);
+          matches.forEach(match => {
+            const div = document.getElementById(match.id);
+            if(div) div.innerHTML = crearMatchHtml(match);
+          });
         });
-      })
-      .catch(e => {
-        console.error("Error cargando datos de Google Sheets:", e);
-      });
+    }
+
+    document.getElementById('btn-prev').addEventListener('click', () => {
+      window.location.href = 'index.html';
+    });
+
+    document.getElementById('btn-next').addEventListener('click', () => {
+      window.location.href = 'semis.html';
+    });
+
+    loadMatches();
   </script>
-<div style="text-align: center; margin: 30px 0;">
-  <!-- Botón siguiente ronda -->
-  <button id="btn-next" style="
-    background-color: #f59e0b;
-    border: none;
-    color: #1e293b;
-    padding: 12px 25px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    border-radius: 8px;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-  ">Siguiente ronda</button>
-</div>
-
-<div style="text-align: center; margin: 30px 0;">
-  <button id="btn-prev" style="...">Ronda anterior</button>
-  <button id="btn-next" style="...">Siguiente ronda</button>
-</div>
-
-<script>
-  document.getElementById('btn-prev').addEventListener('click', () => {
-    window.location.href = 'index.html';
-  });
-
-  document.getElementById('btn-next').addEventListener('click', () => {
-    window.location.href = 'semis.html';
-  });
-</script>
-
 
 </body>
 </html>
