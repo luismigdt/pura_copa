@@ -100,64 +100,61 @@
       align-items: center;
     }
     @media (max-width: 768px) {
-  h1 {
-    font-size: 2rem;
-  }
+      h1 {
+        font-size: 2rem;
+      }
 
-  .title-container img {
-    width: 35px;
-    height: 35px;
-  }
+      .title-container img {
+        width: 35px;
+        height: 35px;
+      }
 
-  .bracket {
-    gap: 6px 12px;
-    overflow-x: auto;
-    padding-bottom: 20px;
-    justify-content: start;
-  }
+      .bracket {
+        gap: 6px 12px;
+        overflow-x: auto;
+        padding-bottom: 20px;
+        justify-content: start;
+      }
 
       .scroll-tip {
-  display: none;
-  font-size: 0.9rem;
-  color: #fbbf24;
-  background-color: rgba(0, 0, 0, 0.3);
-  padding: 6px 12px;
-  margin-top: 30px;
-  margin-bottom: 10px;
-  border-radius: 6px;
-  text-align: center;
-  user-select: none;
-  animation: pulse 2s infinite;
-}
+        display: block;
+      }
 
-@media (max-width: 768px) {
-  .scroll-tip {
-    display: block;
-  }
-}
+      .match, .final {
+        min-width: 140px;
+        padding: 8px;
+        font-size: 0.8rem;
+      }
 
-@keyframes pulse {
-  0% { opacity: 0.6; }
-  50% { opacity: 1; }
-  100% { opacity: 0.6; }
-}
-      
-  .match, .final {
-    min-width: 140px;
-    padding: 8px;
-    font-size: 0.8rem;
-  }
+      .round-title {
+        font-size: 1rem;
+      }
 
-  .round-title {
-    font-size: 1rem;
-  }
+      body {
+        padding: 10px;
+      }
+    }
 
-  body {
-    padding: 10px;
-  }
-}
+    .scroll-tip {
+      display: none;
+      font-size: 0.9rem;
+      color: #fbbf24;
+      background-color: rgba(0, 0, 0, 0.3);
+      padding: 6px 12px;
+      margin-top: 30px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      text-align: center;
+      user-select: none;
+      animation: pulse 2s infinite;
+    }
 
-
+    @keyframes pulse {
+      0% { opacity: 0.6; }
+      50% { opacity: 1; }
+      100% { opacity: 0.6; }
+    }
+    
     /* Colocación */
 
     /* Títulos */
@@ -197,7 +194,6 @@
     #m6 { grid-column: 7; grid-row: 4 / span 2; }
     #m7 { grid-column: 7; grid-row: 6 / span 2; }
     #m8 { grid-column: 7; grid-row: 8 / span 2; }
-
   </style>
 </head>
 <body>
@@ -218,133 +214,86 @@
     <div class="round-title">Cuartos</div>
     <div class="round-title">Octavos</div>
 
-    <!-- Octavos Izquierda -->
-    <div class="match" id="m1">
-      <div class="team team-winner">Equipo 1</div>
-      <div class="team">Equipo 2</div>
-      <div class="team">Ida: 1-0 | Vuelta: 2-5</div>
-    </div>
-    <div class="match" id="m2">
-      <div class="team team-winner">Equipo 3</div>
-      <div class="team">Equipo 4</div>
-      <div class="team">Ida: 0-0 | Vuelta: 0-3</div>
-    </div>
-    <div class="match" id="m3">
-      <div class="team">Equipo 5</div>
-      <div class="team team-winner">Equipo 6</div>
-      <div class="team">Ida: 1-2 | Vuelta: 1-3</div>    
-    </div>
-    <div class="match" id="m4">
-      <div class="team team-winner">Equipo 7</div>
-      <div class="team">Equipo 8</div>
-      <div class="team">Ida: 2-1 | Vuelta: 1-2</div>
-    </div>
+    <!-- Partidos: los rellenaremos con JS -->
+    <div class="match" id="m1"></div>
+    <div class="match" id="m2"></div>
+    <div class="match" id="m3"></div>
+    <div class="match" id="m4"></div>
 
-    <!-- Cuartos Izquierda -->
-    <div class="match" id="q1">
-      <div class="team team-winner">Equipo 1</div>
-      <div class="team">Equipo 3</div>
-      <div class="team">Ida: 2-1 | Vuelta: 1-1</div>
-    </div>
-    <div class="match" id="q2">
-      <div class="team team-winner">Equipo 6</div>
-      <div class="team">Equipo 7</div>
-      <div class="team">Ida: 0-0 | Vuelta: 3-2</div>
-    </div>
+    <div class="match" id="q1"></div>
+    <div class="match" id="q2"></div>
 
-    <!-- Semis Izquierda -->
-    <div class="match" id="s1">
-      <div class="team">Equipo 1</div>
-      <div class="team team-winner">Equipo 6</div>
-      <div class="team">Ida: 1-2 | Vuelta: 0-1</div>
-    </div>
+    <div class="match" id="s1"></div>
 
-    <!-- Final -->
-    <div class="match final" id="f1">
-      <div class="team">Equipo 6</div>
-      <div class="team team-winner">Equipo 11</div>
-    </div>
+    <div class="match final" id="f1"></div>
 
-    <!-- Semis Derecha -->
-    <div class="match" id="s2">
-      <div class="team team-winner">Equipo 11</div>
-      <div class="team">Equipo 14</div>
-      <div class="team">Ida: 2-0 | Vuelta: 1-2</div>
-    </div>
+    <div class="match" id="s2"></div>
 
-    <!-- Cuartos Derecha -->
-    <div class="match" id="q3">
-      <div class="team">Equipo 9</div>
-      <div class="team team-winner">Equipo 11</div>
-      <div class="team">Ida: 2-1 | Vuelta: 0-1</div>
-    </div>
-    <div class="match" id="q4">
-      <div class="team team-winner">Equipo 14</div>
-      <div class="team">Equipo 15</div>
-      <div class="team">Ida: 3-1 | Vuelta: 1-1</div>
-    </div>
+    <div class="match" id="q3"></div>
+    <div class="match" id="q4"></div>
 
-    <!-- Octavos Derecha -->
-    <div class="match" id="m5">
-      <div class="team team-winner">Equipo 9</div>
-      <div class="team">Equipo 10</div>
-      <div class="team">Ida: 3-0 | Vuelta: 1-2</div>
-    </div>
-    <div class="match" id="m6">
-      <div class="team team-winner">Equipo 11</div>
-      <div class="team">Equipo 12</div>
-      <div class="team">Ida: 1-1 | Vuelta: 2-1</div>
-    </div>
-    <div class="match" id="m7">
-      <div class="team">Equipo 13</div>
-      <div class="team team-winner">Equipo 14</div>
-      <div class="team">Ida: 0-2 | Vuelta: 1-1</div>
-    </div>
-    <div class="match" id="m8">
-      <div class="team team-winner">Equipo 15</div>
-      <div class="team">Equipo 16</div>
-      <div class="team">Ida: 1-0 | Vuelta: 1-1</div>
-    </div>
+    <div class="match" id="m5"></div>
+    <div class="match" id="m6"></div>
+    <div class="match" id="m7"></div>
+    <div class="match" id="m8"></div>
   </div>
-<div class="scroll-tip">👉 Desliza para ver el cuadro completo</div>
-<script>
-  // Función para extraer goles de un string como "Ida: 1-0 | Vuelta: 2-2"
-  function parseGoals(text) {
-    const regex = /Ida:\s*(\d+)-(\d+)\s*\|\s*Vuelta:\s*(\d+)-(\d+)/;
-    const match = text.match(regex);
-    if (!match) return null;
-    return {
-      team1: parseInt(match[1]) + parseInt(match[3]),
-      team2: parseInt(match[2]) + parseInt(match[4])
-    };
-  }
 
-  // Recorremos todos los partidos
-  document.querySelectorAll('.match').forEach(match => {
-    // Obtenemos los divs de los dos equipos y el resultado
-    const teams = match.querySelectorAll('.team');
-    if (teams.length < 3) return; // Evitar finales sin resultados
+  <div class="scroll-tip">👉 Desliza para ver el cuadro completo</div>
 
-    const team1 = teams[0];
-    const team2 = teams[1];
-    const resultText = teams[2].textContent;
+  <script>
+    const sheetId = "1M7dV2jRDWsh4A4PhbVlbpFmcEX4l-C-2ERUdG-F29ew";
+    const sheetName = "Sheet1"; // Cambia si tu hoja tiene otro nombre
+    const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
 
-    const goals = parseGoals(resultText);
-    if (!goals) return;
-
-    // Quitamos la clase 'team-winner' para resetear
-    team1.classList.remove('team-winner');
-    team2.classList.remove('team-winner');
-
-    // Asignamos ganador según goles totales
-    if (goals.team1 > goals.team2) {
-      team1.classList.add('team-winner');
-    } else if (goals.team2 > goals.team1) {
-      team2.classList.add('team-winner');
+    // Función para parsear datos del JSON de Google Sheets
+    function parseSheetData(data) {
+      const json = JSON.parse(data.substring(47, data.length - 2));
+      return json.table.rows.map(row => {
+        return {
+          id: row.c[0]?.v || "",
+          equipo1: row.c[1]?.v || "",
+          equipo2: row.c[2]?.v || "",
+          ida: row.c[3]?.v || "",
+          vuelta: row.c[4]?.v || ""
+        };
+      });
     }
-    // Si empate, no marcamos ganador
-  });
-</script>
+
+    // Función para crear el HTML de un partido
+    function crearMatchHtml(match) {
+      const golesIda = match.ida.split('-').map(x => parseInt(x.trim()));
+      const golesVuelta = match.vuelta.split('-').map(x => parseInt(x.trim()));
+      const total1 = (golesIda[0] || 0) + (golesVuelta[0] || 0);
+      const total2 = (golesIda[1] || 0) + (golesVuelta[1] || 0);
+
+      const team1Winner = total1 > total2;
+      const team2Winner = total2 > total1;
+
+      return `
+        <div class="team ${team1Winner ? "team-winner" : ""}">${match.equipo1}</div>
+        <div class="team ${team2Winner ? "team-winner" : ""}">${match.equipo2}</div>
+        <div class="team">Ida: ${match.ida} | Vuelta: ${match.vuelta}</div>
+      `;
+    }
+
+    fetch(url)
+      .then(res => res.text())
+      .then(data => {
+        const matches = parseSheetData(data);
+        // matches tiene objetos con id, equipo1, equipo2, ida, vuelta
+
+        // Asignar cada partido al div correspondiente según su ID
+        matches.forEach(match => {
+          const div = document.getElementById(match.id);
+          if (div) {
+            div.innerHTML = crearMatchHtml(match);
+          }
+        });
+      })
+      .catch(e => {
+        console.error("Error cargando datos de Google Sheets:", e);
+      });
+  </script>
 
 </body>
 </html>
