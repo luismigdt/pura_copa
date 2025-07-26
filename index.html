@@ -293,16 +293,6 @@
       .catch(e => {
         console.error("Error cargando datos de Google Sheets:", e);
       });
-
-    // Ocultar resultados ida/vuelta en la final
-const finalMatch = document.querySelector('.match.final');
-if (finalMatch) {
-  const resultsDiv = finalMatch.querySelectorAll('.team')[2];
-  if (resultsDiv) {
-    resultsDiv.style.display = 'none';
-  }
-}
-
   </script>
 
 </body>
