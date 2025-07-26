@@ -306,5 +306,44 @@
     </div>
   </div>
 <div class="scroll-tip">👉 Desliza para ver el cuadro completo</div>
+  <script>
+  // Función para extraer goles de un string como "Ida: 1-0 | Vuelta: 2-2"
+  function parseGoals(text) {
+    const regex = /Ida:\s*(\d+)-(\d+)\s*\|\s*Vuelta:\s*(\d+)-(\d+)/;
+    const match = text.match(regex);
+    if (!match) return null;
+    return {
+      team1: parseInt(match[1]) + parseInt(match[3]),
+      team2: parseInt(match[2]) + parseInt(match[4])
+    };
+  }
+
+  // Recorremos todos los partidos
+  document.querySelectorAll('.match').forEach(match => {
+    // Obtenemos los divs de los dos equipos y el resultado
+    const teams = match.querySelectorAll('.team');
+    if (teams.length < 3) return; // Evitar finales sin resultados
+
+    const team1 = teams[0];
+    const team2 = teams[1];
+    const resultText = teams[2].textContent;
+
+    const goals = parseGoals(resultText);
+    if (!goals) return;
+
+    // Quitamos la clase 'team-winner' para resetear
+    team1.classList.remove('team-winner');
+    team2.classList.remove('team-winner');
+
+    // Asignamos ganador según goles totales
+    if (goals.team1 > goals.team2) {
+      team1.classList.add('team-winner');
+    } else if (goals.team2 > goals.team1) {
+      team2.classList.add('team-winner');
+    }
+    // Si empate, no marcamos ganador
+  });
+</script>
+
 </body>
 </html>
