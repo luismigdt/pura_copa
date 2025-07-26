@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>PURA COPA - Semifinales y Final</title>
+  <title>PURA COPA</title>
   <style>
     body {
       margin: 0;
@@ -197,7 +197,64 @@
     ">Siguiente ronda</button>
   </div>
 
-  <!-- Aquí tu script para cargar datos y lógica, igual que en el original -->
+ <script>
+    const sheetId = "1M7dV2jRDWsh4A4PhbVlbpFmcEX4l-C-2ERUdG-F29ew";
+    const sheetName = "Hoja 1";
+    const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
+
+    function parseSheetData(data) {
+      const json = JSON.parse(data.substring(47, data.length - 2));
+      return json.table.rows.map(row => {
+        return {
+          id: row.c[0]?.v || "",
+          equipo1: row.c[1]?.v || "",
+          equipo2: row.c[2]?.v || "",
+          ida: row.c[3]?.v || "",
+          vuelta: row.c[4]?.v || ""
+        };
+      });
+    }
+
+    function crearMatchHtml(match) {
+      const golesIda = match.ida.split('-').map(x => parseInt(x.trim()));
+      const golesVuelta = match.vuelta.split('-').map(x => parseInt(x.trim()));
+      const total1 = (golesIda[0] || 0) + (golesVuelta[0] || 0);
+      const total2 = (golesIda[1] || 0) + (golesVuelta[1] || 0);
+      const equipo1Ganador = total1 > total2;
+
+      return `
+        <div>
+          <span class="${equipo1Ganador ? 'team-winner' : ''}">${match.equipo1}</span> <br />
+          <small>Ida: ${match.ida} - Vuelta: ${match.vuelta}</small>
+        </div>
+        <div>
+          <span class="${equipo1Ganador ? '' : 'team-winner'}">${match.equipo2}</span>
+        </div>
+      `;
+    }
+
+    function loadMatches() {
+      fetch(url)
+        .then(res => res.text())
+        .then(text => {
+          const matches = parseSheetData(text);
+          matches.forEach(match => {
+            const div = document.getElementById(match.id);
+            if(div) div.innerHTML = crearMatchHtml(match);
+          });
+        });
+    }
+
+    document.getElementById('btn-prev').addEventListener('click', () => {
+      window.location.href = 'index.html';
+    });
+
+    document.getElementById('btn-next').addEventListener('click', () => {
+      window.location.href = 'semis.html';
+    });
+
+    loadMatches();
+  </script>
 
 </body>
 </html>
