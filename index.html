@@ -102,6 +102,30 @@
   h1 {
     font-size: 2rem;
   }
+.scroll-tip {
+  display: none;
+  font-size: 0.9rem;
+  color: #fbbf24;
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 6px 12px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  text-align: center;
+  user-select: none;
+  animation: pulse 2s infinite;
+}
+
+@media (max-width: 768px) {
+  .scroll-tip {
+    display: block;
+  }
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
 
   .title-container img {
     width: 35px;
@@ -180,6 +204,8 @@
     <h1>PURA COPA</h1>
     <img src="puracopa.png" alt="Logo Derecha" />
   </div>
+  
+<div class="scroll-tip">👉 Desliza para ver el cuadro completo</div>
 
   <div class="bracket">
     <!-- Títulos -->
