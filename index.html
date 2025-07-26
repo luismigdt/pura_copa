@@ -1,5 +1,4 @@
-
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -8,16 +7,12 @@
   <style>
     body {
       margin: 0;
-      padding: 20px;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(135deg, #4b0000, #800020, #1f0000);
       background-size: 400% 400%;
       animation: gradient 20s ease infinite;
-      color: #e2e8f0;
-      font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
+      color: #fff;
     }
 
     @keyframes gradient {
@@ -26,42 +21,109 @@
       100% { background-position: 0% 50%; }
     }
 
-    h1 {
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 30px 0;
+      gap: 20px;
+    }
+
+    .header img {
+      height: 60px;
+    }
+
+    .header h1 {
       font-size: 3rem;
       color: #fbbf24;
-      margin: 0 0 20px;
+      margin: 0;
+    }
+
+    .bracket {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      padding: 0 20px 40px;
+    }
+
+    .round {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      min-width: 220px;
+    }
+
+    .round-title {
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #fcd34d;
     }
 
     .match {
-      background: #1e293b;
-      color: #e2e8f0;
-      padding: 12px;
-      margin-bottom: 10px;
+      background-color: #1e293b;
       border-radius: 8px;
+      padding: 10px;
+      min-width: 200px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.4);
-      min-width: 250px;
+    }
+
+    .team {
+      padding: 4px 0;
     }
 
     .team-winner {
       font-weight: bold;
       color: #22c55e;
     }
+
+    .mobile-hint {
+      text-align: center;
+      padding: 10px;
+      font-size: 0.9rem;
+      color: #f3f4f6;
+    }
+
+    @media (max-width: 768px) {
+      .bracket {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 60px;
+      }
+    }
   </style>
 </head>
 <body>
-  <h1>PURA COPA</h1>
-  <div id="matches-container">Cargando datos...</div>
+  <div class="header">
+    <img src="puracopa.png" alt="Logo Izq">
+    <h1>PURA COPA</h1>
+    <img src="puracopa.png" alt="Logo Der">
+  </div>
+
+  <div class="bracket" id="bracket">
+    <!-- Rondas se llenan dinámicamente -->
+  </div>
+
+  <div class="mobile-hint">⬅️ Desliza para ver el cuadro completo ➡️</div>
 
   <script>
     const sheetId = "1M7dV2jRDWsh4A4PhbVlbpFmcEX4l-C-2ERUdG-F29ew";
     const sheetUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json`;
 
+    const structure = [
+      { title: 'Octavos', count: 8 },
+      { title: 'Cuartos', count: 4 },
+      { title: 'Semifinales', count: 2 },
+      { title: 'Gran Final', count: 1 }
+    ];
+
     function parseGoals(ida, vuelta) {
-      const [i1, i2] = ida.split("-").map(Number);
-      const [v1, v2] = vuelta.split("-").map(Number);
+      const [g1a, g2a] = ida.split("-").map(Number);
+      const [g1b, g2b] = vuelta.split("-").map(Number);
       return {
-        team1: i1 + v1,
-        team2: i2 + v2
+        team1: g1a + g1b,
+        team2: g2a + g2b
       };
     }
 
@@ -69,36 +131,49 @@
       .then(res => res.text())
       .then(text => {
         const json = JSON.parse(text.substring(47).slice(0, -2));
-        const rows = json.table.rows;
-        const container = document.getElementById("matches-container");
-        container.innerHTML = "";
+        const rows = json.table.rows.map(r => ({
+          id: r.c[0]?.v,
+          team1: r.c[1]?.v,
+          team2: r.c[2]?.v,
+          ida: r.c[3]?.v,
+          vuelta: r.c[4]?.v
+        })).filter(r => r.id && r.team1 && r.team2);
 
-        rows.forEach(row => {
-          const id = row.c[0]?.v;
-          const team1 = row.c[1]?.v;
-          const team2 = row.c[2]?.v;
-          const ida = row.c[3]?.v;
-          const vuelta = row.c[4]?.v;
+        const bracket = document.getElementById("bracket");
+        let i = 0;
+        structure.forEach(round => {
+          const column = document.createElement("div");
+          column.className = "round";
 
-          if (!team1 || !team2 || !ida || !vuelta) return;
+          const title = document.createElement("div");
+          title.className = "round-title";
+          title.textContent = round.title;
+          column.appendChild(title);
 
-          const goals = parseGoals(ida, vuelta);
-          const winner1 = goals.team1 > goals.team2;
-          const winner2 = goals.team2 > goals.team1;
+          for (let j = 0; j < round.count; j++, i++) {
+            const match = rows[i];
+            if (!match) continue;
 
-          const matchDiv = document.createElement("div");
-          matchDiv.className = "match";
-          matchDiv.innerHTML = `
-            <div class="${winner1 ? 'team-winner' : ''}">${team1}</div>
-            <div class="${winner2 ? 'team-winner' : ''}">${team2}</div>
-            <div>Ida: ${ida} | Vuelta: ${vuelta}</div>
-          `;
-          container.appendChild(matchDiv);
+            const scores = parseGoals(match.ida, match.vuelta);
+            const team1Win = scores.team1 > scores.team2;
+            const team2Win = scores.team2 > scores.team1;
+
+            const matchDiv = document.createElement("div");
+            matchDiv.className = "match";
+            matchDiv.innerHTML = `
+              <div class="team ${team1Win ? 'team-winner' : ''}">${match.team1}</div>
+              <div class="team ${team2Win ? 'team-winner' : ''}">${match.team2}</div>
+              <div class="team">Ida: ${match.ida} | Vuelta: ${match.vuelta}</div>
+            `;
+            column.appendChild(matchDiv);
+          }
+
+          bracket.appendChild(column);
         });
       })
-      .catch(error => {
-        document.getElementById("matches-container").textContent = "Error al cargar los datos.";
-        console.error("Error al cargar datos de la hoja:", error);
+      .catch(err => {
+        document.getElementById("bracket").textContent = "Error al cargar los datos.";
+        console.error(err);
       });
   </script>
 </body>
