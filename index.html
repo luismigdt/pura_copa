@@ -259,56 +259,96 @@
       });
     }
 
-   function crearMatchHtml(match) {
-  const golesIda = match.ida.split('-').map(x => parseInt(x.trim()));
-  const golesVuelta = match.vuelta.split('-').map(x => parseInt(x.trim()));
-  const total1 = (golesIda[0] || 0) + (golesVuelta[0] || 0);
-  const total2 = (golesIda[1] || 0) + (golesVuelta[1] || 0);
+    function crearMatchHtml(match) {
+      const golesIda = match.ida.split('-').map(x => parseInt(x.trim()));
+      const golesVuelta = match.vuelta.split('-').map(x => parseInt(x.trim()));
+      const total1 = (golesIda[0] || 0) + (golesVuelta[0] || 0);
+      const total2 = (golesIda[1] || 0) + (golesVuelta[1] || 0);
 
-  const team1Winner = total1 > total2;
-  const team2Winner = total2 > total1;
+      const team1Winner = total1 > total2;
+      const team2Winner = total2 > total1;
 
-  const resultadoFinal = `Resultado: ${total1} - ${total2}`;
+      const resultadoFinal = `Resultado: ${total1} - ${total2}`;
 
-  if (match.id === "f1") {
-    return `
-      <div class="team ${team1Winner ? "team-winner" : ""}">
-        ${match.equipo1} ${team1Winner ? "🏆" : ""}
-      </div>
-      <div class="team ${team2Winner ? "team-winner" : ""}">
-        ${match.equipo2} ${team2Winner ? "🏆" : ""}
-      </div>
-      <div class="team">${resultadoFinal}</div>
-    `;
-  }
+      if (match.id === "f1") {
+        return `
+          <div class="team ${team1Winner ? "team-winner" : ""}">
+            ${match.equipo1} ${team1Winner ? "🏆" : ""}
+          </div>
+          <div class="team ${team2Winner ? "team-winner" : ""}">
+            ${match.equipo2} ${team2Winner ? "🏆" : ""}
+          </div>
+          <div class="team">${resultadoFinal}</div>
+        `;
+      }
 
-  return `
-    <div class="team ${team1Winner ? "team-winner" : ""}">${match.equipo1}</div>
-    <div class="team ${team2Winner ? "team-winner" : ""}">${match.equipo2}</div>
-    <div class="team">Ida: ${match.ida} | Vuelta: ${match.vuelta}</div>
-  `;
-}
+      return `
+        <div class="team ${team1Winner ? "team-winner" : ""}">${match.equipo1}</div>
+        <div class="team ${team2Winner ? "team-winner" : ""}">${match.equipo2}</div>
+        <div class="team">Ida: ${match.ida} | Vuelta: ${match.vuelta}</div>
+      `;
+    }
 
+    function obtenerGanador(match) {
+      if (!match) return "";
+      const golesIda = match.ida.split('-').map(x => parseInt(x.trim()));
+      const golesVuelta = match.vuelta.split('-').map(x => parseInt(x.trim()));
+      const total1 = (golesIda[0] || 0) + (golesVuelta[0] || 0);
+      const total2 = (golesIda[1] || 0) + (golesVuelta[1] || 0);
 
-    fetch(url)
-      .then(res => res.text())
-      .then(data => {
-        const matches = parseSheetData(data);
-        // matches tiene objetos con id, equipo1, equipo2, ida, vuelta
+      if (total1 > total2) return match.equipo1;
+      if (total2 > total1) return match.equipo2;
+      return ""; // empate o sin datos
+    }
 
-        // Asignar cada partido al div correspondiente según su ID
-        matches.forEach(match => {
+    function actualizarSiguienteRonda(data) {
+      // Map de id de partidos de cada ronda con los partidos que alimentan esa ronda
+      const nextRounds = {
+        q1: ["m1", "m2"],
+        q2: ["m3", "m4"],
+        s1: ["q1", "q2"],
+        f1: ["s1", "s2"],
+        s2: ["q3", "q4"],
+        q3: ["m5", "m6"],
+        q4: ["m7", "m8"]
+      };
+
+      for (const [key, prevMatches] of Object.entries(nextRounds)) {
+        const equipo1 = obtenerGanador(data.find(m => m.id === prevMatches[0])) || "";
+        const equipo2 = obtenerGanador(data.find(m => m.id === prevMatches[1])) || "";
+
+        const partido = data.find(m => m.id === key);
+        if (partido) {
+          partido.equipo1 = equipo1;
+          partido.equipo2 = equipo2;
+
+          // Limpiar resultados previos para evitar confusión
+          partido.ida = "";
+          partido.vuelta = "";
+        }
+      }
+    }
+
+    async function cargarDatos() {
+      try {
+        const res = await fetch(url);
+        const dataText = await res.text();
+        let data = parseSheetData(dataText);
+
+        actualizarSiguienteRonda(data);
+
+        data.forEach(match => {
           const div = document.getElementById(match.id);
           if (div) {
             div.innerHTML = crearMatchHtml(match);
           }
         });
-      })
-      .catch(e => {
+      } catch (e) {
         console.error("Error cargando datos de Google Sheets:", e);
-      });
-  </script>
+      }
+    }
 
+    cargarDatos();
+  </script>
 </body>
 </html>
-
