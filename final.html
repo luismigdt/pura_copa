@@ -125,27 +125,39 @@
       });
     }
 
-    
+    function crearMatchHtml(match) {
+      // Sumar goles ida y vuelta para cada equipo
+      const golesIda = match.ida.split('-').map(x => parseInt(x.trim()));
+      const golesVuelta = match.vuelta.split('-').map(x => parseInt(x.trim()));
+      const total1 = (golesIda[0] || 0) + (golesVuelta[0] || 0);
+      const total2 = (golesIda[1] || 0) + (golesVuelta[1] || 0);
+      const equipo1Ganador = total1 > total2;
+      const equipo2Ganador = total2 > total1;
+
+      // Resultado final en texto
+      const resultadoFinal = `Total: ${total1} - ${total2}`;
 
       if (match.id === "f1") {
-    return `
-      <div class="team ${team1Winner ? "team-winner" : ""}">
-        ${match.equipo1} ${team1Winner ? "🏆" : ""}
-      </div>
-      <div class="team ${team2Winner ? "team-winner" : ""}">
-        ${match.equipo2} ${team2Winner ? "🏆" : ""}
-      </div>
-      <div class="team">${resultadoFinal}</div>
-    `;
-  }
-        <div>
-          <span class="${equipo1Ganador ? 'team-winner' : ''}">${match.equipo1}</span> <br />
-          <small>Ida: ${match.ida} - Vuelta: ${match.vuelta}</small>
-        </div>
-        <div>
-          <span class="${equipo1Ganador ? '' : 'team-winner'}">${match.equipo2}</span>
-        </div>
-      `;
+        return `
+          <div class="${equipo1Ganador ? "team-winner" : ""}">
+            ${match.equipo1} ${equipo1Ganador ? "🏆" : ""}
+          </div>
+          <div class="${equipo2Ganador ? "team-winner" : ""}">
+            ${match.equipo2} ${equipo2Ganador ? "🏆" : ""}
+          </div>
+          <div>${resultadoFinal}</div>
+        `;
+      } else {
+        return `
+          <div>
+            <span class="${equipo1Ganador ? 'team-winner' : ''}">${match.equipo1}</span><br />
+            <small>Ida: ${match.ida} - Vuelta: ${match.vuelta}</small>
+          </div>
+          <div>
+            <span class="${equipo1Ganador ? '' : 'team-winner'}">${match.equipo2}</span>
+          </div>
+        `;
+      }
     }
 
     function loadMatches() {
@@ -157,7 +169,8 @@
             const div = document.getElementById(match.id);
             if(div) div.innerHTML = crearMatchHtml(match);
           });
-        });
+        })
+        .catch(e => console.error("Error cargando datos:", e));
     }
 
     document.getElementById('btn-prev').addEventListener('click', () => {
