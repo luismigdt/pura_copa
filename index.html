@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+
+    <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -8,7 +9,9 @@
     body {
       margin: 0;
       padding: 20px;
-      background: #410f1a; /* rojo vino oscuro */
+      background: linear-gradient(135deg, #4b0000, #800020, #1f0000);
+      background-size: 400% 400%;
+      animation: gradient 20s ease infinite;
       color: #e2e8f0;
       font-family: 'Segoe UI', sans-serif;
       display: flex;
@@ -17,208 +20,87 @@
       min-height: 100vh;
     }
 
-    .title-container {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      margin-bottom: 30px;
-    }
-
-    .title-container img {
-      width: 50px;
-      height: 50px;
-      object-fit: contain;
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     h1 {
-      color: #f59e0b;
-      font-weight: 900;
       font-size: 3rem;
-      margin: 0;
-    }
-
-    .bracket {
-      display: grid;
-      grid-template-columns: repeat(7, max-content);
-      grid-template-rows: auto repeat(8, min-content);
-      gap: 10px 30px;
-      width: 100%;
-      max-width: 1200px;
-    }
-
-    .round-title {
       color: #fbbf24;
-      font-weight: bold;
-      font-size: 1.25rem;
-      text-align: center;
-      user-select: none;
+      margin: 0 0 20px;
     }
 
     .match {
       background: #1e293b;
-      border-radius: 8px;
-      padding: 10px 12px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-      font-size: 0.9rem;
       color: #e2e8f0;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      width: max-content;
-      min-width: 180px;
-      max-width: 240px;
-    }
-
-    .team {
-      padding: 2px 6px;
-      border-radius: 6px;
+      padding: 12px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+      min-width: 250px;
     }
 
     .team-winner {
       font-weight: bold;
       color: #22c55e;
     }
-
-    .final {
-      background: #f59e0b;
-      border: 2px solid #fbbf24;
-      border-radius: 12px;
-      padding: 15px;
-      font-weight: bold;
-      font-size: 1.1rem;
-      color: #1e293b;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      min-width: 220px;
-      justify-content: center;
-      align-items: center;
-    }
-
-    @media (max-width: 768px) {
-      .bracket {
-        overflow-x: auto;
-        display: block;
-        white-space: nowrap;
-        padding-bottom: 60px;
-      }
-
-      .round-title {
-        display: inline-block;
-        margin-right: 30px;
-      }
-
-      .match {
-        display: inline-block;
-        margin-right: 30px;
-        vertical-align: top;
-      }
-
-      .scroll-tip {
-        position: fixed;
-        bottom: 10px;
-        left: 0;
-        right: 0;
-        text-align: center;
-        font-size: 0.85rem;
-        color: #fbbf24;
-      }
-    }
   </style>
 </head>
 <body>
-  <div class="title-container">
-    <img src="puracopa.png" alt="Logo Izquierda" />
-    <h1>PURA COPA</h1>
-    <img src="puracopa.png" alt="Logo Derecha" />
-  </div>
+  <h1>PURA COPA</h1>
+  <div id="matches-container">Cargando datos...</div>
 
-  <div class="bracket" id="bracket">
-    <div class="round-title" style="grid-column: 1;">Octavos</div>
-    <div class="round-title" style="grid-column: 2;">Cuartos</div>
-    <div class="round-title" style="grid-column: 3;">Semifinal</div>
-    <div class="round-title" style="grid-column: 4;">Final</div>
-    <div class="round-title" style="grid-column: 5;">Semifinal</div>
-    <div class="round-title" style="grid-column: 6;">Cuartos</div>
-    <div class="round-title" style="grid-column: 7;">Octavos</div>
-  </div>
-
-  <div class="scroll-tip">Desliza horizontalmente para ver todo el cuadro</div>
-
-  <script src="https://cdn.jsdelivr.net/npm/tabletop@1.6.0/tabletop.min.js"></script>
   <script>
+    const sheetId = "1M7dV2jRDWsh4A4PhbVlbpFmcEX4l-C-2ERUdG-F29ew";
+    const sheetUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json`;
+
     function parseGoals(ida, vuelta) {
-      const [g1a, g2a] = ida.split("-").map(Number);
-      const [g1b, g2b] = vuelta.split("-").map(Number);
+      const [i1, i2] = ida.split("-").map(Number);
+      const [v1, v2] = vuelta.split("-").map(Number);
       return {
-        team1: g1a + g1b,
-        team2: g2a + g2b
+        team1: i1 + v1,
+        team2: i2 + v2
       };
     }
 
-    function createMatch(data, id) {
-      const div = document.createElement("div");
-      div.className = id === "f1" ? "match final" : "match";
-      div.id = id;
+    fetch(sheetUrl)
+      .then(res => res.text())
+      .then(text => {
+        const json = JSON.parse(text.substring(47).slice(0, -2));
+        const rows = json.table.rows;
+        const container = document.getElementById("matches-container");
+        container.innerHTML = "";
 
-      const goals = parseGoals(data.ida, data.vuelta);
-      const winnerClass1 = goals.team1 > goals.team2 ? "team team-winner" : "team";
-      const winnerClass2 = goals.team2 > goals.team1 ? "team team-winner" : "team";
+        rows.forEach(row => {
+          const id = row.c[0]?.v;
+          const team1 = row.c[1]?.v;
+          const team2 = row.c[2]?.v;
+          const ida = row.c[3]?.v;
+          const vuelta = row.c[4]?.v;
 
-      div.innerHTML = `
-        <div class="${winnerClass1}">${data["equipo 1"]}</div>
-        <div class="${winnerClass2}">${data["equipo 2"]}</div>
-        <div class="team">Ida: ${data.ida} | Vuelta: ${data.vuelta}</div>
-      `;
-      return div;
-    }
+          if (!team1 || !team2 || !ida || !vuelta) return;
 
-    window.addEventListener("DOMContentLoaded", () => {
-      Tabletop.init({
-        key: "1M7dV2jRDWsh4A4PhbVlbpFmcEX4l-C-2ERUdG-F29ew",
-        callback: function (data) {
-          const bracket = document.getElementById("bracket");
+          const goals = parseGoals(ida, vuelta);
+          const winner1 = goals.team1 > goals.team2;
+          const winner2 = goals.team2 > goals.team1;
 
-          const matchIds = [
-            "m1", "m2", "m3", "m4",
-            "q1", "q2",
-            "s1",
-            "f1",
-            "s2",
-            "q3", "q4",
-            "m5", "m6", "m7", "m8"
-          ];
-
-          const positions = {
-            m1: { column: 1, row: 2 },
-            m2: { column: 1, row: 4 },
-            m3: { column: 1, row: 6 },
-            m4: { column: 1, row: 8 },
-            q1: { column: 2, row: 3 },
-            q2: { column: 2, row: 7 },
-            s1: { column: 3, row: 5 },
-            f1: { column: 4, row: 5 },
-            s2: { column: 5, row: 5 },
-            q3: { column: 6, row: 3 },
-            q4: { column: 6, row: 7 },
-            m5: { column: 7, row: 2 },
-            m6: { column: 7, row: 4 },
-            m7: { column: 7, row: 6 },
-            m8: { column: 7, row: 8 }
-          };
-
-          data.slice(0, matchIds.length).forEach((row, i) => {
-            const id = matchIds[i];
-            const matchEl = createMatch(row, id);
-            const pos = positions[id];
-            matchEl.style.gridColumn = pos.column;
-            matchEl.style.gridRow = `${pos.row} / span 2`;
-            bracket.appendChild(matchEl);
-          });
-        },
-        simpleSheet: true
+          const matchDiv = document.createElement("div");
+          matchDiv.className = "match";
+          matchDiv.innerHTML = `
+            <div class="${winner1 ? 'team-winner' : ''}">${team1}</div>
+            <div class="${winner2 ? 'team-winner' : ''}">${team2}</div>
+            <div>Ida: ${ida} | Vuelta: ${vuelta}</div>
+          `;
+          container.appendChild(matchDiv);
+        });
+      })
+      .catch(error => {
+        document.getElementById("matches-container").textContent = "Error al cargar los datos.";
+        console.error("Error al cargar datos de la hoja:", error);
       });
-    });
   </script>
 </body>
 </html>
+
