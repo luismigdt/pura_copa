@@ -195,31 +195,6 @@
     #m6 { grid-column: 7; grid-row: 4 / span 2; }
     #m7 { grid-column: 7; grid-row: 6 / span 2; }
     #m8 { grid-column: 7; grid-row: 8 / span 2; }
-
-    /* Botón siguiente ronda */
-    .next-round-container {
-      text-align: center;
-      margin-top: 8px; /* separación pequeña */
-      width: 100%;
-      max-width: 1200px;
-    }
-
-    #btn-next {
-      background-color: #f59e0b;
-      border: none;
-      color: #1e293b;
-      padding: 12px 25px;
-      font-size: 1.1rem;
-      font-weight: bold;
-      border-radius: 8px;
-      cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      transition: background-color 0.3s ease;
-    }
-
-    #btn-next:hover {
-      background-color: #d48806;
-    }
   </style>
 </head>
 <body>
@@ -264,10 +239,20 @@
     <div class="match" id="m8"></div>
   </div>
 
-  <!-- Botón siguiente ronda justo después del cuadro -->
-  <div class="next-round-container">
-    <button id="btn-next">Siguiente ronda</button>
-  </div>
+  <!-- Botón siguiente ronda -->
+<div style="text-align: center; margin-top: 20px;">
+  <button id="btn-next" style="
+    background-color: #f59e0b;
+    border: none;
+    color: #1e293b;
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  ">Siguiente ronda</button>
+</div>
 
   <div class="scroll-tip">👉 Desliza para ver el cuadro completo</div>
 
@@ -300,37 +285,64 @@
     const team1Winner = total1 > total2;
     const team2Winner = total2 > total1;
 
-    const equipo1Class = team1Winner ? "team-winner" : "";
-    const equipo2Class = team2Winner ? "team-winner" : "";
+    const resultadoFinal = `${total1} - ${total2}`;
+    const idaStr = match.ida ? `Ida: ${match.ida}` : '';
+    const vueltaStr = match.vuelta ? `Vuelta: ${match.vuelta}` : '';
+    
+    // Solo mostrar total si hay goles en ida o vuelta
+     const totalHTML = (match.ida || match.vuelta)
+    ? `<div class="team">Total: ${resultadoFinal}</div>`
+    : '';
+    
+    if (match.id === "f1") {
+      // Final a partido único
+      const golesFinal = match.ida?.includes("-") ? match.ida.split('-').map(x => parseInt(x.trim())) : [0, 0];
+      const f1Team1Winner = golesFinal[0] > golesFinal[1];
+      const f1Team2Winner = golesFinal[1] > golesFinal[0];
+      const resultadoUnico = match.ida || "";
 
+      return `
+        <div class="team ${f1Team1Winner ? "team-winner" : ""}">
+          ${match.equipo1} ${f1Team1Winner ? "🏆" : ""}
+        </div>
+        <div class="team ${f1Team2Winner ? "team-winner" : ""}">
+          ${match.equipo2} ${f1Team2Winner ? "🏆" : ""}
+        </div>
+        <div class="team">${resultadoUnico}</div>
+      `;
+    }
+
+    // Para el resto de partidos
     return `
-      <div>
-        <div class="${equipo1Class}">${match.equipo1}</div>
-        <div class="${equipo2Class}">${match.equipo2}</div>
-        <div>Ida: ${match.ida || "-"}</div>
-        <div>Vuelta: ${match.vuelta || "-"}</div>
-      </div>
+      <div class="team ${team1Winner ? "team-winner" : ""}">${match.equipo1}</div>
+      <div class="team ${team2Winner ? "team-winner" : ""}">${match.equipo2}</div>
+      ${totalHTML}
+      <div class="team">${idaStr}</div>
+      <div class="team">${vueltaStr}</div>
     `;
   }
 
-  function cargarDatos() {
-    fetch(url)
-      .then(res => res.text())
-      .then(text => {
-        const partidos = parseSheetData(text);
-        partidos.forEach(match => {
-          const el = document.getElementById(match.id);
-          if (el) {
-            el.innerHTML = crearMatchHtml(match);
-          }
-        });
+  fetch(url)
+    .then(res => res.text())
+    .then(data => {
+      const matches = parseSheetData(data);
+      matches.forEach(match => {
+        const div = document.getElementById(match.id);
+        if (div) {
+          div.innerHTML = crearMatchHtml(match);
+        }
       });
-  }
+    })
+    .catch(e => {
+      console.error("Error cargando datos de Google Sheets:", e);
+    });
+</script>
 
-  cargarDatos();
 
-  document.getElementById("btn-next").addEventListener("click", () => {
-    alert("Aquí iría la lógica para avanzar a la siguiente ronda.");
+
+<script>
+  document.getElementById('btn-next').addEventListener('click', () => {
+    window.location.href = 'cuartos.html';
   });
 </script>
 
