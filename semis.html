@@ -41,12 +41,11 @@
 
     .bracket {
       display: grid;
-      grid-template-columns: repeat(3, max-content);
-      grid-template-rows: auto;
-      gap: 20px 360px;
+      grid-template-columns: repeat(5, max-content);
+      grid-template-rows: repeat(16, 1fr);
+     gap: 10px 30px;
       width: 100%;
-      justify-content: center;
-      align-items: start;
+      max-width: 900px;
     }
 
     .round-title {
@@ -58,9 +57,9 @@
       grid-row: 1;
     }
 
-    .round-title.semis-left { grid-column: 3; grid-row: 4; }
-    .round-title.final { grid-column: 4; grid-row: 4; }
-    .round-title.semis-right { grid-column: 5; grid-row: 4; }
+    ..round-title.semis-left { grid-column: 1; }
+    .round-title.final { grid-column: 3; }
+    .round-title.semis-right { grid-column: 5; }
 
     /* Posiciones partidos */
     #s1 { grid-column: 3; grid-row: 5 / span 2; }
