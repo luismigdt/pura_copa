@@ -45,19 +45,17 @@
       font-weight: 900;
       font-size: 3rem;
       margin: 0;
+    }
 
-   .bracket {
-        display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: auto;
-    gap: 10px 30px;
-    width: 100%;
-    max-width: 1200px;
-    align-items: start;
-    margin: 0 auto;
-    justify-content: center;
-    padding-bottom: 0;
-      }
+    .bracket {
+      display: grid;
+      grid-template-columns: repeat(7, max-content);
+      grid-template-rows: repeat(15, 1fr);
+      gap: 10px 30px;
+      width: 100%;
+      max-width: 1200px;
+      margin-bottom: 0;
+    }
 
     .round-title {
       color: #fbbf24;
@@ -81,8 +79,14 @@
       min-width: 180px;
       max-width: 240px;
     }
-      .final-style{
-     background: #f59e0b;
+
+    .team-winner {
+      font-weight: bold;
+      color: #3b0a0a;
+    }
+
+    .final {
+      background: #f59e0b;
       border: 2px solid #fbbf24;
       border-radius: 12px;
       padding: 15px;
@@ -96,37 +100,6 @@
       justify-content: center;
       align-items: center;
     }
-    .team-winner {
-      font-weight: bold;
-      color: #3b0a0a;
-    }
-
-
-    #buttons-container {
-      margin-top: 0;  /* Sin espacio arriba para pegarse justo al bracket */
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  flex-wrap: wrap;
-    }
-
-    #buttons-container button {
-      background-color: #f59e0b;
-      border: none;
-      color: #1e293b;
-      padding: 12px 25px;
-      font-size: 1.1rem;
-      font-weight: bold;
-      border-radius: 8px;
-      cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    }
-
-    #buttons-container button#btn-prev {
-      background-color: #64748b;
-      color: #e2e8f0;
-    }
-
     @media (max-width: 768px) {
       h1 {
         font-size: 2rem;
@@ -140,9 +113,12 @@
       .bracket {
         gap: 6px 12px;
         overflow-x: auto;
-        padding-bottom: 0;  /* <-- Igual para móvil */
-        margin-bottom: 0;
+        padding-bottom: 20px;
         justify-content: start;
+      }
+
+      .scroll-tip {
+        display: block;
       }
 
       .match, .final {
@@ -154,16 +130,24 @@
       .round-title {
         font-size: 1rem;
       }
-      #buttons-container {
-        flex-direction: column;
-        gap: 10px;
-        margin-top: 0;    /* <-- Sin margen arriba en móvil */
-        padding-top: 0;
-      }
 
       body {
         padding: 10px;
       }
+    }
+
+    .scroll-tip {
+      display: none;
+      font-size: 0.9rem;
+      color: #fbbf24;
+      background-color: rgba(0, 0, 0, 0.3);
+      padding: 6px 12px;
+      margin-top: 30px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      text-align: center;
+      user-select: none;
+      animation: pulse 2s infinite;
     }
 
     @keyframes pulse {
@@ -255,9 +239,22 @@
     <div class="match" id="m8"></div>
   </div>
 
- <div id="buttons-container">
-    <button id="btn-next">Siguiente ronda</button>
-  </div>
+  <!-- Botón siguiente ronda -->
+<div style="text-align: center; margin-top: 20px;">
+  <button id="btn-next" style="
+    background-color: #f59e0b;
+    border: none;
+    color: #1e293b;
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  ">Siguiente ronda</button>
+</div>
+
+  <div class="scroll-tip">👉 Desliza para ver el cuadro completo</div>
 
 <script>
   const sheetId = "1M7dV2jRDWsh4A4PhbVlbpFmcEX4l-C-2ERUdG-F29ew";
@@ -339,7 +336,11 @@
     .catch(e => {
       console.error("Error cargando datos de Google Sheets:", e);
     });
+</script>
 
+
+
+<script>
   document.getElementById('btn-next').addEventListener('click', () => {
     window.location.href = 'cuartos.html';
   });
