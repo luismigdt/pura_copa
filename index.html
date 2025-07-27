@@ -47,11 +47,16 @@
       margin: 0;
 
    .bracket {
-        gap: 6px 12px;
-        overflow-x: auto;
-        padding-bottom: 0;  /* <-- Igual para móvil */
-        margin-bottom: 0;
-        justify-content: start;
+        display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: auto;
+    gap: 10px 30px;
+    width: 100%;
+    max-width: 1200px;
+    align-items: start;
+    margin: 0 auto;
+    justify-content: center;
+    padding-bottom: 0;
       }
 
     .round-title {
@@ -76,24 +81,33 @@
       min-width: 180px;
       max-width: 240px;
     }
-
+      .final-style{
+     background: #f59e0b;
+      border: 2px solid #fbbf24;
+      border-radius: 12px;
+      padding: 15px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: #1e293b;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 220px;
+      justify-content: center;
+      align-items: center;
+    }
     .team-winner {
       font-weight: bold;
       color: #3b0a0a;
     }
 
-    .final-style {
-      background: #f59e0b;
-      border: 2px solid #fbbf24;
-      color: #1e293b;
-    }
 
     #buttons-container {
-      margin-top: 20px;
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      flex-wrap: wrap;
+      margin-top: 0;  /* Sin espacio arriba para pegarse justo al bracket */
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
     }
 
     #buttons-container button {
@@ -150,20 +164,6 @@
       body {
         padding: 10px;
       }
-    }
-
-    .scroll-tip {
-      display: none;
-      font-size: 0.9rem;
-      color: #fbbf24;
-      background-color: rgba(0, 0, 0, 0.3);
-      padding: 6px 12px;
-      margin-top: 30px;
-      margin-bottom: 10px;
-      border-radius: 6px;
-      text-align: center;
-      user-select: none;
-      animation: pulse 2s infinite;
     }
 
     @keyframes pulse {
@@ -258,8 +258,6 @@
  <div id="buttons-container">
     <button id="btn-next">Siguiente ronda</button>
   </div>
-
-  <div class="scroll-tip">👉 Desliza para ver el cuadro completo</div>
 
 <script>
   const sheetId = "1M7dV2jRDWsh4A4PhbVlbpFmcEX4l-C-2ERUdG-F29ew";
