@@ -87,20 +87,10 @@
       color: #3b0a0a;
     }
 
-    .final {
+    .final-style {
       background: #f59e0b;
       border: 2px solid #fbbf24;
-      border-radius: 12px;
-      padding: 15px;
-      font-weight: bold;
-      font-size: 1.1rem;
       color: #1e293b;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      min-width: 220px;
-      justify-content: center;
-      align-items: center;
     }
 
     #buttons-container {
@@ -141,12 +131,9 @@
       .bracket {
         gap: 6px 12px;
         overflow-x: auto;
-        padding-bottom: 20px;
+        padding-bottom: 0;  /* <-- Igual para móvil */
+        margin-bottom: 0;
         justify-content: start;
-      }
-
-      .scroll-tip {
-        display: block;
       }
 
       .match, .final {
@@ -157,6 +144,12 @@
 
       .round-title {
         font-size: 1rem;
+      }
+      #buttons-container {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 0;    /* <-- Sin margen arriba en móvil */
+        padding-top: 0;
       }
 
       body {
