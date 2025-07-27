@@ -49,12 +49,14 @@
 
     .bracket {
       display: grid;
-      grid-template-columns: repeat(7, max-content);
-      grid-template-rows: repeat(15, 1fr);
+      grid-template-columns: repeat(5, 5, 1fr);
+      grid-template-rows: auto;
       gap: 10px 30px;
       width: 100%;
       max-width: 1200px;
-      margin-bottom: 0;
+      align-items: start;
+      margin: 0 auto;
+      justify-content: center;
     }
 
     .round-title {
