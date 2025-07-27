@@ -84,19 +84,20 @@
 }
 
 .final-style {
-  background: #f59e0b;
-  border: 2px solid #fbbf24;
-  border-radius: 12px;
-  padding: 15px;
-  font-weight: bold;
-  font-size: 1.1rem;
-  color: #1e293b;
+  background: #1e293b;
+  border-radius: 8px;
+  padding: 10px 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  font-size: 0.9rem;
+  color: #e2e8f0;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  min-width: 220px;
+  gap: 4px;
+  width: 200px;
+  height: 110px;
+  box-sizing: border-box;
+  overflow: hidden;
   justify-content: center;
-  align-items: center;
 }
 
     }
@@ -108,8 +109,8 @@
 
     .final-style {
       background: #f59e0b;
-      border: 2px solid #fbbf24;
-      color: #1e293b;
+  border: 2px solid #fbbf24;
+  color: #1e293b;
     }
 
     #buttons-container {
@@ -154,10 +155,11 @@
       .scroll-tip {
         display: block;
       }
-      .match, .final {
-        min-width: 140px;
-        padding: 8px;
-        font-size: 0.8rem;
+      .match, .final-style {
+        width: 140px;
+      height: 100px;
+      padding: 8px;
+      font-size: 0.8rem;
       }
       .round-title {
         font-size: 1rem;
