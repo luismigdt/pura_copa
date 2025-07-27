@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>PURA COPA</title>
   <style>
-    body {
+     body {
       margin: 0;
       padding: 20px;
       background: linear-gradient(135deg, #4b0000, #800020, #1f0000);
@@ -16,14 +16,10 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      height: auto;
-      min-height: unset;
+      min-height: 100vh;
     }
 
      
-
-
-
     /* Ocultar cuartos y octavos */
     #q1, #q2, #q3, #q4,
     #m1, #m2, #m3, #m4, #m5, #m6, #m7, #m8 {
@@ -50,14 +46,12 @@
       margin: 0;
     }
     .bracket {
-      display: grid;
+      display: flex;
       grid-template-columns: repeat(5, max-content);
       grid-template-rows: repeat(16, 1fr);
       gap: 10px 30px;
       width: 100%;
-      max-width: 900px;
-      margin-bottom: 0;
-      padding-bottom: 0;
+      max-width: 600px;
     }
 
      .nav-buttons {
