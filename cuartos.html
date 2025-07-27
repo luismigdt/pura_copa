@@ -42,16 +42,19 @@
       font-size: 3rem;
       margin: 0;
     }
-    .bracket {
-      display: grid;
-      grid-template-columns: repeat(7, max-content);
-      grid-template-rows: repeat(16, 1fr);
-      gap: 10px 30px;
-      width: 100%;
-      max-width: 1200px;
-      padding-bottom: 0;  /* <-- QUITADO padding inferior */
-      margin-bottom: 0;   /* <-- QUITADO margin inferior */
+      .bracket {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: auto;
+    gap: 10px 30px;
+    width: 100%;
+    max-width: 1200px;
+    align-items: start;
+    margin: 0 auto;
+    justify-content: center;
+    padding-bottom: 0;
     }
+
     /* Títulos de rondas alineados en fila 2 */
     .round-title {
       color: #fbbf24;
@@ -89,14 +92,17 @@
       border: 2px solid #fbbf24;
       color: #1e293b;
     }
-
-    #buttons-container {
-      margin-top: 0;    /* <-- Sin margen superior para pegar con el cuadro */
-      padding-top: 0;   /* <-- Sin padding arriba */
+    
+        #buttons-container {
+      margin-top: 0;
       display: flex;
       justify-content: center;
       gap: 15px;
       flex-wrap: wrap;
+      width: 100%;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     #buttons-container button {
