@@ -69,6 +69,7 @@
     #s2 { grid-column: 5; grid-row: 2 / span 2; }
     #f1 { grid-column: 3; grid-row: 2 / span 2; }
 
+    .match, .final-style {
     .match {
   background: #1e293b;
   border-radius: 8px;
@@ -85,6 +86,7 @@
   justify-content: center;
   overflow: hidden;
 }
+    
     final-style {
       background: #f59e0b;
       border: 2px solid #fbbf24;
@@ -103,9 +105,14 @@
 
     .team-winner {
       font-weight: bold;
-      color: #3b0a0a;
+      color: #22c55e;
     }
 
+    .final-style {
+      background: #f59e0b;
+  border: 2px solid #fbbf24;
+  color: #1e293b;
+    }
     .
 
    #buttons-container {
@@ -148,7 +155,7 @@
         height: 35px;
       }
     }
-      
+
       .bracket {
         gap: 6px 12px;
         overflow-x: auto;
@@ -167,7 +174,7 @@
       .round-title {
         font-size: 1rem;
       }
-    
+
     }
   </style>
 </head>
