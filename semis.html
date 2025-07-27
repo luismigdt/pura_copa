@@ -45,15 +45,6 @@
       font-size: 3rem;
       margin: 0;
     }
-    .bracket {
-      display: grid;
-      grid-template-columns: repeat(5, max-content);
-      grid-template-rows: repeat(16, 1fr);
-      gap: 10px 30px;
-      width: 100%;
-      max-width: 600px;
-      justify-content: center;
-    }
 
     .round-title {
       color: #fbbf24;
@@ -107,11 +98,15 @@
         width: 35px;
         height: 35px;
       }
-      .bracket {
-        gap: 6px 12px;
-        overflow-x: auto;
-        padding-bottom: 20px;
-        justify-content: start;
+    
+       .bracket {
+      display: grid;
+      grid-template-columns: repeat(7, max-content);
+      grid-template-rows: repeat(16, 1fr);
+      gap: 10px 30px;
+      width: 100%;
+      max-width: 1200px;
+    }
       }
       .match, .final {
         min-width: 140px;
