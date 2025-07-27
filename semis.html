@@ -229,6 +229,10 @@
     const resultadoFinal = `${total1} - ${total2}`;
     const idaStr = match.ida ? `Ida: ${match.ida}` : '';
     const vueltaStr = match.vuelta ? `Vuelta: ${match.vuelta}` : '';
+    // Solo mostrar total si hay goles en ida o vuelta
+    const totalHTML = (match.ida || match.vuelta)
+    ? `<div class="team">Total: ${resultadoFinal}</div>`
+    : '';
 
     if (match.id === "f1") {
       // Final a partido único
@@ -252,7 +256,7 @@
     return `
       <div class="team ${team1Winner ? "team-winner" : ""}">${match.equipo1}</div>
       <div class="team ${team2Winner ? "team-winner" : ""}">${match.equipo2}</div>
-      <div class="team">Total: ${resultadoFinal}</div>
+      ${totalHTML}
       <div class="team">${idaStr}</div>
       <div class="team">${vueltaStr}</div>
     `;
