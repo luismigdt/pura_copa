@@ -19,12 +19,6 @@
       min-height: 100vh;
     }
 
-    /* Ocultar cuartos y octavos */
-    #q1, #q2, #q3, #q4,
-    #m1, #m2, #m3, #m4, #m5, #m6, #m7, #m8 {
-      display: none;
-    }
-
     .title-container {
       filter: drop-shadow(2px 2px 5px rgba(255, 255, 255, 0.4));
       display: flex;
@@ -45,22 +39,14 @@
       margin: 0;
     }
 
-    .bracket-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-      width: 100%;
-      max-width: 1000px;
-    }
-
     .bracket {
       display: grid;
       grid-template-columns: repeat(5, max-content);
-      grid-template-rows: repeat(16, 1fr);
       gap: 10px 30px;
       width: 100%;
       max-width: 900px;
+      align-items: start;
+      grid-auto-rows: min-content;
     }
 
     .round-title {
@@ -69,11 +55,27 @@
       font-size: 1.25rem;
       text-align: center;
       user-select: none;
-      grid-row: 2;
+      /* colocamos en fila 1 para que no reserve fila de más */
+      grid-row: 1;
     }
-    .round-title.semis-left { grid-column: 1; }
+    .round-title.cuartos-left { grid-column: 1; }
+    .round-title.semis-left { grid-column: 2; }
     .round-title.final { grid-column: 3; }
-    .round-title.semis-right { grid-column: 5; }
+    .round-title.semis-right { grid-column: 4; }
+    .round-title.cuartos-right { grid-column: 5; }
+
+    /* Posición partidos cuartos */
+    #q1 { grid-column: 1; grid-row: 2; }
+    #q2 { grid-column: 1; grid-row: 3; }
+    #q3 { grid-column: 5; grid-row: 2; }
+    #q4 { grid-column: 5; grid-row: 3; }
+
+    /* Posición partidos semis */
+    #s1 { grid-column: 2; grid-row: 2 / span 2; }
+    #s2 { grid-column: 4; grid-row: 2 / span 2; }
+
+    /* Posición final */
+    #f1 { grid-column: 3; grid-row: 2 / span 3; }
 
     .match {
       background: #1e293b;
@@ -88,12 +90,10 @@
       min-width: 180px;
       max-width: 240px;
     }
-
     .team-winner {
       font-weight: bold;
       color: #22c55e;
     }
-
     .final {
       background: #f59e0b;
       border: 2px solid #fbbf24;
@@ -108,29 +108,6 @@
       min-width: 220px;
       justify-content: center;
       align-items: center;
-    }
-
-    .bracket-buttons {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-    }
-
-    .bracket-buttons button {
-      background-color: #64748b;
-      border: none;
-      color: #e2e8f0;
-      padding: 12px 25px;
-      font-size: 1.1rem;
-      font-weight: bold;
-      border-radius: 8px;
-      cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    }
-
-    .bracket-buttons button#btn-next {
-      background-color: #f59e0b;
-      color: #1e293b;
     }
 
     @media (max-width: 768px) {
@@ -158,18 +135,38 @@
       body {
         padding: 10px;
       }
-      .bracket-buttons {
-        flex-direction: column;
-        gap: 10px;
-      }
     }
 
-    /* Posiciones partidos semis (izquierda y derecha) */
-    #s1 { grid-column: 1; grid-row: 5 / span 2; }
-    #s2 { grid-column: 5; grid-row: 5 / span 2; }
-
-    /* Posición final (centro) */
-    #f1 { grid-column: 3; grid-row: 4 / span 4; }
+    /* Botones justo debajo del cuadro */
+    #buttons-container {
+      margin-top: 15px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    #buttons-container button {
+      background-color: #f59e0b;
+      border: none;
+      color: #1e293b;
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: background-color 0.3s ease;
+    }
+    #buttons-container button#btn-prev {
+      background-color: #64748b;
+      color: #e2e8f0;
+    }
+    #buttons-container button:hover {
+      background-color: #d97706;
+    }
+    #buttons-container button#btn-prev:hover {
+      background-color: #475569;
+    }
   </style>
 </head>
 <body>
@@ -180,41 +177,35 @@
     <img src="puracopa.png" alt="Logo Derecha" />
   </div>
 
-  <div class="bracket-container">
-    <div class="bracket">
-      <!-- Títulos -->
-      <div class="round-title semis-left">Semifinales</div>
-      <div class="round-title final">Final</div>
-      <div class="round-title semis-right">Semifinales</div>
+  <div class="bracket">
+    <!-- Títulos -->
+    <div class="round-title cuartos-left">Cuartos</div>
+    <div class="round-title semis-left">Semifinales</div>
+    <div class="round-title final">Final</div>
+    <div class="round-title semis-right">Semifinales</div>
+    <div class="round-title cuartos-right">Cuartos</div>
 
-      <!-- Partidos semis izquierda -->
-      <div class="match" id="s1"></div>
+    <!-- Cuartos izquierda -->
+    <div class="match" id="q1"></div>
+    <div class="match" id="q2"></div>
 
-      <!-- Final -->
-      <div class="match final" id="f1"></div>
+    <!-- Semifinal izquierda -->
+    <div class="match" id="s1"></div>
 
-      <!-- Partidos semis derecha -->
-      <div class="match" id="s2"></div>
+    <!-- Final -->
+    <div class="match final" id="f1"></div>
 
-      <!-- Ocultos cuartos y octavos -->
-      <div class="match" id="q1"></div>
-      <div class="match" id="q2"></div>
-      <div class="match" id="q3"></div>
-      <div class="match" id="q4"></div>
-      <div class="match" id="m1"></div>
-      <div class="match" id="m2"></div>
-      <div class="match" id="m3"></div>
-      <div class="match" id="m4"></div>
-      <div class="match" id="m5"></div>
-      <div class="match" id="m6"></div>
-      <div class="match" id="m7"></div>
-      <div class="match" id="m8"></div>
-    </div>
+    <!-- Semifinal derecha -->
+    <div class="match" id="s2"></div>
 
-    <div class="bracket-buttons">
-      <button id="btn-prev">Ronda anterior</button>
-      <button id="btn-next">Siguiente ronda</button>
-    </div>
+    <!-- Cuartos derecha -->
+    <div class="match" id="q3"></div>
+    <div class="match" id="q4"></div>
+  </div>
+
+  <div id="buttons-container">
+    <button id="btn-prev">Ronda anterior</button>
+    <button id="btn-next">Siguiente ronda</button>
   </div>
 
   <script>
@@ -265,7 +256,7 @@
           <div class="team ${f1Team2Winner ? "team-winner" : ""}">
             ${match.equipo2} ${f1Team2Winner ? "🏆" : ""}
           </div>
-          <div class="team">${resultadoUnico}</div>
+          <div class="team"> ${resultadoUnico}</div>
         `;
       }
 
@@ -304,4 +295,3 @@
 
 </body>
 </html>
-
