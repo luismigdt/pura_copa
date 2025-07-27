@@ -88,6 +88,30 @@
       color: #1e293b;
       
     }
+    #buttons-container {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    #buttons-container button {
+      background-color: #f59e0b;
+      border: none;
+      color: #1e293b;
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    #buttons-container button#btn-prev {
+      background-color: #64748b;
+      color: #e2e8f0;
+    }
     @media (max-width: 768px) {
       h1 {
         font-size: 2rem;
@@ -109,6 +133,10 @@
       }
       .round-title {
         font-size: 1rem;
+      }
+      #buttons-container {
+        flex-direction: column;
+        gap: 10px;
       }
       body {
         padding: 10px;
@@ -172,6 +200,10 @@
     <div class="match" id="m6"></div>
     <div class="match" id="m7"></div>
     <div class="match" id="m8"></div>
+  </div>
+  <div id="buttons-container">
+    <button id="btn-prev">Ronda anterior</button>
+    <button id="btn-next">Siguiente ronda</button>
   </div>
 
   <div style="text-align: center; margin: 30px 0;">
