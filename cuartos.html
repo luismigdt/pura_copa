@@ -247,7 +247,7 @@
       const golesFinal = match.ida?.includes("-") ? match.ida.split('-').map(x => parseInt(x.trim())) : [0, 0];
       const f1Team1Winner = golesFinal[0] > golesFinal[1];
       const f1Team2Winner = golesFinal[1] > golesFinal[0];
-      const resultadoUnico = match.ida || "0-0";
+      const resultadoUnico = match.ida || "";
 
       return `
         <div class="team ${f1Team1Winner ? "team-winner" : ""}">
