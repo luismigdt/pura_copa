@@ -100,6 +100,30 @@
       justify-content: center;
       align-items: center;
     }
+    #buttons-container {
+      margin-top: 0;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    #buttons-container button {
+      background-color: #f59e0b;
+      border: none;
+      color: #1e293b;
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    #buttons-container button#btn-prev {
+      background-color: #64748b;
+      color: #e2e8f0;
+    }
     @media (max-width: 768px) {
       h1 {
         font-size: 2rem;
@@ -113,7 +137,8 @@
       .bracket {
         gap: 6px 12px;
         overflow-x: auto;
-        padding-bottom: 20px;
+        padding-bottom: 0;
+        margin-bottom: 0;
         justify-content: start;
       }
 
@@ -131,6 +156,12 @@
         font-size: 1rem;
       }
 
+      #buttons-container {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 0;
+        padding-top: 0;
+      }
       body {
         padding: 10px;
       }
@@ -239,22 +270,9 @@
     <div class="match" id="m8"></div>
   </div>
 
-  <!-- Botón siguiente ronda -->
-<div style="text-align: center; margin-top: 20px;">
-  <button id="btn-next" style="
-    background-color: #f59e0b;
-    border: none;
-    color: #1e293b;
-    padding: 12px 25px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    border-radius: 8px;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-  ">Siguiente ronda</button>
-</div>
-
-  <div class="scroll-tip">👉 Desliza para ver el cuadro completo</div>
+  <div id="buttons-container">
+    <button id="btn-next">Siguiente ronda</button>
+  </div>
 
 <script>
   const sheetId = "1M7dV2jRDWsh4A4PhbVlbpFmcEX4l-C-2ERUdG-F29ew";
@@ -336,11 +354,7 @@
     .catch(e => {
       console.error("Error cargando datos de Google Sheets:", e);
     });
-</script>
 
-
-
-<script>
   document.getElementById('btn-next').addEventListener('click', () => {
     window.location.href = 'cuartos.html';
   });
