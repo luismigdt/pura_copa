@@ -229,13 +229,17 @@
     const resultadoFinal = `${total1} - ${total2}`;
     const idaStr = match.ida ? `Ida: ${match.ida}` : '';
     const vueltaStr = match.vuelta ? `Vuelta: ${match.vuelta}` : '';
+     // Solo mostrar total si hay goles en ida o vuelta
+  const totalHTML = (match.ida || match.vuelta)
+    ? `<div class="team">Total: ${resultadoFinal}</div>`
+    : '';
 
     if (match.id === "f1") {
       // Final a partido único
       const golesFinal = match.ida?.includes("-") ? match.ida.split('-').map(x => parseInt(x.trim())) : [0, 0];
       const f1Team1Winner = golesFinal[0] > golesFinal[1];
       const f1Team2Winner = golesFinal[1] > golesFinal[0];
-      const resultadoUnico = match.ida || "0-0";
+      const resultadoUnico = match.ida || "";
 
       return `
         <div class="team ${f1Team1Winner ? "team-winner" : ""}">
@@ -253,7 +257,7 @@
     return `
       <div class="team ${team1Winner ? "team-winner" : ""}">${match.equipo1}</div>
       <div class="team ${team2Winner ? "team-winner" : ""}">${match.equipo2}</div>
-      <div class="team">Total: ${resultadoFinal}</div>
+      ${totalHTML}
       <div class="team">${idaStr}</div>
       <div class="team">${vueltaStr}</div>
     `;
