@@ -44,6 +44,16 @@
       font-size: 3rem;
       margin: 0;
     }
+
+    .bracket-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      width: 100%;
+      max-width: 1000px;
+    }
+
     .bracket {
       display: grid;
       grid-template-columns: repeat(5, max-content);
@@ -52,6 +62,7 @@
       width: 100%;
       max-width: 900px;
     }
+
     .round-title {
       color: #fbbf24;
       font-weight: bold;
@@ -77,10 +88,12 @@
       min-width: 180px;
       max-width: 240px;
     }
+
     .team-winner {
       font-weight: bold;
       color: #22c55e;
     }
+
     .final {
       background: #f59e0b;
       border: 2px solid #fbbf24;
@@ -96,6 +109,30 @@
       justify-content: center;
       align-items: center;
     }
+
+    .bracket-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .bracket-buttons button {
+      background-color: #64748b;
+      border: none;
+      color: #e2e8f0;
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    .bracket-buttons button#btn-next {
+      background-color: #f59e0b;
+      color: #1e293b;
+    }
+
     @media (max-width: 768px) {
       h1 {
         font-size: 2rem;
@@ -121,6 +158,10 @@
       body {
         padding: 10px;
       }
+      .bracket-buttons {
+        flex-direction: column;
+        gap: 10px;
+      }
     }
 
     /* Posiciones partidos semis (izquierda y derecha) */
@@ -129,7 +170,6 @@
 
     /* Posición final (centro) */
     #f1 { grid-column: 3; grid-row: 4 / span 4; }
-
   </style>
 </head>
 <body>
@@ -140,142 +180,119 @@
     <img src="puracopa.png" alt="Logo Derecha" />
   </div>
 
-  <div class="bracket">
-    <!-- Títulos -->
-    <div class="round-title semis-left">Semifinales</div>
-    <div class="round-title final">Final</div>
-    <div class="round-title semis-right">Semifinales</div>
+  <div class="bracket-container">
+    <div class="bracket">
+      <!-- Títulos -->
+      <div class="round-title semis-left">Semifinales</div>
+      <div class="round-title final">Final</div>
+      <div class="round-title semis-right">Semifinales</div>
 
-    <!-- Partidos semis izquierda -->
-    <div class="match" id="s1"></div>
+      <!-- Partidos semis izquierda -->
+      <div class="match" id="s1"></div>
 
-    <!-- Final -->
-    <div class="match final" id="f1"></div>
+      <!-- Final -->
+      <div class="match final" id="f1"></div>
 
-    <!-- Partidos semis derecha -->
-    <div class="match" id="s2"></div>
+      <!-- Partidos semis derecha -->
+      <div class="match" id="s2"></div>
 
-    <!-- Ocultos cuartos y octavos -->
-    <div class="match" id="q1" style="display:none;"></div>
-    <div class="match" id="q2" style="display:none;"></div>
-    <div class="match" id="q3" style="display:none;"></div>
-    <div class="match" id="q4" style="display:none;"></div>
+      <!-- Ocultos cuartos y octavos -->
+      <div class="match" id="q1"></div>
+      <div class="match" id="q2"></div>
+      <div class="match" id="q3"></div>
+      <div class="match" id="q4"></div>
+      <div class="match" id="m1"></div>
+      <div class="match" id="m2"></div>
+      <div class="match" id="m3"></div>
+      <div class="match" id="m4"></div>
+      <div class="match" id="m5"></div>
+      <div class="match" id="m6"></div>
+      <div class="match" id="m7"></div>
+      <div class="match" id="m8"></div>
+    </div>
 
-    <div class="match" id="m1" style="display:none;"></div>
-    <div class="match" id="m2" style="display:none;"></div>
-    <div class="match" id="m3" style="display:none;"></div>
-    <div class="match" id="m4" style="display:none;"></div>
-    <div class="match" id="m5" style="display:none;"></div>
-    <div class="match" id="m6" style="display:none;"></div>
-    <div class="match" id="m7" style="display:none;"></div>
-    <div class="match" id="m8" style="display:none;"></div>
+    <div class="bracket-buttons">
+      <button id="btn-prev">Ronda anterior</button>
+      <button id="btn-next">Siguiente ronda</button>
+    </div>
   </div>
 
-  <div style="text-align: center; margin-top: 10px;">
-    <button id="btn-prev" style="
-      background-color: #64748b;
-      border: none;
-      color: #e2e8f0;
-      padding: 12px 25px;
-      font-size: 1.1rem;
-      font-weight: bold;
-      border-radius: 8px;
-      cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      margin-right: 15px;
-    ">Ronda anterior</button>
-    <button id="btn-next" style="
-      background-color: #f59e0b;
-      border: none;
-      color: #1e293b;
-      padding: 12px 25px;
-      font-size: 1.1rem;
-      font-weight: bold;
-      border-radius: 8px;
-      cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    ">Siguiente ronda</button>
-  </div>
-
- <script>
+  <script>
     const sheetId = "1M7dV2jRDWsh4A4PhbVlbpFmcEX4l-C-2ERUdG-F29ew";
-  const sheetName = "Hoja 1"; 
-  const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
+    const sheetName = "Hoja 1"; 
+    const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
 
-  // Función para parsear datos del JSON de Google Sheets
-  function parseSheetData(data) {
-    const json = JSON.parse(data.substring(47, data.length - 2));
-    return json.table.rows.map(row => {
-      return {
-        id: row.c[0]?.v || "",
-        equipo1: row.c[1]?.v || "",
-        equipo2: row.c[2]?.v || "",
-        ida: row.c[3]?.v || "",
-        vuelta: row.c[4]?.v || ""
-      };
-    });
-  }
+    function parseSheetData(data) {
+      const json = JSON.parse(data.substring(47, data.length - 2));
+      return json.table.rows.map(row => {
+        return {
+          id: row.c[0]?.v || "",
+          equipo1: row.c[1]?.v || "",
+          equipo2: row.c[2]?.v || "",
+          ida: row.c[3]?.v || "",
+          vuelta: row.c[4]?.v || ""
+        };
+      });
+    }
 
-  function crearMatchHtml(match) {
-    const golesIda = match.ida?.includes("-") ? match.ida.split('-').map(x => parseInt(x.trim())) : [0, 0];
-    const golesVuelta = match.vuelta?.includes("-") ? match.vuelta.split('-').map(x => parseInt(x.trim())) : [0, 0];
+    function crearMatchHtml(match) {
+      const golesIda = match.ida?.includes("-") ? match.ida.split('-').map(x => parseInt(x.trim())) : [0, 0];
+      const golesVuelta = match.vuelta?.includes("-") ? match.vuelta.split('-').map(x => parseInt(x.trim())) : [0, 0];
 
-    const total1 = (golesIda[0] || 0) + (golesVuelta[0] || 0);
-    const total2 = (golesIda[1] || 0) + (golesVuelta[1] || 0);
+      const total1 = (golesIda[0] || 0) + (golesVuelta[0] || 0);
+      const total2 = (golesIda[1] || 0) + (golesVuelta[1] || 0);
 
-    const team1Winner = total1 > total2;
-    const team2Winner = total2 > total1;
+      const team1Winner = total1 > total2;
+      const team2Winner = total2 > total1;
 
-    const resultadoFinal = `${total1} - ${total2}`;
-    const idaStr = match.ida ? `Ida: ${match.ida}` : '';
-    const vueltaStr = match.vuelta ? `Vuelta: ${match.vuelta}` : '';
-     // Solo mostrar total si hay goles en ida o vuelta
-  const totalHTML = (match.ida || match.vuelta)
-    ? `<div class="team">Total: ${resultadoFinal}</div>`
-    : '';
+      const resultadoFinal = `${total1} - ${total2}`;
+      const idaStr = match.ida ? `Ida: ${match.ida}` : '';
+      const vueltaStr = match.vuelta ? `Vuelta: ${match.vuelta}` : '';
+      const totalHTML = (match.ida || match.vuelta)
+        ? `<div class="team">Total: ${resultadoFinal}</div>`
+        : '';
 
-    if (match.id === "f1") {
-      // Final a partido único
-      const golesFinal = match.ida?.includes("-") ? match.ida.split('-').map(x => parseInt(x.trim())) : [0, 0];
-      const f1Team1Winner = golesFinal[0] > golesFinal[1];
-      const f1Team2Winner = golesFinal[1] > golesFinal[0];
-      const resultadoUnico = match.ida || "";
+      if (match.id === "f1") {
+        const golesFinal = match.ida?.includes("-") ? match.ida.split('-').map(x => parseInt(x.trim())) : [0, 0];
+        const f1Team1Winner = golesFinal[0] > golesFinal[1];
+        const f1Team2Winner = golesFinal[1] > golesFinal[0];
+        const resultadoUnico = match.ida || "";
+
+        return `
+          <div class="team ${f1Team1Winner ? "team-winner" : ""}">
+            ${match.equipo1} ${f1Team1Winner ? "🏆" : ""}
+          </div>
+          <div class="team ${f1Team2Winner ? "team-winner" : ""}">
+            ${match.equipo2} ${f1Team2Winner ? "🏆" : ""}
+          </div>
+          <div class="team">${resultadoUnico}</div>
+        `;
+      }
 
       return `
-        <div class="team ${f1Team1Winner ? "team-winner" : ""}">
-          ${match.equipo1} ${f1Team1Winner ? "🏆" : ""}
-        </div>
-        <div class="team ${f1Team2Winner ? "team-winner" : ""}">
-          ${match.equipo2} ${f1Team2Winner ? "🏆" : ""}
-        </div>
-        <div class="team"> ${resultadoUnico}</div>
+        <div class="team ${team1Winner ? "team-winner" : ""}">${match.equipo1}</div>
+        <div class="team ${team2Winner ? "team-winner" : ""}">${match.equipo2}</div>
+        ${totalHTML}
+        <div class="team">${idaStr}</div>
+        <div class="team">${vueltaStr}</div>
       `;
     }
 
-    // Para el resto de partidos
-    return `
-      <div class="team ${team1Winner ? "team-winner" : ""}">${match.equipo1}</div>
-      <div class="team ${team2Winner ? "team-winner" : ""}">${match.equipo2}</div>
-      ${totalHTML}
-      <div class="team">${idaStr}</div>
-      <div class="team">${vueltaStr}</div>
-    `;
-  }
-
-  fetch(url)
-    .then(res => res.text())
-    .then(data => {
-      const matches = parseSheetData(data);
-      matches.forEach(match => {
-        const div = document.getElementById(match.id);
-        if (div) {
-          div.innerHTML = crearMatchHtml(match);
-        }
+    fetch(url)
+      .then(res => res.text())
+      .then(data => {
+        const matches = parseSheetData(data);
+        matches.forEach(match => {
+          const div = document.getElementById(match.id);
+          if (div) {
+            div.innerHTML = crearMatchHtml(match);
+          }
+        });
+      })
+      .catch(e => {
+        console.error("Error cargando datos de Google Sheets:", e);
       });
-    })
-    .catch(e => {
-      console.error("Error cargando datos de Google Sheets:", e);
-    });
+
     document.getElementById('btn-prev').addEventListener('click', () => {
       window.location.href = 'cuartos.html';
     });
@@ -283,8 +300,6 @@
     document.getElementById('btn-next').addEventListener('click', () => {
       window.location.href = 'final.html';
     });
-
-    loadMatches();
   </script>
 
 </body>
