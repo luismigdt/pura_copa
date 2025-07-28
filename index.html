@@ -114,6 +114,11 @@
 
     }
 
+      .bracket-wrapper {
+    overflow-x: auto;
+    width: 100%;
+    padding-bottom: 20px;
+    }
 
 
     .round-title {
@@ -272,27 +277,15 @@
 
       .bracket {
 
-        display: inline-block;
-
-        transform: scale(0.8);
-
-        transform-origin: top center;
-
-        width: max-content;
-
-        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(7, max-content);
+        grid-template-rows: repeat(15, 1fr);
+        gap: 10px 20px;
+        min-width: 900px; 
 
           }
 
-
-
-
-
-
-
       }
-
-
 
 
       .scroll-tip {
@@ -480,7 +473,8 @@
 
 
 
-  <div class="bracket">
+  <div class="bracket-wrapper"">
+    <div class="bracket">
 
     <!-- Títulos -->
 
@@ -544,8 +538,11 @@
 
     <div class="match" id="m8"></div>
 
+    </div>
+
   </div>
 
+  <div class="scroll-tip">⬅️ Desliza para ver el cuadro ➡️</div>
 
 
   <div id="buttons-container">
