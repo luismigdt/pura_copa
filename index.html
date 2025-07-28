@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <me<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=10, user-scalable=yes" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" />
   <title>PURA COPA</title>
   <style>
     body {
@@ -17,6 +17,7 @@
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
     @keyframes gradient {
@@ -100,6 +101,7 @@
       justify-content: center;
       align-items: center;
     }
+
     #buttons-container {
       margin-top: 0;
       display: flex;
@@ -125,49 +127,6 @@
       color: #e2e8f0;
     }
 
-    @media (max-width: 768px) {
-  .bracket {
-    transform: scale(0.45);
-    transform-origin: top center;
-    width: max-content;
-    margin: 0 auto;
-  }
-
-  body {
-    padding: 5px;
-  }
-
-  h1 {
-    font-size: 1.5rem;
-  }
-
-  .match, .final {
-    min-width: 120px;
-    font-size: 0.7rem;
-  }
-
-  .round-title {
-    font-size: 0.9rem;
-  }
-
-  .title-container img {
-    width: 28px;
-    height: 28px;
-  }
-
-  #buttons-container {
-    flex-direction: column;
-    gap: 8px;
-  }
-}
-
-
-      
-      body {
-        padding: 10px;
-      }
-    }
-
     .scroll-tip {
       display: none;
       font-size: 0.9rem;
@@ -187,10 +146,58 @@
       50% { opacity: 1; }
       100% { opacity: 0.6; }
     }
-    
-    /* Colocación */
 
-    /* Títulos */
+    /* RESPONSIVE PARA MÓVILES */
+    @media (max-width: 768px) {
+      .bracket {
+        transform: scale(0.48);
+        transform-origin: top center;
+        width: max-content;
+        margin: 0 auto;
+      }
+
+      body {
+        padding: 10px;
+        overflow-x: hidden;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      .title-container img {
+        width: 30px;
+        height: 30px;
+      }
+
+      .match, .final {
+        min-width: 120px;
+        font-size: 0.75rem;
+      }
+
+      .round-title {
+        font-size: 1rem;
+      }
+
+      #buttons-container {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .scroll-tip {
+        display: block;
+      }
+    }
+
+    /* ESCALA EN PANTALLAS GRANDES */
+    @media (min-width: 1600px) {
+      .bracket {
+        transform: scale(1.1);
+        transform-origin: top center;
+      }
+    }
+
+    /* Colocación del cuadro */
     .bracket .round-title:nth-child(1)  { grid-column: 1; }
     .bracket .round-title:nth-child(2)  { grid-column: 2; }
     .bracket .round-title:nth-child(3)  { grid-column: 3; }
@@ -199,30 +206,23 @@
     .bracket .round-title:nth-child(6)  { grid-column: 6; }
     .bracket .round-title:nth-child(7)  { grid-column: 7; }
 
-    /* Octavos izquierda */
     #m1 { grid-column: 1; grid-row: 2 / span 2; }
     #m2 { grid-column: 1; grid-row: 4 / span 2; }
     #m3 { grid-column: 1; grid-row: 6 / span 2; }
     #m4 { grid-column: 1; grid-row: 8 / span 2; }
 
-    /* Cuartos izquierda */
     #q1 { grid-column: 2; grid-row: 3 / span 2; }
     #q2 { grid-column: 2; grid-row: 7 / span 2; }
 
-    /* Semis izquierda */
     #s1 { grid-column: 3; grid-row: 5 / span 2; }
 
-    /* Final */
     #f1 { grid-column: 4; grid-row: 6 / span 2; }
 
-    /* Semis derecha */
     #s2 { grid-column: 5; grid-row: 5 / span 2; }
 
-    /* Cuartos derecha */
     #q3 { grid-column: 6; grid-row: 3 / span 2; }
     #q4 { grid-column: 6; grid-row: 7 / span 2; }
 
-    /* Octavos derecha */
     #m5 { grid-column: 7; grid-row: 2 / span 2; }
     #m6 { grid-column: 7; grid-row: 4 / span 2; }
     #m7 { grid-column: 7; grid-row: 6 / span 2; }
@@ -238,7 +238,6 @@
   </div>
 
   <div class="bracket">
-    <!-- Títulos -->
     <div class="round-title">Octavos</div>
     <div class="round-title">Cuartos</div>
     <div class="round-title">Semis</div>
@@ -247,7 +246,7 @@
     <div class="round-title">Cuartos</div>
     <div class="round-title">Octavos</div>
 
-    <!-- Partidos: los rellenaremos con JS -->
+    <!-- Partidos -->
     <div class="match" id="m1"></div>
     <div class="match" id="m2"></div>
     <div class="match" id="m3"></div>
@@ -277,10 +276,9 @@
 
 <script>
   const sheetId = "1M7dV2jRDWsh4A4PhbVlbpFmcEX4l-C-2ERUdG-F29ew";
-  const sheetName = "Hoja 1"; 
+  const sheetName = "Hoja 1";
   const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
 
-  // Función para parsear datos del JSON de Google Sheets
   function parseSheetData(data) {
     const json = JSON.parse(data.substring(47, data.length - 2));
     return json.table.rows.map(row => {
@@ -307,14 +305,12 @@
     const resultadoFinal = `${total1} - ${total2}`;
     const idaStr = match.ida ? `Ida: ${match.ida}` : '';
     const vueltaStr = match.vuelta ? `Vuelta: ${match.vuelta}` : '';
-    
-    // Solo mostrar total si hay goles en ida o vuelta
-     const totalHTML = (match.ida || match.vuelta)
-    ? `<div class="team">Total: ${resultadoFinal}</div>`
-    : '';
-    
+
+    const totalHTML = (match.ida || match.vuelta)
+      ? `<div class="team">Total: ${resultadoFinal}</div>`
+      : '';
+
     if (match.id === "f1") {
-      // Final a partido único
       const golesFinal = match.ida?.includes("-") ? match.ida.split('-').map(x => parseInt(x.trim())) : [0, 0];
       const f1Team1Winner = golesFinal[0] > golesFinal[1];
       const f1Team2Winner = golesFinal[1] > golesFinal[0];
@@ -331,7 +327,6 @@
       `;
     }
 
-    // Para el resto de partidos
     return `
       <div class="team ${team1Winner ? "team-winner" : ""}">${match.equipo1}</div>
       <div class="team ${team2Winner ? "team-winner" : ""}">${match.equipo2}</div>
