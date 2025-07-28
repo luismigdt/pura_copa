@@ -147,55 +147,66 @@
       100% { opacity: 0.6; }
     }
 
-    /* RESPONSIVE PARA MÓVILES */
-    @media (max-width: 768px) {
-      .bracket {
-        transform: scale(0.48);
-        transform-origin: top center;
-        width: max-content;
-        margin: 0 auto;
-      }
+   /* Móviles verticales */
+@media (max-width: 768px) and (orientation: portrait) {
+  .bracket {
+    transform: scale(0.48);
+    transform-origin: top center;
+    width: max-content;
+    margin: 0 auto;
+  }
 
-      body {
-        padding: 10px;
-        overflow-x: hidden;
-      }
+  body {
+    padding: 10px;
+    overflow-x: hidden;
+  }
 
-      h1 {
-        font-size: 1.8rem;
-      }
+  h1 {
+    font-size: 1.8rem;
+  }
 
-      .title-container img {
-        width: 30px;
-        height: 30px;
-      }
+  .title-container img {
+    width: 30px;
+    height: 30px;
+  }
 
-      .match, .final {
-        min-width: 120px;
-        font-size: 0.75rem;
-      }
+  .match, .final {
+    min-width: 120px;
+    font-size: 0.75rem;
+  }
 
-      .round-title {
-        font-size: 1rem;
-      }
+  .round-title {
+    font-size: 1rem;
+  }
 
-      #buttons-container {
-        flex-direction: column;
-        gap: 10px;
-      }
+  #buttons-container {
+    flex-direction: column;
+    gap: 10px;
+  }
 
-      .scroll-tip {
-        display: block;
-      }
-    }
+  .scroll-tip {
+    display: block;
+  }
+}
 
-    /* ESCALA EN PANTALLAS GRANDES */
-    @media (min-width: 1600px) {
-      .bracket {
-        transform: scale(1.1);
-        transform-origin: top center;
-      }
-    }
+/* Móviles en horizontal: un poco más grande */
+@media (max-width: 1024px) and (orientation: landscape) {
+  .bracket {
+    transform: scale(0.7);
+    transform-origin: top center;
+    width: max-content;
+    margin: 0 auto;
+  }
+}
+
+/* Pantallas grandes */
+@media (min-width: 1400px) {
+  .bracket {
+    transform: scale(1.05);
+    transform-origin: top center;
+  }
+}
+
 
     /* Colocación del cuadro */
     .bracket .round-title:nth-child(1)  { grid-column: 1; }
