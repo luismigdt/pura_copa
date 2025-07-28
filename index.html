@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <me<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=10, user-scalable=yes" />
   <title>PURA COPA</title>
   <style>
     body {
@@ -124,44 +124,45 @@
       background-color: #64748b;
       color: #e2e8f0;
     }
+
     @media (max-width: 768px) {
-      h1 {
-        font-size: 2rem;
-      }
+  .bracket {
+    transform: scale(0.45);
+    transform-origin: top center;
+    width: max-content;
+    margin: 0 auto;
+  }
 
-      .title-container img {
-        width: 35px;
-        height: 35px;
-      }
+  body {
+    padding: 5px;
+  }
 
-      .bracket {
-         transform: scale(0.6);
-          transform-origin: top left;
-          width: max-content;
-          margin-left: 10px;
-          overflow-x: hidden
-          }
+  h1 {
+    font-size: 1.5rem;
+  }
 
-      .scroll-tip {
-        display: block;
-      }
+  .match, .final {
+    min-width: 120px;
+    font-size: 0.7rem;
+  }
 
-      .match, .final {
-        min-width: 140px;
-        padding: 8px;
-        font-size: 0.8rem;
-      }
+  .round-title {
+    font-size: 0.9rem;
+  }
 
-      .round-title {
-        font-size: 1rem;
-      }
+  .title-container img {
+    width: 28px;
+    height: 28px;
+  }
 
-      #buttons-container {
-        flex-direction: column;
-        gap: 10px;
-        margin-top: 0;
-        padding-top: 0;
-      }
+  #buttons-container {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+
+      
       body {
         padding: 10px;
       }
