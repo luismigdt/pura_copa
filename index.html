@@ -114,12 +114,7 @@
 
     }
 
-      .bracket-wrapper {
-    overflow-x: auto;
-    width: 100%;
-    padding-bottom: 20px;
-    }
-
+    
 
     .round-title {
 
@@ -255,111 +250,50 @@
 
     }
 
+     .bracket-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      display: flex;
+      justify-content: center;
+      }
+
     @media (max-width: 768px) {
 
-      h1 {
+  .bracket-wrapper {
+    justify-content: flex-start;
+  }
 
-        font-size: 2rem;
+  .bracket {
+    min-width: 900px; /* Para scroll horizontal si no cabe */
+    gap: 10px 20px;
+  }
 
-      }
+  .match, .final {
+    min-width: 140px;
+    padding: 8px;
+    font-size: 0.8rem;
+  }
 
+  .round-title {
+    font-size: 1rem;
+  }
 
+  #buttons-container {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 0;
+    padding-top: 0;
+  }
 
-      .title-container img {
+  body {
+    padding: 10px;
+  }
 
-        width: 35px;
+  .scroll-tip {
+    display: block;
+  }
+}
 
-        height: 35px;
-
-      }
-
-
-
-      .bracket {
-
-        display: grid;
-        grid-template-columns: repeat(7, max-content);
-        grid-template-rows: repeat(15, 1fr);
-        gap: 10px 20px;
-        min-width: 900px; 
-
-          }
-
-      }
-
-
-      .scroll-tip {
-
-        display: block;
-
-      }
-
-
-
-      .match, .final {
-
-        min-width: 140px;
-
-        padding: 8px;
-
-        font-size: 0.8rem;
-
-      }
-
-
-
-      .round-title {
-
-        font-size: 1rem;
-
-      }
-
-
-
-      #buttons-container {
-
-        flex-direction: column;
-
-        gap: 10px;
-
-        margin-top: 0;
-
-        padding-top: 0;
-
-      }
-
-      body {
-
-        padding: 10px;
-
-      }
-
-
-    .scroll-tip {
-
-      display: none;
-
-      font-size: 0.9rem;
-
-      color: #fbbf24;
-
-      background-color: rgba(0, 0, 0, 0.3);
-
-      padding: 6px 12px;
-
-      margin-top: 30px;
-
-      margin-bottom: 10px;
-
-      border-radius: 6px;
-
-      text-align: center;
-
-      user-select: none;
-
-      animation: pulse 2s infinite;
-
-    }
 
 
 
