@@ -264,45 +264,41 @@
   	justify-content: center;
   	}
 
-	@media (max-width: 768px) {
-
-  .bracket-wrapper {
-	justify-content: flex-start;
-  }
-
-  .bracket {
-	min-width: 900px; /* Para scroll horizontal si no cabe */
-	gap: 10px 20px;
-  }
-
-  .match, .final {
-	min-width: 140px;
-	padding: 8px;
-	font-size: 0.8rem;
-  }
-
-  .round-title {
-	font-size: 1rem;
-  }
-
-  #buttons-container {
-	flex-direction: column;
-	gap: 10px;
-	margin-top: 0;
-	padding-top: 0;
-  }
-
-  body {
-	padding: 10px;
-  }
-
-  .scroll-tip {
-	display: block;
-  }
-}
+	 @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+      .title-container img {
+        width: 35px;
+        height: 35px;
+      }
+      .bracket {
+        gap: 6px 12px;
+        overflow-x: auto;
+        padding-bottom: 0;  /* <-- Igual para móvil */
+        margin-bottom: 0;
+        justify-content: start;
+      }
+      .match, .final {
+        min-width: 140px;
+        padding: 8px;
+        font-size: 0.8rem;
+      }
+      .round-title {
+        font-size: 1rem;
+      }
+      #buttons-container {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 0;    /* <-- Sin margen arriba en móvil */
+        padding-top: 0;
+      }
+      body {
+        padding: 10px;
+      }
 
 
-
+ }
 
 	@keyframes pulse {
 
