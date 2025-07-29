@@ -265,10 +265,27 @@
       }
 
     @media (max-width: 768px) {
-
-  .bracket-wrapper {
+    .bracket-wrapper {
     justify-content: flex-start;
-  }
+    }
+
+    .bracket {
+    min-width: 900px;
+    gap: 10px 20px;
+      }
+    }
+  
+    @media (min-width: 769px) {
+    .bracket-wrapper {
+    overflow-x: hidden;
+    }
+
+    .bracket {
+    width: 100%;
+    min-width: unset;
+    justify-content: center;
+      }
+    }
 
   .bracket {
     min-width: 900px; /* Para scroll horizontal si no cabe */
