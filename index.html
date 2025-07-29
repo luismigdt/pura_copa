@@ -115,22 +115,23 @@
 
 
 	.match {
-  background: #1e293b;
-  border-radius: 8px;
-  padding: 10px 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-  font-size: 0.9rem;
-  color: #e2e8f0;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  width: 200px;  	/* Tamaño original ancho */
-  height: 110px; 	/* Tamaño original alto */
-  box-sizing: border-box;
-  justify-content: center;
-  overflow: hidden;
-}
-   .final-style{
+	  background: #1e293b;
+	  border-radius: 8px;
+	  padding: 10px 12px;
+	  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+	  font-size: 0.9rem;
+	  color: #e2e8f0;
+	  display: flex;
+	  flex-direction: column;
+	  gap: 4px;
+	  width: 200px;  	/* Tamaño original ancho */
+	  height: 110px; 	/* Tamaño original alto */
+	  box-sizing: border-box;
+	  justify-content: center;
+	  overflow: hidden;
+	}
+	  
+ 	  .final-style{
  	background: #f59e0b;
   	border: 2px solid #fbbf24;
   	border-radius: 12px;
@@ -144,7 +145,8 @@
   	min-width: 220px;
   	justify-content: center;
   	align-items: center;
-}
+	}
+	  
 	.team-winner {
   	font-weight: bold;
   	color: #3b0a0a;
@@ -152,12 +154,12 @@
 
 
 	#buttons-container {
-  margin-top: 0;  /* Sin espacio arriba para pegarse justo al bracket */
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  flex-wrap: wrap;
-}
+	  margin-top: 0;  /* Sin espacio arriba para pegarse justo al bracket */
+	  display: flex;
+	  justify-content: center;
+	  gap: 15px;
+	  flex-wrap: wrap;
+	}
 
 	#buttons-container button {
   	background-color: #f59e0b;
@@ -185,27 +187,32 @@
         width: 35px;
         height: 35px;
       }
+		 
       .bracket {
         gap: 6px 12px;
         overflow-x: auto;
         padding-bottom: 0;  /* <-- Igual para móvil */
         margin-bottom: 0;
         justify-content: start;
+	      
       }
       .match, .final {
         min-width: 140px;
         padding: 8px;
         font-size: 0.8rem;
       }
+		 
       .round-title {
         font-size: 1rem;
       }
+		 
       #buttons-container {
         flex-direction: column;
         gap: 10px;
         margin-top: 0;    /* <-- Sin margen arriba en móvil */
         padding-top: 0;
       }
+		 
       body {
         padding: 10px;
       }
@@ -366,7 +373,7 @@
 
 
 
-	<div class="match final" id="f1"></div>
+	<div class="match final-style" id="f1"></div>
 
 
 
@@ -392,9 +399,7 @@
 
   </div>
 
-  <div class="scroll-tip">⬅️ Desliza para ver el cuadro ➡️</div>
-
-
+ 
   <div id="buttons-container">
 
 	<button id="btn-next">Siguiente ronda</button>
