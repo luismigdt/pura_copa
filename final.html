@@ -127,6 +127,32 @@
 
     }
 
+	#buttons-container {
+  	margin-top: 40px;
+  	display: flex;
+  	justify-content: center;
+  	gap: 15px;
+  	flex-wrap: wrap;
+	}
+
+	#buttons-container button {
+  	background-color: #f59e0b;
+  	border: none;
+  	color: #1e293b;
+  	padding: 12px 25px;
+  	font-size: 1.1rem;
+  	font-weight: bold;
+  	border-radius: 8px;
+  	cursor: pointer;
+  	box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+	}
+
+	#buttons-container button#btn-prev {
+  	background-color: #64748b;
+  	color: #e2e8f0;
+	}
+
+
     @media (max-width: 768px) {
 
       h1 {
@@ -151,24 +177,24 @@
 
       }
 
-      #buttons-container button#btn-ini {
-  	background-color: #64748b;
-  	color: #e2e8f0;
-	}
-	    #buttons-container {
-    	flex-direction: column;
-    	gap: 10px;
-    	margin-top: 30px;
-    	padding-top: 0;
-  	}
-
-
 
       body {
 
         padding: 10px;
 
       }
+	    #buttons-container {
+    	flex-direction: column;
+    	gap: 10px;
+    	margin-top: 30px;
+    	padding-top: 0;
+		    
+  	}
+	    
+  	body {
+    	padding: 10px;
+  	}
+
 
     }
 
@@ -200,36 +226,8 @@
 
 <div id="buttons-container">
 	<button id="btn-ini">Volver al inicio</button>
-	
+	<button id="btn-prev">Ronda anterior</button>
 
-
-  <div style="text-align: center; margin: 30px 0;">
-
-    <button id="btn-prev" style="
-
-      background-color: #64748b;
-
-      border: none;
-
-      color: #e2e8f0;
-
-      padding: 12px 25px;
-
-      font-size: 1.1rem;
-
-      font-weight: bold;
-
-      border-radius: 8px;
-
-      cursor: pointer;
-
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-
-      margin-right: 15px;
-
-    ">Ronda anterior</button>
-
-  </div>
 
 
 
