@@ -859,177 +859,49 @@
 
 
 
-	   @media screen and (max-height: 500px) and (orientation: landscape) {
-
-
-
-
-
-	  .bracket-wrapper {
-
-
-
-
-
-	    height: auto;
-
-
-
-
-
-	    overflow-x: auto;
-
-
-
-
-
-	  }
-
-
-
-
-
-
-
-
-
-
-
-	  .bracket {
-
-
-
-
-
-	    min-width: 1400px;
-
-
-
-
-
-	    width: max-content;
-
-
-
-
-
-	    height: auto;
-
-
-
-
-
-	  }
-
-
-
-
-
-
-
-
-
-
-
-	  .match {
-
-
-
-
-
-	    height: auto;
-
-
-
-
-
-	  }
-
-
-
-
-
-
-
-
-
-
-
-	  h1 {
-
-
-
-
-
-	    font-size: 1.6rem;
-
-
-
-
-
-	  }
-
-
-
-
-
-
-
-
-
-
-
-	  .title-container img {
-
-
-
-
-
-	    width: 30px;
-
-
-
-
-
-	    height: 30px;
-
-
-
-
-
-	  }
-
-
-
-
-
-
-
-
-
-
-
-	  .round-title {
-
-
-
-
-
-	    font-size: 0.9rem;
-
-
-
-
-
-	  }
-
-
-
-
-
-	}
-
-
+	@media screen and (max-height: 500px) and (orientation: landscape) {
+  html, body {
+    height: auto;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .bracket-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .bracket {
+    min-width: 1400px;
+    width: max-content;
+    height: auto;
+  }
+
+  .match {
+    height: auto;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  .title-container img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .round-title {
+    font-size: 0.9rem;
+  }
+
+  #buttons-container {
+    margin-top: 20px;
+    padding-bottom: 30px; /* para que no quede pegado al borde */
+  }
+}
 
 
 
@@ -2730,7 +2602,7 @@
 
 
 
-
+<div style="height: 60px;"></div>
 
 
 
