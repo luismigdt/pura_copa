@@ -317,52 +317,29 @@
 
 
    	@media screen and (max-height: 500px) and (orientation: landscape) {
+  .bracket-wrapper {
+    width: 100vw;
+    height: 100vh;
+    overflow-x: auto;
+    overflow-y: auto; /* importante */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-  	.bracket-wrapper {
+  .bracket {
+    height: auto;
+    width: max-content;
+    min-width: 1400px;
+    display: grid;
+  }
 
-    	height: auto;
+  body {
+    padding: 0;
+    overflow: hidden; /* opcional si hay rebote lateral */
+  }
+}
 
-    	overflow-x: auto;
-
-  	}
-
-  	.bracket {
-    	min-width: 1400px;
-
-    	width: max-content;
-
-    	height: auto;
-
-  	}
-
-
-  	.match {
-
-    	height: auto;
-
-  	}
-
-
-  	h1 {
-
-    	font-size: 1.6rem;
-
-
-  	}
-
-
-  	.title-container img {
-
-    	width: 30px;
-    	height: 30px;
-  	}
-
-  	.round-title {
-
-    	font-size: 0.9rem;
-  	}
-
-	}
 
   	@media (max-height: 500px) {
 
@@ -762,15 +739,11 @@
 
 
   window.onload = function () {
+  const wrapper = document.querySelector('.bracket-wrapper');
+  // Mueve al centro del contenido
+  wrapper.scrollLeft = wrapper.scrollWidth / 2 - wrapper.clientWidth / 2;
+};
 
-
-	const wrapper = document.querySelector('.bracket-wrapper');
-
-
-	wrapper.scrollLeft = 0;
-
-
-  };
 
 
 </script>
