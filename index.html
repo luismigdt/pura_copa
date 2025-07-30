@@ -79,18 +79,16 @@
   	font-size: 3rem;
   	margin: 0;
 	}
-  	.bracket {
-	display: grid;
-	grid-template-columns: repeat(5, 1fr);
-	grid-template-rows: auto;
-	gap: 10px 30px;
-	width: 100%;
-	max-width: 1200px;
-	align-items: start;
-	margin: 0 auto;
-	justify-content: center;
-	padding-bottom: 0;
-	margin-bottom: 40px;
+  	
+	  .
+	.bracket {
+	  display: grid;
+	  grid-template-columns: repeat(7, auto);
+	  gap: 10px 30px;
+	  min-width: 1300px; /* Esto fuerza el scroll horizontal */
+	  margin: 0 auto;
+	  justify-content: center;
+	  padding-bottom: 40px;
 	}
 
    
@@ -178,30 +176,33 @@
 	}
 
 
-	 @media (max-width: 768px) {
-      h1 {
-        font-size: 2rem;
-    	  }
-      .title-container img {
-        width: 35px;
-        height: 35px;
-    	  }
-
-	 .bracket-wrapper {
-   	  width: 100%;
- 	 overflow-x: auto;
- 	 overflow-y: visible;
+		@media (max-width: 768px) {
+	  h1 {
+	    font-size: 2rem;
 	  }
-		 
-     	 
-    	 .bracket {
-	  gap: 6px 12px;
-	  justify-content: start;
-	  min-width: 1200px;
-	  width: max-content;
-		}
+	  .title-container img {
+	    width: 35px;
+	    height: 35px;
+	  }
+	  .match, .final-style {
+	    min-width: 140px;
+	    padding: 8px;
+	    font-size: 0.8rem;
+	  }
+	  .round-title {
+	    font-size: 1rem;
+	  }
+	  #buttons-container {
+	    flex-direction: column;
+	    gap: 10px;
+	    margin-top: 0;
+	    padding-top: 0;
+	  }
+	  body {
+	    padding: 10px;
+	  }
+	}
 
-	 }
 
 	   @media screen and (max-height: 500px) and (orientation: landscape) {
 	  .bracket-wrapper {
@@ -392,7 +393,7 @@
 
 
 
-  <div class="bracket-wrapper">
+  <div class="bracket-scroll">
 	<div class="bracket">
 
 	<!-- Títulos -->
