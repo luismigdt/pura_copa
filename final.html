@@ -151,6 +151,12 @@
 
       }
 
+      #buttons-container button#btn-prev {
+  	background-color: #64748b;
+  	color: #e2e8f0;
+	}
+
+
       body {
 
         padding: 10px;
@@ -185,6 +191,8 @@
 
   </div>
 
+<div id="buttons-container">
+	<button id="btn-prev">Volver al inicio</button>
 
 
   <div style="text-align: center; margin: 30px 0;">
@@ -347,6 +355,9 @@
 
     }
 
+        document.getElementById('btn-prev').addEventListener('click', () => {
+  	    window.location.href = 'indidex.html';
+	    });
 
 
     document.getElementById('btn-prev').addEventListener('click', () => {
