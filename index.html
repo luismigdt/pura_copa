@@ -794,6 +794,19 @@
 
 	#m8 { grid-column: 7; grid-row: 8 / span 2; }
 
+	.bracket-wrapper {
+	  overflow-x: auto;
+	  overflow-y: hidden;
+	  -webkit-overflow-scrolling: touch;
+	  touch-action: pan-x;
+	  width: 100%;
+	  -ms-overflow-style: none;
+	  scrollbar-width: none;
+	}
+	
+	.bracket-wrapper::-webkit-scrollbar {
+	  display: none;
+	}
 
 
   </style>
