@@ -199,10 +199,32 @@
 	  justify-content: start;
 	  min-width: 1200px;
 	  width: max-content;
-	}
+		}
 
 	      
      	 }
+
+	  @media (max-height: 500px) {
+	  .bracket-wrapper {
+	    overflow-x: auto;
+	    overflow-y: hidden;
+	  }
+	
+	  .bracket {
+	    min-width: 1200px;
+	    width: max-content;
+	    flex-wrap: nowrap;
+	  }
+	
+	  body {
+	    padding: 10px;
+	  }
+	
+	  .match {
+	    height: auto;
+	  }
+	}
+
 		 
       .match, .final {
         min-width: 140px;
