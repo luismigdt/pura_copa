@@ -172,8 +172,7 @@
 
 
 
-  	min-height: auto;
-
+  	
 
 
 
@@ -1617,6 +1616,27 @@
 	}
 
 
+@media screen and (max-height: 500px) and (orientation: landscape) {
+  html, body {
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .bracket-wrapper {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    height: auto;
+  }
+
+  .bracket {
+    min-width: 1200px;
+    width: max-content;
+    height: auto;
+  }
+}
 
 
 
