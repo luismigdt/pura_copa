@@ -809,6 +809,19 @@
 	}
 
 
+	  .scroll-container {
+	  width: 100vw;
+	  overflow-x: auto;
+	  overflow-y: hidden;
+	  -webkit-overflow-scrolling: touch;
+	  touch-action: pan-x;
+	  position: relative;
+	}
+	
+	.bracket-wrapper {
+	  width: max-content;
+	}
+
   </style>
 
 
@@ -823,7 +836,7 @@
 
 
 
-
+  <div class="scroll-container">
 
   <div class="title-container">
 
@@ -981,7 +994,8 @@
 
 	</div>
 
-
+  </div>
+	  
 
   </div>
 
@@ -1337,6 +1351,11 @@
 
 
 
+  });
+
+
+  window.addEventListener('load', () => {
+    document.querySelector('.scroll-container').scrollLeft = 0;
   });
 
 
